@@ -1,0 +1,28 @@
+prefix: "&6&lVillas ► &e"
+noconsole: "&cThis command can only be used by players"
+noperm:
+  manage: "&cYou are not allowed to manage this villa"
+  tp: "&cYou are not allowed to teleport to this villa"
+help:
+  header:
+  - "&e&m-----------------------------"
+  - "&6&l&n      Villas - Help Menu"
+  - "&e&m-----------------------------"
+  player:
+  - "&6&lPlayer Commands"
+  - "&6• /villa [name]:&e Teleport to your villa / manage it"
+  - "&6• /villas OR /villas help:&e Shows this help menu"
+  - "&6• /villas list [player] [page]:&e Lists villas"
+  - "&6• /villas info <name>:&e Info about a villa"
+  - "&6• /villas tp <name>:&e Teleport to a villa"
+  - "&6• /villas manage <name>:&e Manage a villa"
+  admin:
+  - "&6&lAdmin Commands"
+  - "&6• /villasa addmember <name> <group> <member>:&e Adds a member to the villa"
+  - "&6• /villasa create <name>:&e Creates a villa"
+  - "&6• /villasa list [page]:&e Lists all of the villas"
+  - "&6• /villasa redefine <name>:&e Redefines the area of a villa"
+  - "&6• /villasa setspawn <name>:&e Set the spawnpoint of a villa"
+  - "&6• /villasa remove <name>:&e Removes a villa"
+  - "&6• /villasa removemember <name> <group> <member>:&e Removes a member from a villa"
+setspawn: "Set the spawn point of villa &6&l<villa>&e to &f<loc>"

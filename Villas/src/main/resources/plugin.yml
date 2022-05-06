@@ -1,0 +1,8 @@
+name: Villas
+author: gyuriX
+api-version: 1.13
+main: gyurix.villas.Villas
+version: 1.0
+depend: [ WorldEdit, WRLDPaymentsAPI ]
+commands:
+  villas:

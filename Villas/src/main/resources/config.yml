@@ -1,0 +1,102 @@
+{
+  "nonMemberGroup": "nonmember",
+  "mySQL": {
+    "database": "minecraft",
+    "table": "villas",
+    "host": "localhost",
+    "password": "p&7h5y%_pC4Pk6tH",
+    "username": "minecraft"
+  },
+  "groupLimit": 7,
+  "playerLimit": 28,
+  "guis": {
+    "manage": {
+      "title": "&4&lManage - <villa>",
+      "layout": [
+        "glass glass glass glass   glass  glass  glass glass    exit",
+        "glass tp    glass players glass  groups glass setspawn glass",
+        "glass glass glass glass   glass  glass  glass glass    glass"
+      ],
+      "staticItems": {
+        "glass": "BLACK_STAINED_GLASS_PANE name:&c",
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_management_gui",
+        "tp": "COMPASS name:&6&lTeleport lore:&7|&7Click_to_teleport|&7to_this_villa",
+        "setspawn": "OAK_SAPLING name:&6&lSet_Spawn lore:&7|&7Click_to_set_the|&7spawn_point_of_this|&7villa_to_your_location",
+        "players": "PLAYER_SKULL name:&6&lPlayers owner:Deadpool lore:&7|&7Click_to_manage|&7the_players|&7of_this_villa",
+        "groups": "PAPER name:&6&lGroups lore:&7|&7Click_to_manage|&7the_groups_and_permissions|&7of_this_villa"
+      }
+    },
+    "groups": {
+      "title": "&4&lGroups - <villa>",
+      "layout": [
+        "back glass glass glass glass glass glass glass exit",
+        "glass glass glass glass glass glass glass glass glass",
+        "glass glass glass glass glass glass glass glass glass"
+      ],
+      "staticItems": {
+        "glass": "BLACK_STAINED_GLASS_PANE name:&c",
+        "back": "ARROW name:&c&l<--_Back lore:&7|&7Click_to_go_back|&7to_the_management_gui",
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_management_gui",
+      }
+    },
+    "players": {
+      "title": "&4&lPlayers - <villa>",
+      "layout": [
+        "back glass glass glass glass glass glass glass exit",
+        "glass glass glass glass glass glass glass glass glass",
+        "glass glass glass glass glass glass glass glass glass"
+      ],
+      "staticItems": {
+        "glass": "BLACK_STAINED_GLASS_PANE name:&c",
+        "back": "ARROW name:&c&l<--_Back lore:&7|&7Click_to_go_back|&7to_the_management_gui",
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_management_gui",
+      }
+    },
+  },
+  "groups": {
+    "banned": {
+      "build": false,
+      "enter": false,
+      "icon": "BARRIER",
+      "info": false,
+      "manage": false,
+      "removable": true,
+      "see": false,
+      "tp": false,
+      "use": false
+    },
+    "nonmember": {
+      "build": false,
+      "enter": true,
+      "icon": "REDSTONE",
+      "info": true,
+      "manage": false,
+      "removable": false,
+      "see": true,
+      "tp": true,
+      "use": true
+    },
+    "member": {
+      "build": true,
+      "enter": true,
+      "icon": "IRON_INGOT",
+      "info": true,
+      "manage": false,
+      "removable": true,
+      "see": true,
+      "tp": true,
+      "use": true
+    },
+    "owner": {
+      "build": true,
+      "enter": true,
+      "icon": "GOLD_INGOT",
+      "info": true,
+      "manage": true,
+      "removable": false,
+      "see": true,
+      "tp": true,
+      "use": true
+    }
+  }
+}
