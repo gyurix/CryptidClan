@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.io.FileReader;
 
-import static gyurix.villas.Villas.pl;
+import static gyurix.villas.VillasPlugin.pl;
 
 public class ConfigManager {
     public static Config conf;

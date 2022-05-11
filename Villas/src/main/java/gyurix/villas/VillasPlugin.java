@@ -6,8 +6,9 @@ import gyurix.villas.conf.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Villas extends JavaPlugin {
-    public static Villas pl;
+public class VillasPlugin extends JavaPlugin {
+    public static VillasPlugin pl;
+
     @Override
     public void onEnable() {
         pl = this;

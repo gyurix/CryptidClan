@@ -1,8 +1,10 @@
 name: Villas
 author: gyuriX
 api-version: 1.13
-main: gyurix.villas.Villas
+main: gyurix.villas.VillasPlugin
 version: 1.0
 depend: [ WorldEdit, WRLDPaymentsAPI ]
 commands:
+  villa:
   villas:
+  villasa:

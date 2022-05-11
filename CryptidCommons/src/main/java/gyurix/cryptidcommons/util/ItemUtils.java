@@ -180,7 +180,7 @@ public class ItemUtils {
         return is;
     }
 
-    public static ItemStack makeSkull(String owner, String name, String... lore) {
+    public static ItemStack makeSkull(String owner, String name, List<String> lore) {
         ItemStack is = makeItem(Material.PLAYER_HEAD, name, lore);
         SkullMeta meta = (SkullMeta) is.getItemMeta();
         meta.setOwner(owner);

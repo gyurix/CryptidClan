@@ -7,8 +7,26 @@
     "password": "p&7h5y%_pC4Pk6tH",
     "username": "minecraft"
   },
-  "groupLimit": 7,
+  "groupLimit": 28,
   "playerLimit": 28,
+  "playersName": "&6&l<name>",
+  "playersLore": [
+    "&7",
+    "&7• Group: &e<group>",
+    "&7",
+    "&7• &eLeft-Click to change group",
+    "&7• &cRight-Click to remove"
+  ],
+  "groupsName": "&6&l<name>",
+  "groupsSelectedName": "&a&l<name>",
+  "groupsLore": [
+    "&7",
+    "&7• &eClick to change group"
+  ],
+  "groupsSelectedLore": [
+    "&7",
+    "&a--- Selected ---"
+  ],
   "guis": {
     "manage": {
       "title": "&4&lManage - <villa>",
@@ -19,37 +37,62 @@
       ],
       "staticItems": {
         "glass": "BLACK_STAINED_GLASS_PANE name:&c",
-        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_management_gui",
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
         "tp": "COMPASS name:&6&lTeleport lore:&7|&7Click_to_teleport|&7to_this_villa",
         "setspawn": "OAK_SAPLING name:&6&lSet_Spawn lore:&7|&7Click_to_set_the|&7spawn_point_of_this|&7villa_to_your_location",
         "players": "PLAYER_SKULL name:&6&lPlayers owner:Deadpool lore:&7|&7Click_to_manage|&7the_players|&7of_this_villa",
         "groups": "PAPER name:&6&lGroups lore:&7|&7Click_to_manage|&7the_groups_and_permissions|&7of_this_villa"
       }
     },
+    "groupEdit": {
+      "title": "&4&l<villa> - Group <group>",
+      "layout": [
+        "back  glass glass glass glass  glass  glass glass exit",
+        "glass glass icon  glass glass  glass remove glass glass"
+        "glass glass glass glass glass  glass  glass glass glass"
+        "glass build enter info  manage see    tp    use   glass",
+        "glass glass glass glass glass  glass  glass glass glass"
+      ],
+      "staticItems": {
+        "glass": "BLACK_STAINED_GLASS_PANE name:&c",
+        "back": "ARROW name:&c&l<--_Back lore:&7|&7Click_to_go_back|&7to_the_group_selector_gui",
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
+
+      }
+    },
     "groups": {
       "title": "&4&lGroups - <villa>",
       "layout": [
-        "back glass glass glass glass glass glass glass exit",
-        "glass glass glass glass glass glass glass glass glass",
-        "glass glass glass glass glass glass glass glass glass"
+        "back glass glass glass add glass glass glass exit",
       ],
       "staticItems": {
         "glass": "BLACK_STAINED_GLASS_PANE name:&c",
         "back": "ARROW name:&c&l<--_Back lore:&7|&7Click_to_go_back|&7to_the_management_gui",
-        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_management_gui",
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
+        "add": "EMERALD name:&aCreate_Group lore:&7|&7Click_to_create|&7a_new_group"
+      }
+    },
+    "playerGroupSelector": {
+      "title": "&4&l<player>'s group",
+      "layout": [
+        "back glass glass glass glass glass glass glass exit",
+      ],
+      "staticItems": {
+        "glass": "BLACK_STAINED_GLASS_PANE name:&c",
+        "back": "ARROW name:&c&l<--_Back lore:&7|&7Click_to_go_back|&7to_the_player_list",
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
       }
     },
     "players": {
       "title": "&4&lPlayers - <villa>",
       "layout": [
-        "back glass glass glass glass glass glass glass exit",
-        "glass glass glass glass glass glass glass glass glass",
-        "glass glass glass glass glass glass glass glass glass"
+        "back glass glass glass add glass glass glass exit",
       ],
       "staticItems": {
-        "glass": "BLACK_STAINED_GLASS_PANE name:&c",
+        "add": "EMERALD name:&a&lAdd_Player lore:&7|&7Click_to_add_player|&7to_this_villa"
+          "glass": "BLACK_STAINED_GLASS_PANE name:&c",
         "back": "ARROW name:&c&l<--_Back lore:&7|&7Click_to_go_back|&7to_the_management_gui",
-        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_management_gui",
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
       }
     },
   },

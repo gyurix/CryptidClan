@@ -1,5 +1,7 @@
 package gyurix.villas;
 
+import gyurix.villas.data.Group;
+import gyurix.villas.data.Villa;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -10,8 +12,8 @@ public class MoveDetector implements Runnable {
     public HashMap<String, Location> oldLoc = new HashMap<>();
 
     public boolean cancelMove(Player plr, Location to) {
-        String pln = plr.getName();
-        return false;
+        Villa villa = VillaManager.getVillaAt(to);
+        return villa != null && !villa.hasPermission(plr, Group::isEnter);
     }
 
     public void run() {
@@ -26,7 +28,10 @@ public class MoveDetector implements Runnable {
             if (old.distance(cur) < 0.5)
                 continue;
             if (cancelMove(p, cur)) {
-                p.teleport(old);
+                if (cancelMove(p, old))
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawn " + p.getName());
+                else
+                    p.teleport(old);
                 continue;
             }
             oldLoc.put(pln, cur);

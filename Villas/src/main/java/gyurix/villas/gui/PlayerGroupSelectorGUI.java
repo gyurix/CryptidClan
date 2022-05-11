@@ -13,16 +13,19 @@ import java.util.HashMap;
 import java.util.TreeSet;
 
 import static gyurix.villas.conf.ConfigManager.conf;
+import static gyurix.villas.conf.ConfigManager.msg;
 
-public class GroupsGUI extends CustomGUI {
+public class PlayerGroupSelectorGUI extends CustomGUI {
     private final HashMap<Integer, String> groupNames = new HashMap<>();
+    private final String target;
     private final Villa villa;
 
-    public GroupsGUI(Player plr, Villa villa) {
-        super(plr, conf.getGuis().get("groups"));
+    public PlayerGroupSelectorGUI(Player plr, Villa villa, String target) {
+        super(plr, conf.getGuis().get("playerGroupSelector"));
         this.villa = villa;
+        this.target = target;
 
-        String title = StrUtils.fillVariables(config.getTitle(), "villa", villa.getName());
+        String title = StrUtils.fillVariables(config.getTitle(), "player", target, "villa", villa.getName());
         int rows = (villa.getGroups().size() + 8) / 9;
         inv = Bukkit.createInventory(this, config.getLayout().size() + rows * 9, title);
 
@@ -46,12 +49,12 @@ public class GroupsGUI extends CustomGUI {
         String groupName = groupNames.get(slot);
         if (groupName == null)
             return;
-        Group group = villa.getGroups().get(groupName);
-        if (group == null) {
-            new GroupsGUI(plr, villa);
+        if (!villa.hasPermission(plr, Group::isManage)) {
+            msg.msg(plr, "noperm.manage");
             return;
         }
-        new GroupEditGUI(plr, villa, group);
+        villa.changeGroup(plr, target, groupName);
+        new PlayersGUI(plr, villa);
     }
 
     @Override
@@ -59,11 +62,13 @@ public class GroupsGUI extends CustomGUI {
         int id = 0;
         for (int i = 9; i < inv.getSize(); ++i)
             inv.setItem(i, config.getStaticItem("glass"));
+        String playerGroup = villa.getPlayers().get(Bukkit.getPlayerUniqueId(target));
         for (String groupName : new TreeSet<>(villa.getGroups().keySet())) {
+            boolean selected = groupName.equals(playerGroup);
             ItemStack is = ItemUtils.makeItem(villa.getGroups().get(groupName).getIcon(),
-                    StrUtils.fillVariables(conf.getGroupsName(), "name", groupName),
-                    conf.getGroupsLore());
-            inv.setItem(dataSlots[id], is);
+                    StrUtils.fillVariables(selected ? conf.getGroupsSelectedName() : conf.getGroupsName(), "name", groupName),
+                    selected ? conf.getGroupsSelectedLore() : conf.getGroupsLore());
+            inv.setItem(dataSlots[id], selected ? ItemUtils.glow(is) : is);
             groupNames.put(dataSlots[id], groupName);
             ++id;
         }
