@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -47,6 +50,15 @@ public class Villa {
             msg.msg(p, "groupchd", "villa", name);
     }
 
+    public Map<String, TreeSet<String>> getGrouppedPlayerNames() {
+        TreeMap<String, TreeSet<String>> out = new TreeMap<>();
+        players.forEach((uuid, group) -> {
+            TreeSet<String> list = out.computeIfAbsent(group, k -> new TreeSet<>());
+            list.add(Bukkit.getOfflinePlayer(uuid).getName());
+        });
+        return out;
+    }
+
     public List<String> getPlayerNames() {
         List<String> out = new ArrayList<>();
         for (UUID uuid : players.keySet()) {
@@ -56,7 +68,9 @@ public class Villa {
         return out;
     }
 
-    public boolean hasPermission(Player plr, Function<Group, Boolean> permission) {
+    public boolean hasPermission(CommandSender sender, Function<Group, Boolean> permission) {
+        if (!(sender instanceof Player plr))
+            return true;
         String group = players.get(plr.getUniqueId());
         return permission.apply(groups.get(group == null ? conf.getNonMemberGroup() : group));
     }

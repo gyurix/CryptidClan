@@ -49,34 +49,6 @@ public class MySQLDatabase {
         return false;
     }
 
-    public void query(String cmd, ResultHandler rh, Object... args) {
-        try (PreparedStatement st = prepare(cmd, args)) {
-            try (ResultSet rs = st.executeQuery()) {
-                rh.handle(rs);
-            }
-        } catch (Throwable err) {
-            err.printStackTrace();
-        }
-    }
-
-    public int update(String cmd) {
-        try (PreparedStatement st = getConnection().prepareStatement(cmd)) {
-            return st.executeUpdate();
-        } catch (Throwable e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    public int update(String cmd, Object... args) {
-        try (PreparedStatement st = prepare(cmd, args)) {
-            return st.executeUpdate();
-        } catch (Throwable e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
     /**
      * @return - The Connection
      */
@@ -109,8 +81,36 @@ public class MySQLDatabase {
         PreparedStatement st = getConnection().prepareStatement(cmd);
         for (int i = 0; i < args.length; ++i)
             st.setObject(i + 1, args[i] instanceof Enum ? ((Enum) args[i]).name() :
-                String.valueOf(args[i]));
+                    String.valueOf(args[i]));
         return st;
+    }
+
+    public void query(String cmd, ResultHandler rh, Object... args) {
+        try (PreparedStatement st = prepare(cmd, args)) {
+            try (ResultSet rs = st.executeQuery()) {
+                rh.handle(rs);
+            }
+        } catch (Throwable err) {
+            err.printStackTrace();
+        }
+    }
+
+    public int update(String cmd, Object... args) {
+        try (PreparedStatement st = prepare(cmd, args)) {
+            return st.executeUpdate();
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int update(String cmd) {
+        try (PreparedStatement st = getConnection().prepareStatement(cmd)) {
+            return st.executeUpdate();
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }
 

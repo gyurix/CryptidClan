@@ -2,6 +2,7 @@ package gyurix.cryptidcommons.util;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -42,6 +43,11 @@ public class StrUtils {
         for (int i = 0; i < len; ++i)
             list.set(i, fillVariables(list.get(i), vars));
         return list;
+    }
+
+    public static List<String> filterStart(Collection<String> list, String prefix) {
+        String prefixLower = prefix.toLowerCase();
+        return list.stream().filter(el -> el.toLowerCase().startsWith(prefixLower)).sorted().toList();
     }
 
     public static String formatNum(double am) {

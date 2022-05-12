@@ -1,8 +1,9 @@
 prefix: "&6&lVillas ► &e"
 noconsole: "&cThis command can only be used by players"
 noperm:
-  manage: "&cYou are not allowed to manage this villa"
-  tp: "&cYou are not allowed to teleport to this villa"
+  manage: "&cYou are not allowed to manage villa &e<villa>"
+  info: "&cYou are not allowed to check the info of villa &e<villa>"
+  tp: "&cYou are not allowed to teleport to villa &e<villa>"
 help:
   header:
   - "&e&m-----------------------------"
@@ -13,18 +14,16 @@ help:
   - "&6• /villa [name]:&e Teleport to your villa / manage it"
   - "&6• /villas OR /villas help:&e Shows this help menu"
   - "&6• /villas list [player] [page]:&e Lists villas"
-  - "&6• /villas info <name>:&e Info about a villa"
-  - "&6• /villas tp <name>:&e Teleport to a villa"
-  - "&6• /villas manage <name>:&e Manage a villa"
+  - "&6• /villas info [name]:&e Info about a villa"
+  - "&6• /villas tp [name]:&e Teleport to a villa"
+  - "&6• /villas manage [name]:&e Manage a villa"
   admin:
   - "&6&lAdmin Commands"
-  - "&6• /villasa addmember <name> <group> <member>:&e Adds a member to the villa"
   - "&6• /villasa create <name>:&e Creates a villa"
   - "&6• /villasa list [page]:&e Lists all of the villas"
   - "&6• /villasa redefine <name>:&e Redefines the area of a villa"
-  - "&6• /villasa setspawn <name>:&e Set the spawnpoint of a villa"
   - "&6• /villasa remove <name>:&e Removes a villa"
-  - "&6• /villasa removemember <name> <group> <member>:&e Removes a member from a villa"
+  - "&6• /villasa setspawn <name>:&e Set the spawnpoint of a villa"
 setspawn: "Set the spawn point of villa &6&l<villa>&e to &f<loc>"
 add: "Added &e<player>&c to villa &6&l<villa>"
 added: "You have been added to villa &6&l<villa>"
@@ -32,12 +31,43 @@ groupch: "Changed the &6&l<player>&e's group in villa &6&l<villa>&e to &6&l<grou
 groupchd: "Your group in villa &6&l<villa>&e has been changed to &6&l<group>"
 in: "&cPlayer &e<player> &cis already added to villa &6&l<villa>"
 notin: "&cPlayer &e<player> &cis not added to villa &6&l<villa>"
+notinany: "&cYou are not in any villas"
 remove: "Removed &6&l<player>&e from villa &6&l<villa>"
 removed: "You have been removed from villa &6&l<villa>"
+tp: "Teleported to villa &6&l<villa>"
+list:
+  header:
+  - "&6&lVilla List - &e&l<player>&6&l - page &e&l<page> / <maxpage>"
+  - ""
+  entry:
+  - "&e<villa>&f (<players> players, rank: <rank>)"
+  - ""
+admin:
+  list:
+    header:
+    - "&6&lVilla List - &e&lAll Villas&6&l - page &e&l<page> / <maxpage>"
+    - ""
+    entry:
+    - "&e<villa>&f (<players> players)"
+    - ""
+info:
+  header:
+  - "&6&lVilla Info - &e&l<villa>"
+  - "&e• Area:&f <area>"
+  - "&e• Spawn:&f <spawn>"
+  - "&e• Players:"
+  player:
+  - "&e  - <group> (<count>):&f <players>"
+  - ""
+missing:
+  player: "&cYou did not enter the player argument"
+  villa: "&cYou did not enter the villa argument"
+  group: "&cYou did not enter the group argument"
 wrong:
   villa: "&cVilla &e<villa>&c was not found"
+  villaLoc: "&cYou are not standing in a villa"
   group: "&cGroup &e<group>&c was not found in villa &e<villa>"
-  player: "&cPlayer &e<player>&c is not online"
+  player: "&cPlayer &e<player>&c was not found"
   sub: "&cThe entered subcommand was not found"
 group:
   iconClick: "&cClick to an item in your inventory for changing the groups icon"

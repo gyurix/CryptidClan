@@ -1,10 +1,15 @@
 package gyurix.villas;
 
+import gyurix.villas.data.Group;
 import gyurix.villas.data.Villa;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 import static gyurix.villas.VillasPlugin.pl;
 import static gyurix.villas.conf.ConfigManager.conf;
@@ -13,12 +18,22 @@ import static gyurix.villas.conf.ConfigManager.gson;
 public class VillaManager {
     public static HashMap<String, Villa> villas = new HashMap<>();
 
-    public static Villa getVillaAt(Location to) {
+    public static Villa getVillaAt(Location loc) {
         for (Villa v : villas.values()) {
-            if (v.getArea().contains(to))
+            if (v.getArea().contains(loc))
                 return v;
         }
         return null;
+    }
+
+    public static List<Villa> getVillasWithPlayer(CommandSender sender, UUID uuid) {
+        boolean admin = sender.hasPermission("villas.admin");
+        List<Villa> out = new ArrayList<>();
+        for (Villa v : villas.values()) {
+            if ((admin || v.hasPermission(sender, Group::isSee)) && v.getPlayers().containsKey(uuid))
+                out.add(v);
+        }
+        return out;
     }
 
     public static void loadVillas() {

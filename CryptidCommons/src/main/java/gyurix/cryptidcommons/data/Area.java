@@ -95,8 +95,8 @@ public class Area implements StringSerializable {
         double zDif = maxZ - minZ;
         for (int i = 0; i < 100; ++i) {
             Location loc = new Location(Bukkit.getWorld(world), rand.nextDouble() * xDif + minX + 0.5,
-                rand.nextDouble() * yDif + minY + 0.5,
-                rand.nextDouble() * zDif + minZ + 0.5);
+                    rand.nextDouble() * yDif + minY + 0.5,
+                    rand.nextDouble() * zDif + minZ + 0.5);
             boolean correct = true;
             for (Area a : exclude) {
                 if (a.contains(loc)) {

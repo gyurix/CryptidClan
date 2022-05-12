@@ -20,16 +20,16 @@ public class GUIListener implements Listener {
     }
 
     @EventHandler
-    public void onDrag(InventoryDragEvent e) {
-        Inventory top = e.getView().getTopInventory();
-        if (top.getHolder() instanceof CustomGUI)
-            e.setCancelled(true);
-    }
-
-    @EventHandler
     public void onClose(InventoryCloseEvent e) {
         Inventory top = e.getView().getTopInventory();
         if (top.getHolder() instanceof CustomGUI)
             ((CustomGUI) top.getHolder()).onClose();
+    }
+
+    @EventHandler
+    public void onDrag(InventoryDragEvent e) {
+        Inventory top = e.getView().getTopInventory();
+        if (top.getHolder() instanceof CustomGUI)
+            e.setCancelled(true);
     }
 }

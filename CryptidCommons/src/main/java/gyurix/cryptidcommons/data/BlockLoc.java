@@ -8,8 +8,10 @@ import org.bukkit.block.Block;
 
 @Getter
 public class BlockLoc implements StringSerializable {
-    private String world;
-    private int x, y, z;
+    private final String world;
+    private final int x;
+    private final int y;
+    private final int z;
 
     public BlockLoc(Block b) {
         this.world = b.getWorld().getName();

@@ -13,10 +13,10 @@ import java.util.List;
 @Getter
 public class GUIConfig implements PostProcessable {
     private HashMap<String, ItemStack> customItems;
-    private transient HashMap<Integer, String> customMap = new HashMap<>();
+    private final transient HashMap<Integer, String> customMap = new HashMap<>();
     private List<String> layout;
     private HashMap<String, ItemStack> staticItems;
-    private transient HashMap<Integer, ItemStack> staticMap = new HashMap<>();
+    private final transient HashMap<Integer, ItemStack> staticMap = new HashMap<>();
     private String title;
 
     public ItemStack getItem(String key, Object... vars) {

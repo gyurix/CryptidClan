@@ -10,8 +10,10 @@ import static gyurix.cryptidcommons.util.StrUtils.DF;
 
 @Getter
 public class Loc implements StringSerializable {
-    private String world;
-    private double x, y, z;
+    private final String world;
+    private final double x;
+    private final double y;
+    private final double z;
     private float yaw, pitch;
 
     public Loc(Block b) {

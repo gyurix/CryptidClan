@@ -1,38 +1,94 @@
 package gyurix.villas.cmd;
 
+import gyurix.cryptidcommons.util.StrUtils;
+import gyurix.villas.VillaManager;
+import gyurix.villas.data.Group;
+import gyurix.villas.data.Villa;
+import gyurix.villas.gui.ManageGUI;
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static gyurix.villas.conf.ConfigManager.msg;
 
 public class CommandVillas implements CommandExecutor, TabCompleter {
+    List<String> subCommands = List.of("help", "info", "list", "manage", "tp");
+
     private void cmdHelp(CommandSender sender) {
         msg.msg(sender, "help.player");
     }
 
     private void cmdInfo(CommandSender sender, String[] args) {
+        withVilla(sender, args, Group::isInfo, villa -> {
+                    msg.msg(sender, "info.header",
+                            "villa", villa.getName(),
+                            "area", villa.getArea(),
+                            "spawn", villa.getSpawn());
+                    villa.getGrouppedPlayerNames().forEach((group, players) ->
+                            msg.msg(sender, "info.player",
+                                    "group", group,
+                                    "count", players.size(),
+                                    "players", StringUtils.join(players, ", ")));
+                },
+                villa -> msg.msg(sender, "noperm.info"));
     }
 
     private void cmdList(CommandSender sender, String[] args) {
-
+        withPlayer(sender, args, (target) -> {
+            int page = 1;
+            try {
+                if (args.length > 1 && args[args.length - 1].matches("\\d"))
+                    page = Integer.parseInt(args[args.length - 1]);
+            } catch (Throwable ignored) {
+            }
+            List<Villa> results = VillaManager.getVillasWithPlayer(sender, target.getUniqueId());
+            int maxpage = Math.max(1, (results.size() + 9) / 10);
+            page = Math.min(Math.max(page, 1), maxpage);
+            msg.msg(sender, "list.header", "player", target.getName(), "page", page, "maxpage", maxpage);
+            int from = (page - 1) * 10;
+            int to = Math.min(from + 10, results.size());
+            for (int i = from; i < to; ++i) {
+                Villa v = results.get(i);
+                msg.msg(sender, "list.entry",
+                        "villa", v.getName(),
+                        "players", v.getPlayers().size(),
+                        "rank", v.getPlayers().get(target.getUniqueId())
+                );
+            }
+        });
     }
 
     private void cmdManage(CommandSender sender, String[] args) {
-    }
-
-    public void cmdRemove(CommandSender sender, String name) {
-
+        if (!(sender instanceof Player plr)) {
+            msg.msg(sender, "noconsole");
+            return;
+        }
+        withVilla(sender, args, Group::isInfo, villa -> new ManageGUI(plr, villa),
+                villa -> msg.msg(sender, "noperm.info"));
     }
 
     private void cmdTp(CommandSender sender, String[] args) {
-
+        if (!(sender instanceof Player plr)) {
+            msg.msg(sender, "noconsole");
+            return;
+        }
+        withVilla(sender, args, Group::isTp, villa -> {
+                    plr.teleport(villa.getSpawn().toLocation());
+                    msg.msg(sender, "villa.tp", "villa", villa.getName());
+                },
+                villa -> msg.msg(sender, "villa.noperm.tp"));
     }
 
     @Override
@@ -66,6 +122,46 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String string, @NotNull String[] args) {
+        if (args.length == 1)
+            return StrUtils.filterStart(subCommands, args[0]);
         return Collections.emptyList();
+    }
+
+    private void withPlayer(CommandSender sender, String[] args, Consumer<OfflinePlayer> con) {
+        Player plr = sender instanceof Player ? (Player) sender : null;
+        boolean hasPlayerArg = args.length > 1 && !args[1].matches("\\d+");
+        if (plr == null && !hasPlayerArg) {
+            msg.msg(sender, "missing.player");
+            return;
+        }
+        OfflinePlayer target = hasPlayerArg ? Bukkit.getOfflinePlayer(args[1]) : plr;
+        if (target != null && (target.hasPlayedBefore() || target.isOnline())) {
+            con.accept(target);
+            return;
+        }
+        msg.msg(sender, "wrong.player", "player", args[1]);
+    }
+
+    private void withVilla(CommandSender sender, String[] args, Function<Group, Boolean> extraPerm, Consumer<Villa> con, Consumer<Villa> noPerm) {
+        boolean villaArg = args.length > 1;
+        if (!(sender instanceof Player) && !villaArg) {
+            msg.msg(sender, "missing.villa");
+            return;
+        }
+        boolean admin = sender.hasPermission("villas.admin");
+        Villa villa = villaArg ? VillaManager.villas.get(args[1]) : VillaManager.getVillaAt(((Player) sender).getLocation());
+        if (villa == null || !admin && !villa.hasPermission(sender, Group::isSee)) {
+            if (villaArg) {
+                msg.msg(sender, "wrong.villa", "villa", args[1]);
+                return;
+            }
+            msg.msg(sender, "wrong.villaLoc");
+            return;
+        }
+        if (admin || villa.hasPermission(sender, extraPerm)) {
+            con.accept(villa);
+            return;
+        }
+        noPerm.accept(villa);
     }
 }
