@@ -7,8 +7,8 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import static gyurix.villas.VillasPlugin.pl;
@@ -16,7 +16,7 @@ import static gyurix.villas.conf.ConfigManager.conf;
 import static gyurix.villas.conf.ConfigManager.gson;
 
 public class VillaManager {
-    public static HashMap<String, Villa> villas = new HashMap<>();
+    public static TreeMap<String, Villa> villas = new TreeMap<>();
 
     public static Villa getVillaAt(Location loc) {
         for (Villa v : villas.values()) {
@@ -37,8 +37,9 @@ public class VillaManager {
     }
 
     public static void loadVillas() {
-        HashMap<String, Villa> villas = new HashMap<>();
+        TreeMap<String, Villa> villas = new TreeMap<>();
         Bukkit.getScheduler().runTaskAsynchronously(pl, () -> {
+            conf.getMySQL().command("CREATE TABLE IF NOT EXISTS `" + conf.getMySQL().table + "` (`name` TEXT UNIQUE PRIMARY KEY, `data` TEXT)");
             conf.getMySQL().query("SELECT `data` FROM `" + conf.getMySQL().table + "`", (rs) -> {
                 while (rs.next()) {
                     Villa villa = gson.fromJson(rs.getString(1), Villa.class);
@@ -47,6 +48,11 @@ public class VillaManager {
             });
             VillaManager.villas = villas;
         });
+    }
+
+    public static void removeVilla(Villa villa) {
+        Bukkit.getScheduler().runTaskAsynchronously(pl, () ->
+                conf.getMySQL().command("DELETE FROM `" + conf.getMySQL().table + "` WHERE `name` = ? LIMIT 1", villa.getName()));
     }
 
     public static void saveVilla(Villa villa) {

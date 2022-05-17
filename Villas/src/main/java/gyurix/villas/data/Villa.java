@@ -2,7 +2,9 @@ package gyurix.villas.data;
 
 import gyurix.cryptidcommons.data.Area;
 import gyurix.cryptidcommons.data.Loc;
+import gyurix.villas.VillaManager;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -21,12 +23,38 @@ import static gyurix.villas.conf.ConfigManager.conf;
 import static gyurix.villas.conf.ConfigManager.msg;
 
 @Data
+@NoArgsConstructor
 public class Villa {
     private Area area;
     private HashMap<String, Group> groups;
     private String name;
     private HashMap<UUID, String> players;
     private Loc spawn;
+
+    public Villa(String name, Area area) {
+        this.name = name;
+        this.area = area;
+    }
+
+    public void addPlayer(CommandSender sender, String pln) {
+        if (!hasPermission(sender, Group::isManage)) {
+            msg.msg(sender, "noperm.manage");
+            return;
+        }
+        Player p = Bukkit.getPlayer(pln);
+        if (p == null) {
+            msg.msg(sender, "wrong.player", "player", pln);
+            return;
+        }
+        if (players.containsKey(p.getUniqueId())) {
+            msg.msg(sender, "addalready", "player", p.getName(), "villa", name);
+            return;
+        }
+        msg.msg(sender, "add", "player", p.getName(), "villa", name);
+        msg.msg(p, "added", "villa", name);
+        players.put(p.getUniqueId(), conf.getNewMemberGroup());
+        VillaManager.saveVilla(this);
+    }
 
     public void changeGroup(CommandSender sender, String pln, String group) {
         if (!groups.containsKey(group)) {
@@ -48,6 +76,8 @@ public class Villa {
         Player p = Bukkit.getPlayer(uuid);
         if (p != null)
             msg.msg(p, "groupchd", "villa", name);
+
+        VillaManager.saveVilla(this);
     }
 
     public Map<String, TreeSet<String>> getGrouppedPlayerNames() {
@@ -86,5 +116,16 @@ public class Villa {
         if (p != null) {
             msg.msg(p, "removed", "villa", name);
         }
+        VillaManager.saveVilla(this);
+    }
+
+    public void remove(CommandSender sender) {
+        for (UUID uuid : players.keySet()) {
+            Player p = Bukkit.getPlayer(uuid);
+            if (p != null)
+                msg.msg(p, "admin.remove", "villa", name);
+        }
+        msg.msg(sender, "admin.removed");
+        VillaManager.removeVilla(this);
     }
 }

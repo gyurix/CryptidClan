@@ -1,6 +1,7 @@
 package gyurix.villas.gui;
 
 import gyurix.cryptidcommons.gui.CustomGUI;
+import gyurix.cryptidcommons.util.ChatDataReader;
 import gyurix.cryptidcommons.util.StrUtils;
 import gyurix.villas.data.Group;
 import gyurix.villas.data.Villa;
@@ -34,11 +35,34 @@ public class PlayersGUI extends CustomGUI {
     public void onClick(int slot, boolean right, boolean shift) {
         if (slot >= inv.getSize() || slot < 0) return;
         String type = config.getLayout().get(slot);
+        switch (type) {
+            case "add" -> {
+                if (!villa.hasPermission(plr, Group::isManage)) {
+                    msg.msg(plr, "noperm.manage");
+                    return;
+                }
+                plr.closeInventory();
+                msg.msg(plr, "addplayer");
+                new ChatDataReader(plr, (pln) -> {
+                    villa.addPlayer(plr, pln);
+                    new PlayersGUI(plr, villa);
+                }, () -> {
+                    msg.msg(plr, "addplayercancel");
+                    new PlayersGUI(plr, villa);
+                });
+            }
+            case "back" -> {
+                new ManageGUI(plr, villa);
+            }
+            case "exit" -> {
+                plr.closeInventory();
+            }
+        }
         if (type.equals("exit")) {
             plr.closeInventory();
             return;
         } else if (type.equals("back")) {
-            new ManageGUI(plr, villa);
+
             return;
         }
         String pln = playerNames.get(slot);

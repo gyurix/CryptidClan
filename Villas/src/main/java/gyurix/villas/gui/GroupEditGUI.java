@@ -1,6 +1,7 @@
 package gyurix.villas.gui;
 
 import gyurix.cryptidcommons.gui.CustomGUI;
+import gyurix.villas.VillaManager;
 import gyurix.villas.data.Group;
 import gyurix.villas.data.Villa;
 import org.bukkit.entity.Player;
@@ -22,7 +23,8 @@ public class GroupEditGUI extends CustomGUI {
 
     @Override
     public ItemStack getCustomItem(String name) {
-        return config.getCustomItems().get(name);
+        boolean enabled = group.isFlagEnabled(name);
+        return config.getCustomItems().get(name + (enabled ? "Enabled" : ""));
     }
 
     @Override
@@ -50,7 +52,9 @@ public class GroupEditGUI extends CustomGUI {
             return;
         }
         switch (type) {
-            case "icon" -> msg.msg(plr, "group.iconClick");
+            case "icon" -> {
+                //msg.msg(plr, "group.iconClick");
+            }
             case "remove" -> {
                 if (!group.isRemovable()) {
                     msg.msg(plr, "group.notremovable");
@@ -91,5 +95,10 @@ public class GroupEditGUI extends CustomGUI {
             }
         }
         update();
+    }
+
+    @Override
+    public void onClose() {
+        VillaManager.saveVilla(villa);
     }
 }

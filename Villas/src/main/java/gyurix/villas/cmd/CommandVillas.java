@@ -1,5 +1,6 @@
 package gyurix.villas.cmd;
 
+import gyurix.cryptidcommons.data.Loc;
 import gyurix.cryptidcommons.util.StrUtils;
 import gyurix.villas.VillaManager;
 import gyurix.villas.data.Group;
@@ -24,7 +25,7 @@ import java.util.function.Function;
 import static gyurix.villas.conf.ConfigManager.msg;
 
 public class CommandVillas implements CommandExecutor, TabCompleter {
-    List<String> subCommands = List.of("help", "info", "list", "manage", "tp");
+    List<String> subCommands = List.of("help", "info", "list", "manage", "setspawn", "tp");
 
     private void cmdHelp(CommandSender sender) {
         msg.msg(sender, "help.player");
@@ -79,6 +80,19 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
                 villa -> msg.msg(sender, "noperm.info"));
     }
 
+    private void cmdSetSpawn(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player plr)) {
+            msg.msg(sender, "noconsole");
+            return;
+        }
+        withVilla(sender, args, Group::isManage, villa -> {
+                    villa.setSpawn(new Loc(plr.getLocation()));
+                    VillaManager.saveVilla(villa);
+                    msg.msg(sender, "setspawn", "villa", villa.getName(), "loc", villa.getSpawn());
+                },
+                villa -> msg.msg(sender, "villa.noperm.tp"));
+    }
+
     private void cmdTp(CommandSender sender, String[] args) {
         if (!(sender instanceof Player plr)) {
             msg.msg(sender, "noconsole");
@@ -86,7 +100,7 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
         }
         withVilla(sender, args, Group::isTp, villa -> {
                     plr.teleport(villa.getSpawn().toLocation());
-                    msg.msg(sender, "villa.tp", "villa", villa.getName());
+                    msg.msg(sender, "tp", "villa", villa.getName());
                 },
                 villa -> msg.msg(sender, "villa.noperm.tp"));
     }
@@ -115,6 +129,10 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
                 cmdManage(sender, args);
                 return true;
             }
+            case "setspawn" -> {
+                cmdSetSpawn(sender, args);
+                return true;
+            }
         }
         msg.msg(sender, "wrong.sub");
         return true;
@@ -135,7 +153,7 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
             return;
         }
         OfflinePlayer target = hasPlayerArg ? Bukkit.getOfflinePlayer(args[1]) : plr;
-        if (target != null && (target.hasPlayedBefore() || target.isOnline())) {
+        if (target.hasPlayedBefore() || target.isOnline()) {
             con.accept(target);
             return;
         }
@@ -149,10 +167,10 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
             return;
         }
         boolean admin = sender.hasPermission("villas.admin");
-        Villa villa = villaArg ? VillaManager.villas.get(args[1]) : VillaManager.getVillaAt(((Player) sender).getLocation());
+        Villa villa = villaArg ? VillaManager.villas.get(args[1].toLowerCase()) : VillaManager.getVillaAt(((Player) sender).getLocation());
         if (villa == null || !admin && !villa.hasPermission(sender, Group::isSee)) {
             if (villaArg) {
-                msg.msg(sender, "wrong.villa", "villa", args[1]);
+                msg.msg(sender, "wrong.villa", "villa", args[1].toLowerCase());
                 return;
             }
             msg.msg(sender, "wrong.villaLoc");

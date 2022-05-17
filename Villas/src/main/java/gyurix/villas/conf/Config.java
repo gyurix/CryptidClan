@@ -10,10 +10,10 @@ import java.util.List;
 
 @Getter
 public class Config {
-    private String nonMemberGroup;
-    private MySQLDatabase mySQL;
     private HashMap<String, Group> groups;
     private HashMap<String, GUIConfig> guis;
+    private MySQLDatabase mySQL;
+    private String newMemberGroup, nonMemberGroup;
     private List<String> playersLore, groupsLore, groupsSelectedLore;
     private String playersName, groupsName, groupsSelectedName;
 }

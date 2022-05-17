@@ -36,12 +36,18 @@ public class GroupsGUI extends CustomGUI {
         if (slot >= inv.getSize() || slot < 0)
             return;
         String type = config.getLayout().get(slot);
-        if (type.equals("exit")) {
-            plr.closeInventory();
-            return;
-        } else if (type.equals("back")) {
-            new PlayersGUI(plr, villa);
-            return;
+        switch (type) {
+            case "exit" -> {
+                plr.closeInventory();
+                return;
+            }
+            case "back" -> {
+                new PlayersGUI(plr, villa);
+                return;
+            }
+            case "add" -> {
+                return;
+            }
         }
         String groupName = groupNames.get(slot);
         if (groupName == null)

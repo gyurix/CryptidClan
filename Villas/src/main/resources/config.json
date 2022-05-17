@@ -1,0 +1,163 @@
+{
+  "groupLimit": 28,
+  "groups": {
+    "banned": {
+      "build": false,
+      "enter": false,
+      "icon": "BARRIER",
+      "info": false,
+      "manage": false,
+      "removable": true,
+      "see": false,
+      "tp": false,
+      "use": false
+    },
+    "member": {
+      "build": true,
+      "enter": true,
+      "icon": "IRON_INGOT",
+      "info": true,
+      "manage": false,
+      "removable": true,
+      "see": true,
+      "tp": true,
+      "use": true
+    },
+    "nonmember": {
+      "build": false,
+      "enter": true,
+      "icon": "REDSTONE",
+      "info": true,
+      "manage": false,
+      "removable": false,
+      "see": true,
+      "tp": true,
+      "use": true
+    },
+    "owner": {
+      "build": true,
+      "enter": true,
+      "icon": "GOLD_INGOT",
+      "info": true,
+      "manage": true,
+      "removable": false,
+      "see": true,
+      "tp": true,
+      "use": true
+    }
+  },
+  "groupsLore": [
+    "&7",
+    "&7• &eClick to change group"
+  ],
+  "groupsName": "&6&l<name>",
+  "groupsSelectedLore": [
+    "&7",
+    "&a--- Selected ---"
+  ],
+  "groupsSelectedName": "&a&l<name>",
+  "guis": {
+    "groupEdit": {
+      "layout": [
+        "back  glass glass glass glass  glass  glass glass exit",
+        "glass glass icon  glass glass  glass remove glass glass",
+        "glass glass glass glass glass  glass  glass glass glass",
+        "glass build enter info  manage see    tp    use   glass",
+        "glass glass glass glass glass  glass  glass glass glass"
+      ],
+      "staticItems": {
+        "back": "ARROW name:&c&l<--_Back lore:&7|&7Click_to_go_back|&7to_the_group_selector_gui",
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
+        "glass": "BLACK_STAINED_GLASS_PANE name:&c",
+        "icon": "SEA_PICKLE 7:&6&lGroup_Permissions"
+      },
+      "customItems": {
+        "remove": "REDSTONE name:&c&lRemove_Group lore:&7|&e---_Click_to_&cremove_this_group&e_---",
+        "build": "BRICK name:&6&lBuild lore:&7|&7•_Status:&c_Disabled|&e---_Click_to_&aenable&e_---",
+        "buildEnabled": "BRICK name:&6&lBuild lore:&7|&7•_Status:&a_Enabled|&e---_Click_to_&cdisable&e_--- luck:1 hide:enchants",
+        "enter": "GRASS_BLOCK name:&6&lEnter lore:&7|&7•_Status:&c_Disabled|&e---_Click_to_&aenable&e_---",
+        "enterEnabled": "GRASS_BLOCK name:&6&lEnter lore:&7|&7•_Status:&a_Enabled|&e---_Click_to_&cdisable&e_--- luck:1 hide:enchants",
+        "info": "PAPER name:&6&lInfo lore:&7|&7•_Status:&c_Disabled|&e---_Click_to_&aenable&e_---",
+        "infoEnabled": "PAPER name:&6&lInfo lore:&7|&7•_Status:&a_Enabled|&e---_Click_to_&cdisable&e_--- luck:1 hide:enchants",
+        "manage": "EMERALD name:&6&lManage lore:&7|&7•_Status:&c_Disabled|&e---_Click_to_&aenable&e_---",
+        "manageEnabled": "EMERALD name:&6&lManage lore:&7|&7•_Status:&a_Enabled|&e---_Click_to_&cdisable&e_--- luck:1 hide:enchants",
+        "see": "SPYGLASS name:&6&lSee lore:&7|&7•_Status:&c_Disabled|&e---_Click_to_&aenable&e_---",
+        "seeEnabled": "SPYGLASS name:&6&lSee lore:&7|&7•_Status:&a_Enabled|&e---_Click_to_&cdisable&e_--- luck:1 hide:enchants",
+        "tp": "COMPASS name:&6&lTeleport lore:&7|&7•_Status:&c_Disabled|&e---_Click_to_&aenable&e_---",
+        "tpEnabled": "COMPASS name:&6&lTeleport lore:&7|&7•_Status:&a_Enabled|&e---_Click_to_&cdisable&e_--- luck:1 hide:enchants",
+        "use": "BIRCH_SIGN name:&6&lUse lore:&7|&7•_Status:&c_Disabled|&e---_Click_to_&aenable&e_---",
+        "useEnabled": "BIRCH_SIGN name:&6&lUse lore:&7|&7•_Status:&a_Enabled|&e---_Click_to_&cdisable&e_--- luck:1 hide:enchants"
+      },
+      "title": "&4&l<villa> - Group <group>"
+    },
+    "groups": {
+      "layout": [
+        "back glass glass glass add glass glass glass exit"
+      ],
+      "staticItems": {
+        "add": "EMERALD name:&aCreate_Group lore:&7|&7Click_to_create|&7a_new_group",
+        "back": "ARROW name:&c&l<--_Back lore:&7|&7Click_to_go_back|&7to_the_management_gui",
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
+        "glass": "BLACK_STAINED_GLASS_PANE name:&c"
+      },
+      "title": "&4&lGroups - <villa>"
+    },
+    "manage": {
+      "layout": [
+        "glass glass glass glass   glass  glass  glass glass    exit",
+        "glass tp    glass players glass  groups glass setspawn glass",
+        "glass glass glass glass   glass  glass  glass glass    glass"
+      ],
+      "staticItems": {
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
+        "glass": "BLACK_STAINED_GLASS_PANE name:&c",
+        "groups": "PAPER name:&6&lGroups lore:&7|&7Click_to_manage|&7the_groups_and_permissions|&7of_this_villa",
+        "players": "PLAYER_SKULL name:&6&lPlayers owner:Deadpool lore:&7|&7Click_to_manage|&7the_players|&7of_this_villa",
+        "setspawn": "OAK_SAPLING name:&6&lSet_Spawn lore:&7|&7Click_to_set_the|&7spawn_point_of_this|&7villa_to_your_location",
+        "tp": "COMPASS name:&6&lTeleport lore:&7|&7Click_to_teleport|&7to_this_villa"
+      },
+      "title": "&4&lManage - <villa>"
+    },
+    "playerGroupSelector": {
+      "layout": [
+        "back glass glass glass glass glass glass glass exit"
+      ],
+      "staticItems": {
+        "back": "ARROW name:&c&l<--_Back lore:&7|&7Click_to_go_back|&7to_the_player_list",
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
+        "glass": "BLACK_STAINED_GLASS_PANE name:&c"
+      },
+      "title": "&4&l<player>'s group"
+    },
+    "players": {
+      "layout": [
+        "back glass glass glass add glass glass glass exit"
+      ],
+      "staticItems": {
+        "add": "EMERALD name:&a&lAdd_Player lore:&7|&7Click_to_add_player|&7to_this_villa",
+        "back": "ARROW name:&c&l<--_Back lore:&7|&7Click_to_go_back|&7to_the_management_gui",
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
+        "glass": "BLACK_STAINED_GLASS_PANE name:&c"
+      },
+      "title": "&4&lPlayers - <villa>"
+    }
+  },
+  "mySQL": {
+    "database": "minecraft",
+    "host": "localhost",
+    "password": "p&7h5y%_pC4Pk6tH",
+    "table": "villas",
+    "username": "minecraft"
+  },
+  "newMemberGroup": "member",
+  "nonMemberGroup": "nonmember",
+  "playerLimit": 28,
+  "playersLore": [
+    "&7",
+    "&7• Group: &e<group>",
+    "&7",
+    "&7• &eLeft-Click to change group",
+    "&7• &cRight-Click to remove"
+  ],
+  "playersName": "&6&l<name>"
+}

@@ -1,8 +1,8 @@
 package gyurix.villas.gui;
 
-import gyurix.cryptidcommons.data.BlockLoc;
 import gyurix.cryptidcommons.data.Loc;
 import gyurix.cryptidcommons.gui.CustomGUI;
+import gyurix.villas.VillaManager;
 import gyurix.villas.data.Group;
 import gyurix.villas.data.Villa;
 import org.bukkit.entity.Player;
@@ -46,6 +46,7 @@ public class ManageGUI extends CustomGUI {
                     return;
                 }
                 villa.setSpawn(new Loc(plr.getLocation()));
+                VillaManager.saveVilla(villa);
                 msg.msg(plr, "setspawn", "villa", villa.getName(), "loc", villa.getSpawn());
             }
         }

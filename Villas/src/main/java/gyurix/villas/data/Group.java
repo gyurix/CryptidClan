@@ -2,8 +2,9 @@ package gyurix.villas.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import org.bukkit.Material;
+
+import java.lang.reflect.Field;
 
 @Data
 @AllArgsConstructor
@@ -22,5 +23,17 @@ public class Group {
     @Override
     protected Group clone() {
         return new Group(build, enter, icon, info, manage, name, removable, see, tp, use);
+    }
+
+    public boolean isFlagEnabled(String name) {
+        try {
+            Field f = getClass().getDeclaredField(name);
+            f.setAccessible(true);
+            return (boolean) f.get(this);
+        } catch (NoSuchFieldException e) {
+            return false;
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

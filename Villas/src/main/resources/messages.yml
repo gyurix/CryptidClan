@@ -1,82 +1,91 @@
-prefix: "&6&lVillas ► &e"
-noconsole: "&cThis command can only be used by players"
-noperm:
-  manage: "&cYou are not allowed to manage villa &e<villa>"
-  info: "&cYou are not allowed to check the info of villa &e<villa>"
-  tp: "&cYou are not allowed to teleport to villa &e<villa>"
-help:
-  header:
-  - "&e&m-----------------------------"
-  - "&6&l&n      Villas - Help Menu"
-  - "&e&m-----------------------------"
-  player:
-  - "&6&lPlayer Commands"
-  - "&6• /villa [name]:&e Teleport to your villa / manage it"
-  - "&6• /villas OR /villas help:&e Shows this help menu"
-  - "&6• /villas list [player] [page]:&e Lists villas"
-  - "&6• /villas info [name]:&e Info about a villa"
-  - "&6• /villas tp [name]:&e Teleport to a villa"
-  - "&6• /villas manage [name]:&e Manage a villa"
-  admin:
-  - "&6&lAdmin Commands"
-  - "&6• /villasa create <name>:&e Creates a villa"
-  - "&6• /villasa list [page]:&e Lists all of the villas"
-  - "&6• /villasa redefine <name>:&e Redefines the area of a villa"
-  - "&6• /villasa remove <name>:&e Removes a villa"
-  - "&6• /villasa setspawn <name>:&e Set the spawnpoint of a villa"
-setspawn: "Set the spawn point of villa &6&l<villa>&e to &f<loc>"
-add: "Added &e<player>&c to villa &6&l<villa>"
-added: "You have been added to villa &6&l<villa>"
-groupch: "Changed the &6&l<player>&e's group in villa &6&l<villa>&e to &6&l<group>"
-groupchd: "Your group in villa &6&l<villa>&e has been changed to &6&l<group>"
-in: "&cPlayer &e<player> &cis already added to villa &6&l<villa>"
-notin: "&cPlayer &e<player> &cis not added to villa &6&l<villa>"
-notinany: "&cYou are not in any villas"
-remove: "Removed &6&l<player>&e from villa &6&l<villa>"
-removed: "You have been removed from villa &6&l<villa>"
-tp: "Teleported to villa &6&l<villa>"
-list:
-  header:
-  - "&6&lVilla List - &e&l<player>&6&l - page &e&l<page> / <maxpage>"
-  - ""
-  entry:
-  - "&e<villa>&f (<players> players, rank: <rank>)"
-  - ""
+add: Added &e<player>&c to villa &6&l<villa>
+addalready: '&cPlayer &e<player> &cis already added to villa &6&l<villa>'
+added: You have been added to villa &6&l<villa>
+addplayer: Enter the addable players name or &ccancel&e to the chat
+addplayerlimit: "&cPlayer limit reached"
+addplayercancel: '&cCancelled adding player'
 admin:
+  exists: Villa &6&l<villa>&e exists already
   list:
-    header:
-    - "&6&lVilla List - &e&lAll Villas&6&l - page &e&l<page> / <maxpage>"
-    - ""
     entry:
-    - "&e<villa>&f (<players> players)"
-    - ""
+    - '&e<villa>&f (<players> players)'
+    - ''
+    header:
+    - '&6&lVilla List - &e&lAll Villas&6&l - page &e&l<page> / <maxpage>'
+    - ''
+  redefine: Set the area of villa &6&l<villa>&e to &f<area>
+  remove: Removed villa &6&l<villa>
+  removed: Your villa &6&l<villa>&e was removed by an admin
+group:
+  create: Created group &6&l<group>
+  disable: Disabled &6&l<permission>&e permission of group &6&l<group>
+  enable: Enabled &6&l<permission>&e permission of group &6&l<group>
+  icon: Changed the icon of group &6&l<group>&e to &6&l<icon>
+  iconClick: '&cClick to an item in your inventory for changing the groups icon'
+  lastowner: '&cPlayer &e<player>&c is the last owner of villa &e<villa>'
+  notempty: '&cGroup &e<group>&c is not empty. Remove all the players from it before
+    removing the group'
+  notremovable: '&cGroup &e<group>&c is not removable'
+  readonly: '&cThe permissions of group &e<group>&c can not be edited'
+  remove: Removed group &6&l<group>
+groupch: Changed the &6&l<player>&e's group in villa &6&l<villa>&e to &6&l<group>
+groupchd: Your group in villa &6&l<villa>&e has been changed to &6&l<group>
+help:
+  admin:
+  - '&6&lAdmin Commands'
+  - '&6• /villasa create <name>:&e Creates a villa'
+  - '&6• /villasa list [page]:&e Lists all of the villas'
+  - '&6• /villasa redefine <name>:&e Redefines the area of a villa'
+  - '&6• /villasa remove <name>:&e Removes a villa'
+  header:
+  - '&e&m-----------------------------'
+  - '&6&l&n      Villas - Help Menu'
+  - '&e&m-----------------------------'
+  player:
+  - '&6&lPlayer Commands'
+  - '&6• /villa [name]:&e Teleport to your villa / manage it'
+  - '&6• /villas OR /villas help:&e Shows this help menu'
+  - '&6• /villas info [name]:&e Info about a villa'
+  - '&6• /villas list [player] [page]:&e Lists villas'
+  - '&6• /villas manage [name]:&e Manage a villa'
+  - '&6• /villas setspawn [name]:&e Set the spawnpoint of a villa'
+  - '&6• /villas tp [name]:&e Teleport to a villa'
 info:
   header:
-  - "&6&lVilla Info - &e&l<villa>"
-  - "&e• Area:&f <area>"
-  - "&e• Spawn:&f <spawn>"
-  - "&e• Players:"
+  - '&6&lVilla Info - &e&l<villa>'
+  - '&e• Area:&f <area>'
+  - '&e• Spawn:&f <spawn>'
+  - '&e• Players:'
   player:
-  - "&e  - <group> (<count>):&f <players>"
-  - ""
+  - '&e  - <group> (<count>):&f <players>'
+  - ''
+list:
+  entry:
+  - '&e<villa>&f (<players> players, rank: <rank>)'
+  - ''
+  header:
+  - '&6&lVilla List - &e&l<player>&6&l - page &e&l<page> / <maxpage>'
+  - ''
 missing:
-  player: "&cYou did not enter the player argument"
-  villa: "&cYou did not enter the villa argument"
-  group: "&cYou did not enter the group argument"
+  group: '&cYou did not enter the group argument'
+  player: '&cYou did not enter the player argument'
+  sel: '&cYou did not select the region using WorldEdit'
+  villa: '&cYou did not enter the villa argument'
+noconsole: '&cThis command can only be used by players'
+noperm:
+  info: '&cYou are not allowed to check the info of villa &e<villa>'
+  manage: '&cYou are not allowed to manage villa &e<villa>'
+  tp: '&cYou are not allowed to teleport to villa &e<villa>'
+notin: '&cPlayer &e<player> &cis not added to villa &6&l<villa>'
+notinany: '&cYou are not in any villas'
+prefix: '&6&lVillas ► &e'
+remove: Removed &6&l<player>&e from villa &6&l<villa>
+removed: You have been removed from villa &6&l<villa>
+setspawn: Set the spawn point of villa &6&l<villa>&e to &f<loc>
+tp: Teleported to villa &6&l<villa>
 wrong:
-  villa: "&cVilla &e<villa>&c was not found"
-  villaLoc: "&cYou are not standing in a villa"
-  group: "&cGroup &e<group>&c was not found in villa &e<villa>"
-  player: "&cPlayer &e<player>&c was not found"
-  sub: "&cThe entered subcommand was not found"
-group:
-  iconClick: "&cClick to an item in your inventory for changing the groups icon"
-  icon: "Changed the icon of group &6&l<group>&e to &6&l<icon>"
-  create: "Created group &6&l<group>"
-  remove: "Removed group &6&l<group>"
-  notempty: "&cGroup &e<group>&c is not empty. Remove all the players from it before removing the group"
-  notremovable: "&cGroup &e<group>&c is not removable"
-  readonly: "&cThe permissions of group &e<group>&c can not be edited"
-  lastowner: "&cPlayer &e<player>&c is the last owner of villa &e<villa>"
-  enable: "Enabled &6&l<permission>&e permission of group &6&l<group>"
-  disable: "Disabled &6&l<permission>&e permission of group &6&l<group>"
+  group: '&cGroup &e<group>&c was not found in villa &e<villa>'
+  player: '&cPlayer &e<player>&c was not found'
+  sub: '&cThe entered subcommand was not found'
+  villa: '&cVilla &e<villa>&c was not found'
+  villaLoc: '&cYou are not standing in a villa'
