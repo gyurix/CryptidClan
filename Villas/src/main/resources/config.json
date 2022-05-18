@@ -1,4 +1,5 @@
 {
+  "customGroupIcon": "SEA_PICKLE",
   "groupLimit": 28,
   "groups": {
     "banned": {
@@ -18,7 +19,7 @@
       "icon": "IRON_INGOT",
       "info": true,
       "manage": false,
-      "removable": true,
+      "removable": false,
       "see": true,
       "tp": true,
       "use": true
@@ -59,34 +60,34 @@
   "guis": {
     "groupEdit": {
       "layout": [
-        "back  glass glass glass glass  glass  glass glass exit",
-        "glass glass icon  glass glass  glass remove glass glass",
-        "glass glass glass glass glass  glass  glass glass glass",
-        "glass build enter info  manage see    tp    use   glass",
-        "glass glass glass glass glass  glass  glass glass glass"
+        "back  glass glass glass glass  glass  glass  glass exit",
+        "glass glass icon  glass glass  glass  remove glass glass",
+        "glass glass glass glass glass  glass  glass  glass glass",
+        "glass build enter info  manage see    tp     use   glass",
+        "glass glass glass glass glass  glass  glass  glass glass"
       ],
       "staticItems": {
         "back": "ARROW name:&c&l<--_Back lore:&7|&7Click_to_go_back|&7to_the_group_selector_gui",
         "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
-        "glass": "BLACK_STAINED_GLASS_PANE name:&c",
-        "icon": "SEA_PICKLE 7:&6&lGroup_Permissions"
+        "glass": "BLACK_STAINED_GLASS_PANE name:&c"
       },
       "customItems": {
-        "remove": "REDSTONE name:&c&lRemove_Group lore:&7|&e---_Click_to_&cremove_this_group&e_---",
-        "build": "BRICK name:&6&lBuild lore:&7|&7•_Status:&c_Disabled|&e---_Click_to_&aenable&e_---",
-        "buildEnabled": "BRICK name:&6&lBuild lore:&7|&7•_Status:&a_Enabled|&e---_Click_to_&cdisable&e_--- luck:1 hide:enchants",
-        "enter": "GRASS_BLOCK name:&6&lEnter lore:&7|&7•_Status:&c_Disabled|&e---_Click_to_&aenable&e_---",
-        "enterEnabled": "GRASS_BLOCK name:&6&lEnter lore:&7|&7•_Status:&a_Enabled|&e---_Click_to_&cdisable&e_--- luck:1 hide:enchants",
-        "info": "PAPER name:&6&lInfo lore:&7|&7•_Status:&c_Disabled|&e---_Click_to_&aenable&e_---",
-        "infoEnabled": "PAPER name:&6&lInfo lore:&7|&7•_Status:&a_Enabled|&e---_Click_to_&cdisable&e_--- luck:1 hide:enchants",
-        "manage": "EMERALD name:&6&lManage lore:&7|&7•_Status:&c_Disabled|&e---_Click_to_&aenable&e_---",
-        "manageEnabled": "EMERALD name:&6&lManage lore:&7|&7•_Status:&a_Enabled|&e---_Click_to_&cdisable&e_--- luck:1 hide:enchants",
-        "see": "SPYGLASS name:&6&lSee lore:&7|&7•_Status:&c_Disabled|&e---_Click_to_&aenable&e_---",
-        "seeEnabled": "SPYGLASS name:&6&lSee lore:&7|&7•_Status:&a_Enabled|&e---_Click_to_&cdisable&e_--- luck:1 hide:enchants",
-        "tp": "COMPASS name:&6&lTeleport lore:&7|&7•_Status:&c_Disabled|&e---_Click_to_&aenable&e_---",
-        "tpEnabled": "COMPASS name:&6&lTeleport lore:&7|&7•_Status:&a_Enabled|&e---_Click_to_&cdisable&e_--- luck:1 hide:enchants",
-        "use": "BIRCH_SIGN name:&6&lUse lore:&7|&7•_Status:&c_Disabled|&e---_Click_to_&aenable&e_---",
-        "useEnabled": "BIRCH_SIGN name:&6&lUse lore:&7|&7•_Status:&a_Enabled|&e---_Click_to_&cdisable&e_--- luck:1 hide:enchants"
+        "icon": "SEA_PICKLE name:&6&lGroup_Icon lore:&7|&7•_Click_to_an_item_in_your|&7__inventory_to_change_it",
+        "remove": "REDSTONE name:&c&lRemove_Group lore:&7|&7•_Click_to_remove_this_group",
+        "build": "BRICK name:&6&lBuild lore:&7|&7•_Status:&c_Disabled|&7|&7•_Click_to_enable",
+        "buildEnabled": "BRICK name:&6&lBuild lore:&7|&7•_Status:&a_Enabled|&7|&7•_Click_to_disable luck:1 hide:enchants",
+        "enter": "GRASS_BLOCK name:&6&lEnter lore:&7|&7•_Status:&c_Disabled|&7|&7•_Click_to_enable",
+        "enterEnabled": "GRASS_BLOCK name:&6&lEnter lore:&7|&7•_Status:&a_Enabled|&7|&7•_Click_to_disable luck:1 hide:enchants",
+        "info": "PAPER name:&6&lInfo lore:&7|&7•_Status:&c_Disabled|&7|&7•_Click_to_enable",
+        "infoEnabled": "PAPER name:&6&lInfo lore:&7|&7•_Status:&a_Enabled|&7|&7•_Click_to_disable luck:1 hide:enchants",
+        "manage": "EMERALD name:&6&lManage lore:&7|&7•_Status:&c_Disabled|&7|&7•_Click_to_enable",
+        "manageEnabled": "EMERALD name:&6&lManage lore:&7|&7•_Status:&a_Enabled|&7|&7•_Click_to_disable luck:1 hide:enchants",
+        "see": "SPYGLASS name:&6&lSee lore:&7|&7•_Status:&c_Disabled|&7|&7•_Click_to_enable",
+        "seeEnabled": "SPYGLASS name:&6&lSee lore:&7|&7•_Status:&a_Enabled|&7|&7•_Click_to_disable luck:1 hide:enchants",
+        "tp": "COMPASS name:&6&lTeleport lore:&7|&7•_Status:&c_Disabled|&7|&7•_Click_to_enable",
+        "tpEnabled": "COMPASS name:&6&lTeleport lore:&7|&7•_Status:&a_Enabled|&7|&7•_Click_to_disable luck:1 hide:enchants",
+        "use": "BIRCH_SIGN name:&6&lUse lore:&7|&7•_Status:&c_Disabled|&7|&7•_Click_to_enable",
+        "useEnabled": "BIRCH_SIGN name:&6&lUse lore:&7|&7•_Status:&a_Enabled|&7|&7•_Click_to_disable luck:1 hide:enchants"
       },
       "title": "&4&l<villa> - Group <group>"
     },
@@ -112,7 +113,7 @@
         "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
         "glass": "BLACK_STAINED_GLASS_PANE name:&c",
         "groups": "PAPER name:&6&lGroups lore:&7|&7Click_to_manage|&7the_groups_and_permissions|&7of_this_villa",
-        "players": "PLAYER_SKULL name:&6&lPlayers owner:Deadpool lore:&7|&7Click_to_manage|&7the_players|&7of_this_villa",
+        "players": "PLAYER_HEAD name:&6&lPlayers owner:Deadpool lore:&7|&7Click_to_manage|&7the_players|&7of_this_villa",
         "setspawn": "OAK_SAPLING name:&6&lSet_Spawn lore:&7|&7Click_to_set_the|&7spawn_point_of_this|&7villa_to_your_location",
         "tp": "COMPASS name:&6&lTeleport lore:&7|&7Click_to_teleport|&7to_this_villa"
       },

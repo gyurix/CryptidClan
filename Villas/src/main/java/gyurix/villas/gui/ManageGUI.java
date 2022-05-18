@@ -5,6 +5,7 @@ import gyurix.cryptidcommons.gui.CustomGUI;
 import gyurix.villas.VillaManager;
 import gyurix.villas.data.Group;
 import gyurix.villas.data.Villa;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,7 +18,7 @@ public class ManageGUI extends CustomGUI {
     public ManageGUI(Player plr, Villa villa) {
         super(plr, conf.getGuis().get("manage"));
         this.villa = villa;
-        open();
+        open("villa", villa.getName());
     }
 
     @Override
@@ -37,17 +38,32 @@ public class ManageGUI extends CustomGUI {
                     msg.msg(plr, "noperm.tp");
                     return;
                 }
+
+                plr.teleport(villa.getSpawn().toLocation());
+                return;
             }
-            case "players" -> new PlayersGUI(plr, villa);
-            case "groups" -> new GroupsGUI(plr, villa);
-            case "spawn" -> {
+            case "players" -> {
+                new PlayersGUI(plr, villa);
+                return;
+            }
+            case "groups" -> {
+                new GroupsGUI(plr, villa);
+                return;
+            }
+            case "setspawn" -> {
                 if (!villa.hasPermission(plr, Group::isManage)) {
                     msg.msg(plr, "noperm.manage");
                     return;
                 }
-                villa.setSpawn(new Loc(plr.getLocation()));
+                Location spawn = plr.getLocation();
+                if (!villa.getArea().contains(spawn)) {
+                    msg.msg(plr, "wrong.spawn", "villa", villa.getName());
+                    return;
+                }
+                villa.setSpawn(new Loc(spawn));
                 VillaManager.saveVilla(villa);
                 msg.msg(plr, "setspawn", "villa", villa.getName(), "loc", villa.getSpawn());
+                return;
             }
         }
         update();

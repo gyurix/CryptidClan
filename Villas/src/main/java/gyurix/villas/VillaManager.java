@@ -39,7 +39,7 @@ public class VillaManager {
     public static void loadVillas() {
         TreeMap<String, Villa> villas = new TreeMap<>();
         Bukkit.getScheduler().runTaskAsynchronously(pl, () -> {
-            conf.getMySQL().command("CREATE TABLE IF NOT EXISTS `" + conf.getMySQL().table + "` (`name` TEXT UNIQUE PRIMARY KEY, `data` TEXT)");
+            conf.getMySQL().command("CREATE TABLE IF NOT EXISTS `" + conf.getMySQL().table + "` (`name` VARCHAR(32) UNIQUE PRIMARY KEY, `data` TEXT)");
             conf.getMySQL().query("SELECT `data` FROM `" + conf.getMySQL().table + "`", (rs) -> {
                 while (rs.next()) {
                     Villa villa = gson.fromJson(rs.getString(1), Villa.class);

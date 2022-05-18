@@ -26,14 +26,39 @@ import static gyurix.villas.conf.ConfigManager.msg;
 @NoArgsConstructor
 public class Villa {
     private Area area;
-    private HashMap<String, Group> groups;
+    private HashMap<String, Group> groups = new HashMap<>();
     private String name;
-    private HashMap<UUID, String> players;
+    private HashMap<UUID, String> players = new HashMap<>();
     private Loc spawn;
 
-    public Villa(String name, Area area) {
+    public Villa(String name, Area area, Loc spawn) {
         this.name = name;
         this.area = area;
+        this.spawn = spawn;
+        conf.getGroups().values().forEach(group -> this.groups.put(group.getName(), group.clone()));
+    }
+
+    public void addGroup(CommandSender sender, String groupName) {
+        groupName = groupName.toLowerCase();
+        if (!hasPermission(sender, Group::isManage)) {
+            msg.msg(sender, "noperm.manage");
+            return;
+        }
+        if (groups.containsKey(groupName)) {
+            msg.msg(sender, "group.already", "group", groupName, "villa", name);
+            return;
+        }
+        if (groups.size() >= conf.getGroupLimit()) {
+            msg.msg(sender, "group.limit", "group", groupName, "villa", name);
+            return;
+        }
+        Group group = groups.get(conf.getNewMemberGroup()).clone();
+        group.setIcon(conf.getCustomGroupIcon());
+        group.setName(groupName);
+        group.setRemovable(true);
+        groups.put(groupName, group);
+        msg.msg(sender, "group.create", "group", groupName, "villa", name);
+        VillaManager.saveVilla(this);
     }
 
     public void addPlayer(CommandSender sender, String pln) {
@@ -47,16 +72,24 @@ public class Villa {
             return;
         }
         if (players.containsKey(p.getUniqueId())) {
-            msg.msg(sender, "addalready", "player", p.getName(), "villa", name);
+            msg.msg(sender, "player.already", "player", p.getName(), "villa", name);
             return;
         }
-        msg.msg(sender, "add", "player", p.getName(), "villa", name);
-        msg.msg(p, "added", "villa", name);
+        if (players.size() >= conf.getPlayerLimit()) {
+            msg.msg(sender, "player.limit", "player", p.getName(), "villa", name);
+            return;
+        }
+        msg.msg(sender, "player.add", "player", p.getName(), "villa", name);
+        msg.msg(p, "player.added", "villa", name);
         players.put(p.getUniqueId(), conf.getNewMemberGroup());
         VillaManager.saveVilla(this);
     }
 
     public void changeGroup(CommandSender sender, String pln, String group) {
+        if (!hasPermission(sender, Group::isManage)) {
+            msg.msg(sender, "noperm.manage");
+            return;
+        }
         if (!groups.containsKey(group)) {
             msg.msg(sender, "wrong.group", "group", group, "villa", name);
             return;
@@ -64,18 +97,18 @@ public class Villa {
         UUID uuid = Bukkit.getPlayerUniqueId(pln);
         String curGroup = players.get(uuid);
         if (curGroup == null) {
-            msg.msg(sender, "notin", "player", pln, "villa", name);
+            msg.msg(sender, "notin", "player", pln, "group", group, "villa", name);
             return;
         }
         if (curGroup.equals("owner") && Collections.frequency(players.values(), "owner") == 1) {
-            msg.msg(sender, "group.lastowner", "player", pln, "villa", name);
+            msg.msg(sender, "group.lastowner", "player", pln, "group", group, "villa", name);
             return;
         }
         players.put(uuid, group);
-        msg.msg(sender, "groupch", "player", pln, "villa", name);
+        msg.msg(sender, "groupch", "player", pln, "group", group, "villa", name);
         Player p = Bukkit.getPlayer(uuid);
         if (p != null)
-            msg.msg(p, "groupchd", "villa", name);
+            msg.msg(p, "groupchd", "group", group, "villa", name);
 
         VillaManager.saveVilla(this);
     }
@@ -102,7 +135,7 @@ public class Villa {
         if (!(sender instanceof Player plr))
             return true;
         String group = players.get(plr.getUniqueId());
-        return permission.apply(groups.get(group == null ? conf.getNonMemberGroup() : group));
+        return permission.apply(groups.get(group == null ? conf.getNonMemberGroup() : group)) || sender.hasPermission("villas.admin");
     }
 
     public void kick(CommandSender sender, String pln) {
@@ -125,7 +158,31 @@ public class Villa {
             if (p != null)
                 msg.msg(p, "admin.remove", "villa", name);
         }
-        msg.msg(sender, "admin.removed");
+        msg.msg(sender, "admin.removed", "villa", name);
         VillaManager.removeVilla(this);
+    }
+
+    public void removeGroup(CommandSender sender, String groupName) {
+        if (!hasPermission(sender, Group::isManage)) {
+            msg.msg(sender, "noperm.manage");
+            return;
+        }
+        groupName = groupName.toLowerCase();
+        Group group = groups.get(groupName);
+        if (group == null) {
+            msg.msg(sender, "wrong.group", "group", groupName, "villa", name);
+            return;
+        }
+        if (!group.isRemovable()) {
+            msg.msg(sender, "group.notremovable", "group", groupName);
+            return;
+        }
+        if (players.containsValue(groupName)) {
+            msg.msg(sender, "group.notempty", "group", group.getName());
+            return;
+        }
+        groups.remove(groupName);
+        msg.msg(sender, "group.remove", "group", group.getName());
+        VillaManager.saveVilla(this);
     }
 }

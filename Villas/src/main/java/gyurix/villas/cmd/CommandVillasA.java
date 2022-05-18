@@ -5,12 +5,15 @@ import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.bukkit.BukkitPlayer;
 import com.sk89q.worldedit.regions.Region;
 import gyurix.cryptidcommons.data.Area;
+import gyurix.cryptidcommons.data.Loc;
 import gyurix.cryptidcommons.util.StrUtils;
 import gyurix.villas.VillaManager;
 import gyurix.villas.data.Villa;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -21,11 +24,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static gyurix.villas.VillasPlugin.pl;
 import static gyurix.villas.conf.ConfigManager.msg;
 
 public class CommandVillasA implements CommandExecutor, TabCompleter {
 
     List<String> subCommands = List.of("create", "help", "list", "redefine", "remove");
+
+    public CommandVillasA() {
+        PluginCommand pcmd = pl.getCommand("villasa");
+        pcmd.setExecutor(this);
+        pcmd.setTabCompleter(this);
+    }
 
     private void cmdCreate(CommandSender sender, String[] args) {
         if (args.length == 1) {
@@ -38,14 +48,22 @@ public class CommandVillasA implements CommandExecutor, TabCompleter {
             return;
         }
         withArea(sender, area -> {
-            Villa villa = new Villa(name, area);
+            Location spawn = ((Player) sender).getLocation();
+            if (!area.contains(spawn)) {
+                msg.msg(sender, "wrong.spawn", "villa", name);
+                return;
+            }
+            Villa villa = new Villa(name, area, new Loc(spawn));
             VillaManager.villas.put(name, villa);
             VillaManager.saveVilla(villa);
+            msg.msg(sender, "admin.create", "villa", name);
         });
     }
 
     private void cmdHelp(CommandSender sender) {
+        msg.msg(sender, "help.header");
         msg.msg(sender, "help.admin");
+        msg.msg(sender, "help.player");
     }
 
     private void cmdList(CommandSender sender, String[] args) {

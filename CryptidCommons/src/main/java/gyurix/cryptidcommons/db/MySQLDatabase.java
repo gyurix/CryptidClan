@@ -1,5 +1,7 @@
 package gyurix.cryptidcommons.db;
 
+import gyurix.cryptidcommons.conf.PostProcessable;
+import gyurix.cryptidcommons.util.StrUtils;
 import lombok.NoArgsConstructor;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -10,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @NoArgsConstructor
-public class MySQLDatabase {
+public class MySQLDatabase implements PostProcessable {
     public String database;
     public String table;
     private transient Connection con;
@@ -75,6 +77,11 @@ public class MySQLDatabase {
         } catch (Throwable e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void postProcess() {
+        password = StrUtils.decolorize(password);
     }
 
     private PreparedStatement prepare(String cmd, Object... args) throws Throwable {

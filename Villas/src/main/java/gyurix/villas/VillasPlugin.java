@@ -24,6 +24,7 @@ public class VillasPlugin extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(pl, new MoveDetector(), 5, 5);
         GUIListener.register(this);
 
+        VillaManager.loadVillas();
         new CommandVilla();
         new CommandVillas();
         new CommandVillasA();

@@ -26,8 +26,8 @@ public class Loc implements StringSerializable {
     public Loc(Location loc) {
         this.world = loc.getWorld().getName();
         this.x = loc.getX();
-        this.y = loc.getX();
-        this.z = loc.getX();
+        this.y = loc.getY();
+        this.z = loc.getZ();
         this.yaw = loc.getYaw();
         this.pitch = loc.getPitch();
     }
@@ -35,9 +35,9 @@ public class Loc implements StringSerializable {
     public Loc(String in) {
         String[] d = in.split(" ", 6);
         world = d[0];
-        x = Integer.parseInt(d[1]);
-        y = Integer.parseInt(d[2]);
-        z = Integer.parseInt(d[3]);
+        x = Double.parseDouble(d[1]);
+        y = Double.parseDouble(d[2]);
+        z = Double.parseDouble(d[3]);
         yaw = Float.parseFloat(d[4]);
         pitch = Float.parseFloat(d[5]);
     }

@@ -21,6 +21,10 @@ public class StrUtils {
         return s.replaceAll("&([0-9a-fk-or])", "§$1");
     }
 
+    public static String decolorize(String s) {
+        return s.replaceAll("§([0-9a-fk-or])", "&$1");
+    }
+
     public static String fillVariables(String s, Object... vars) {
         if (s == null || s.isEmpty())
             return s;
@@ -39,6 +43,7 @@ public class StrUtils {
     public static List<String> fillVariables(List<String> list, Object... vars) {
         if (list == null || list.isEmpty())
             return list;
+        list = new ArrayList<>(list);
         int len = list.size();
         for (int i = 0; i < len; ++i)
             list.set(i, fillVariables(list.get(i), vars));

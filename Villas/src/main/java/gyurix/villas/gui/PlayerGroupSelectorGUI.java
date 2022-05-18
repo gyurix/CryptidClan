@@ -38,7 +38,7 @@ public class PlayerGroupSelectorGUI extends CustomGUI {
     public void onClick(int slot, boolean right, boolean shift) {
         if (slot >= inv.getSize() || slot < 0)
             return;
-        String type = config.getLayout().get(slot);
+        String type = slot < config.getLayout().size() ? config.getLayout().get(slot) : "";
         if (type.equals("exit")) {
             plr.closeInventory();
             return;

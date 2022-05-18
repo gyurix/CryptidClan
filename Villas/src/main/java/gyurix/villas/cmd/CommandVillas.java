@@ -8,10 +8,12 @@ import gyurix.villas.data.Villa;
 import gyurix.villas.gui.ManageGUI;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -22,12 +24,22 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import static gyurix.villas.VillasPlugin.pl;
 import static gyurix.villas.conf.ConfigManager.msg;
 
 public class CommandVillas implements CommandExecutor, TabCompleter {
     List<String> subCommands = List.of("help", "info", "list", "manage", "setspawn", "tp");
 
+    public CommandVillas() {
+        PluginCommand pcmd = pl.getCommand("villas");
+        pcmd.setExecutor(this);
+        pcmd.setTabCompleter(this);
+    }
+
     private void cmdHelp(CommandSender sender) {
+        msg.msg(sender, "help.header");
+        if (sender.hasPermission("villas.admin"))
+            msg.msg(sender, "help.admin");
         msg.msg(sender, "help.player");
     }
 
@@ -86,7 +98,12 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
             return;
         }
         withVilla(sender, args, Group::isManage, villa -> {
-                    villa.setSpawn(new Loc(plr.getLocation()));
+                    Location spawn = plr.getLocation();
+                    if (!villa.getArea().contains(spawn)) {
+                        msg.msg(sender, "wrong.spawn", "villa", villa.getName());
+                        return;
+                    }
+                    villa.setSpawn(new Loc(spawn));
                     VillaManager.saveVilla(villa);
                     msg.msg(sender, "setspawn", "villa", villa.getName(), "loc", villa.getSpawn());
                 },
@@ -166,9 +183,8 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
             msg.msg(sender, "missing.villa");
             return;
         }
-        boolean admin = sender.hasPermission("villas.admin");
         Villa villa = villaArg ? VillaManager.villas.get(args[1].toLowerCase()) : VillaManager.getVillaAt(((Player) sender).getLocation());
-        if (villa == null || !admin && !villa.hasPermission(sender, Group::isSee)) {
+        if (villa == null || !villa.hasPermission(sender, Group::isSee)) {
             if (villaArg) {
                 msg.msg(sender, "wrong.villa", "villa", args[1].toLowerCase());
                 return;
@@ -176,7 +192,7 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
             msg.msg(sender, "wrong.villaLoc");
             return;
         }
-        if (admin || villa.hasPermission(sender, extraPerm)) {
+        if (villa.hasPermission(sender, extraPerm)) {
             con.accept(villa);
             return;
         }

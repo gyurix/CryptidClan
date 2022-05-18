@@ -1,6 +1,7 @@
 package gyurix.cryptidcommons.util;
 
 import gyurix.cryptidcommons.gui.GUIListener;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.function.Consumer;
@@ -16,12 +17,14 @@ public class ChatDataReader {
     }
 
     public void onMessage(Player plr, String msg) {
-        if (msg.equalsIgnoreCase("cancel")) {
-            GUIListener.chatDataReaders.remove(plr.getUniqueId());
-            if (onCancel != null)
-                onCancel.run();
-            return;
-        }
-        con.accept(msg);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(GUIListener.registeredUnder, () -> {
+            if (msg.equalsIgnoreCase("cancel")) {
+                GUIListener.chatDataReaders.remove(plr.getUniqueId());
+                if (onCancel != null)
+                    onCancel.run();
+                return;
+            }
+            con.accept(msg);
+        });
     }
 }

@@ -1,6 +1,7 @@
 package gyurix.villas.gui;
 
 import gyurix.cryptidcommons.gui.CustomGUI;
+import gyurix.cryptidcommons.util.ChatDataReader;
 import gyurix.cryptidcommons.util.ItemUtils;
 import gyurix.cryptidcommons.util.StrUtils;
 import gyurix.villas.data.Group;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.TreeSet;
 
 import static gyurix.villas.conf.ConfigManager.conf;
+import static gyurix.villas.conf.ConfigManager.msg;
 
 public class GroupsGUI extends CustomGUI {
     private final HashMap<Integer, String> groupNames = new HashMap<>();
@@ -35,7 +37,7 @@ public class GroupsGUI extends CustomGUI {
     public void onClick(int slot, boolean right, boolean shift) {
         if (slot >= inv.getSize() || slot < 0)
             return;
-        String type = config.getLayout().get(slot);
+        String type = slot < config.getLayout().size() ? config.getLayout().get(slot) : "";
         switch (type) {
             case "exit" -> {
                 plr.closeInventory();
@@ -46,6 +48,19 @@ public class GroupsGUI extends CustomGUI {
                 return;
             }
             case "add" -> {
+                if (!villa.hasPermission(plr, Group::isManage)) {
+                    msg.msg(plr, "noperm.manage");
+                    return;
+                }
+                plr.closeInventory();
+                msg.msg(plr, "group.add");
+                new ChatDataReader(plr, (groupName) -> {
+                    villa.addGroup(plr, groupName);
+                    new GroupsGUI(plr, villa);
+                }, () -> {
+                    msg.msg(plr, "group.cancel");
+                    new GroupsGUI(plr, villa);
+                });
                 return;
             }
         }

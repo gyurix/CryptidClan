@@ -1,11 +1,13 @@
-add: Added &e<player>&c to villa &6&l<villa>
-addalready: '&cPlayer &e<player> &cis already added to villa &6&l<villa>'
-added: You have been added to villa &6&l<villa>
-addplayer: Enter the addable players name or &ccancel&e to the chat
-addplayerlimit: "&cPlayer limit reached"
-addplayercancel: '&cCancelled adding player'
+player:
+  add: Added &e<player>&c to villa &6&l<villa>
+  added: You have been added to villa &6&l<villa>
+  already: '&cPlayer &e<player> &cis already added to villa &e<villa>'
+  cancel: '&cCancelled adding player'
+  enter: Enter the addable players name or &ccancel&e to the chat
+  limit: "&cPlayer limit reached"
 admin:
-  exists: Villa &6&l<villa>&e exists already
+  create: Created villa &6&l<villa>
+  exists: "&cVilla &e&l<villa>&c exists already"
   list:
     entry:
     - '&e<villa>&f (<players> players)'
@@ -17,11 +19,15 @@ admin:
   remove: Removed villa &6&l<villa>
   removed: Your villa &6&l<villa>&e was removed by an admin
 group:
+  add: Enter the addable groups name or &ccancel&e to the chat
+  already: '&cGroup &e<group> &cis already added to villa &e<villa>'
+  cancel: '&cCancelled adding group'
   create: Created group &6&l<group>
   disable: Disabled &6&l<permission>&e permission of group &6&l<group>
   enable: Enabled &6&l<permission>&e permission of group &6&l<group>
   icon: Changed the icon of group &6&l<group>&e to &6&l<icon>
   iconClick: '&cClick to an item in your inventory for changing the groups icon'
+  limit: "&cGroup limit reached"
   lastowner: '&cPlayer &e<player>&c is the last owner of villa &e<villa>'
   notempty: '&cGroup &e<group>&c is not empty. Remove all the players from it before
     removing the group'
@@ -38,9 +44,9 @@ help:
   - '&6• /villasa redefine <name>:&e Redefines the area of a villa'
   - '&6• /villasa remove <name>:&e Removes a villa'
   header:
-  - '&e&m-----------------------------'
-  - '&6&l&n      Villas - Help Menu'
-  - '&e&m-----------------------------'
+  - '&e&m----------------------------------------------------'
+  - '&6&l                   &nVillas - Help Menu'
+  - '&e&m----------------------------------------------------'
   player:
   - '&6&lPlayer Commands'
   - '&6• /villa [name]:&e Teleport to your villa / manage it'
@@ -77,7 +83,7 @@ noperm:
   manage: '&cYou are not allowed to manage villa &e<villa>'
   tp: '&cYou are not allowed to teleport to villa &e<villa>'
 notin: '&cPlayer &e<player> &cis not added to villa &6&l<villa>'
-notinany: '&cYou are not in any villas'
+notinany: '&cYou are not added to any villa'
 prefix: '&6&lVillas ► &e'
 remove: Removed &6&l<player>&e from villa &6&l<villa>
 removed: You have been removed from villa &6&l<villa>
@@ -89,3 +95,4 @@ wrong:
   sub: '&cThe entered subcommand was not found'
   villa: '&cVilla &e<villa>&c was not found'
   villaLoc: '&cYou are not standing in a villa'
+  spawn: '&cThe villas spawn point needs to be inside the villas area'

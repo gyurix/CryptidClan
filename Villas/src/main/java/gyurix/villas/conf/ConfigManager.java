@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import gyurix.cryptidcommons.conf.Messages;
 import gyurix.cryptidcommons.conf.adapters.ItemStackAdapter;
 import gyurix.cryptidcommons.conf.adapters.PostProcessableAdapter;
+import gyurix.cryptidcommons.conf.adapters.StringAdapter;
 import gyurix.cryptidcommons.conf.adapters.StringSerializableAdapter;
 import lombok.SneakyThrows;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -23,6 +24,7 @@ public class ConfigManager {
             .registerTypeAdapterFactory(new StringSerializableAdapter())
             .registerTypeAdapterFactory(new PostProcessableAdapter())
             .registerTypeAdapter(ItemStack.class, new ItemStackAdapter().nullSafe())
+            .registerTypeAdapter(String.class, new StringAdapter().nullSafe())
             .serializeNulls()
             .setPrettyPrinting()
             .create();

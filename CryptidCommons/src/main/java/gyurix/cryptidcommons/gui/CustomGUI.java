@@ -34,6 +34,10 @@ public abstract class CustomGUI implements InventoryHolder {
         return inv;
     }
 
+    public void onBottomClick(int slot, boolean rightClick, boolean shiftClick) {
+
+    }
+
     public abstract void onClick(int slot, boolean right, boolean shift);
 
     public void onClose() {

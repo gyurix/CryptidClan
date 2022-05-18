@@ -49,6 +49,8 @@ public class GUIListener implements Listener {
             e.setCancelled(true);
             if (inv == top)
                 ((CustomGUI) top.getHolder()).onClick(e.getSlot(), e.isRightClick(), e.isShiftClick());
+            if (inv == e.getView().getBottomInventory())
+                ((CustomGUI) top.getHolder()).onBottomClick(e.getSlot(), e.isRightClick(), e.isShiftClick());
         }
     }
 
