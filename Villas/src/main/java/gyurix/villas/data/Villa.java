@@ -9,14 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 
 import static gyurix.villas.conf.ConfigManager.conf;
@@ -30,6 +23,8 @@ public class Villa {
     private String name;
     private HashMap<UUID, String> players = new HashMap<>();
     private Loc spawn;
+    private boolean buyable;
+    private double price;
 
     public Villa(String name, Area area, Loc spawn) {
         this.name = name;
@@ -132,10 +127,14 @@ public class Villa {
     }
 
     public boolean hasPermission(CommandSender sender, Function<Group, Boolean> permission) {
+        return hasPermission(sender, permission, true);
+    }
+
+    public boolean hasPermission(CommandSender sender, Function<Group, Boolean> permission, boolean adminCheck) {
         if (!(sender instanceof Player plr))
             return true;
         String group = players.get(plr.getUniqueId());
-        return permission.apply(groups.get(group == null ? conf.getNonMemberGroup() : group)) || sender.hasPermission("villas.admin");
+        return permission.apply(groups.get(group == null ? conf.getNonMemberGroup() : group)) || adminCheck && sender.hasPermission("villas.admin");
     }
 
     public void kick(CommandSender sender, String pln) {
@@ -184,5 +183,9 @@ public class Villa {
         groups.remove(groupName);
         msg.msg(sender, "group.remove", "group", group.getName());
         VillaManager.saveVilla(this);
+    }
+
+    public void buy(Player plr) {
+
     }
 }

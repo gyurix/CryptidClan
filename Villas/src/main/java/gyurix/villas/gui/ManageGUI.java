@@ -2,13 +2,16 @@ package gyurix.villas.gui;
 
 import gyurix.cryptidcommons.data.Loc;
 import gyurix.cryptidcommons.gui.CustomGUI;
-import gyurix.villas.VillaManager;
+import gyurix.cryptidcommons.util.ChatDataReader;
+import gyurix.cryptidcommons.util.ItemUtils;
 import gyurix.villas.data.Group;
 import gyurix.villas.data.Villa;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import static gyurix.cryptidcommons.util.StrUtils.DF;
+import static gyurix.villas.VillaManager.saveVilla;
 import static gyurix.villas.conf.ConfigManager.conf;
 import static gyurix.villas.conf.ConfigManager.msg;
 
@@ -23,7 +26,12 @@ public class ManageGUI extends CustomGUI {
 
     @Override
     public ItemStack getCustomItem(String name) {
-        return config.getCustomItems().get(name);
+        if (name.equals("price"))
+            return ItemUtils.fillVariables(config.getCustomItems().get("price"),
+                    "price", DF.format(villa.getPrice()));
+        else if (name.equals("buyable"))
+            return ItemUtils.fillVariables(config.getCustomItems().get(villa.isBuyable() ? "buyableEnabled" : "buyable"));
+        throw new RuntimeException("Unknown custom item " + name);
     }
 
     @Override
@@ -32,6 +40,40 @@ public class ManageGUI extends CustomGUI {
             return;
         String type = config.getLayout().get(slot);
         switch (type) {
+            case "buyable" -> {
+                if (!villa.hasPermission(plr, Group::isManage)) {
+                    msg.msg(plr, "noperm.manage");
+                    return;
+                }
+                villa.setBuyable(!villa.isBuyable());
+                saveVilla(villa);
+                msg.msg(plr, villa.isBuyable() ? "buyable.enable" : "buyable.disable", "villa", villa.getName());
+                update();
+            }
+            case "price" -> {
+                if (!villa.hasPermission(plr, Group::isManage)) {
+                    msg.msg(plr, "noperm.manage");
+                    return;
+                }
+                msg.msg(plr, "price.enter", "villa", villa.getName());
+                plr.closeInventory();
+                new ChatDataReader(plr, (priceStr) -> {
+                    double price = -1;
+                    try {
+                        price = Double.parseDouble(priceStr);
+                    } catch (NumberFormatException ignored) {
+                    }
+                    if (price < 0 || !Double.isFinite(price)) {
+                        msg.msg(plr, "wrong.price");
+                        return;
+                    }
+                    villa.setPrice(price);
+                    saveVilla(villa);
+                    msg.msg(plr, "price.done", "villa", villa.getName(), "price", DF.format(price));
+                }, () -> msg.msg(plr, "price.cancel", "villa", villa.getName()));
+                msg.msg(plr, villa.isBuyable() ? "buyable.enable" : "buyable.disable", "villa", villa.getName());
+                update();
+            }
             case "exit" -> plr.closeInventory();
             case "tp" -> {
                 if (!villa.hasPermission(plr, Group::isTp)) {
@@ -40,15 +82,12 @@ public class ManageGUI extends CustomGUI {
                 }
 
                 plr.teleport(villa.getSpawn().toLocation());
-                return;
             }
             case "players" -> {
                 new PlayersGUI(plr, villa);
-                return;
             }
             case "groups" -> {
                 new GroupsGUI(plr, villa);
-                return;
             }
             case "setspawn" -> {
                 if (!villa.hasPermission(plr, Group::isManage)) {
@@ -61,11 +100,9 @@ public class ManageGUI extends CustomGUI {
                     return;
                 }
                 villa.setSpawn(new Loc(spawn));
-                VillaManager.saveVilla(villa);
+                saveVilla(villa);
                 msg.msg(plr, "setspawn", "villa", villa.getName(), "loc", villa.getSpawn());
-                return;
             }
         }
-        update();
     }
 }

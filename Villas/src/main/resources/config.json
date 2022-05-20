@@ -105,9 +105,9 @@
     },
     "manage": {
       "layout": [
-        "glass glass glass glass   glass  glass  glass glass    exit",
-        "glass tp    glass players glass  groups glass setspawn glass",
-        "glass glass glass glass   glass  glass  glass glass    glass"
+        "glass glass glass   glass  glass    glass glass   glass exit",
+        "glass tp    players groups setspawn glass buyable price glass",
+        "glass glass glass   glass  glass    glass glass   glass glass"
       ],
       "staticItems": {
         "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
@@ -116,6 +116,11 @@
         "players": "PLAYER_HEAD name:&6&lPlayers owner:Deadpool lore:&7|&7Click_to_manage|&7the_players|&7of_this_villa",
         "setspawn": "OAK_SAPLING name:&6&lSet_Spawn lore:&7|&7Click_to_set_the|&7spawn_point_of_this|&7villa_to_your_location",
         "tp": "COMPASS name:&6&lTeleport lore:&7|&7Click_to_teleport|&7to_this_villa"
+      },
+      "customItems": {
+        "buyable": "REDSTONE name:&6&lBuyable lore:&7|&7•_Status:&c_disabled|&7|&7Click_to_make_this|&7villa_buyable",
+        "buyableEnabled": "SLIME_BALL name:&6&lBuyable lore:&7|&7•_Status:&a_enabled|&7|&7Click_to_make_this|&7villa_not_buyable luck:1 hide:enchants",
+        "price": "EMERALD name:&6&lPrice lore:&7|&7•_Current_price:&c_$<price>|&7|&7Click_to_change_the|&7price_of_this_villa"
       },
       "title": "&4&lManage - <villa>"
     },
@@ -141,6 +146,32 @@
         "glass": "BLACK_STAINED_GLASS_PANE name:&c"
       },
       "title": "&4&lPlayers - <villa>"
+    },
+    "villas": {
+      "title": "&4&lVillas",
+      "layout": [
+        "glass glass glass buyable orderBy order glass glass exit",
+        "glass glass glass glass   glass   glass glass glass glass",
+        "glass glass glass glass   glass   glass glass glass glass",
+        "glass glass glass glass   glass   glass glass glass glass",
+        "glass glass glass glass   glass   glass glass glass glass",
+        "glass glass glass prev    page    next  glass glass glass"
+      ],
+      "staticItems": {
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
+        "glass": "BLACK_STAINED_GLASS_PANE name:&c"
+      },
+      "customItems": {
+        "prev": "PLAYER_HEAD owner:MHF_arrowleft name:&6&l<--_Previous_Page lore:&7|&7Click_to_go|&7to_the_previous_page",
+        "page": "PLAYER_HEAD owner:MHF_chest name:&6&l--►_Page_◄-- lore:&e&l___<page>_/_<maxPage>___",
+        "next": "PLAYER_HEAD owner:MHF_arrowright name:&6&lNext_Page_--> lore:&7|&7Click_to_go|&7to_the_next_page",
+        "orderPrice": "GOLD_INGOT name:&6&lOrder_By lore:&e&lPrice|&7|&7Click_to_order_the|&7villas_by_their_names",
+        "orderName": "PAPER name:&6&lOrder_By lore:&e&lName|&7|&7Click_to_order_the|&7villas_by_their_prices",
+        "orderAsc": "PLAYER_HEAD owner:MHF_arrowup name:&6&lOrder lore:&7|&7•_&a^_Ascending_^|&7|&7Click_to_change|&7it_to_descending",
+        "orderDesc": "PLAYER_HEAD owner:MHF_arrowdown name:&6&lOrder lore:&7|&7•_&cv_Descending_v|&7|&7Click_to_change|&7it_to_ascending",
+        "buyableOff": "EMERALD name:&6&lBuyable_Only lore:&7|&7•_Status:&c_Disabled|&7|&7Click_to_show|&7only_the_buyable_villas",
+        "buyableOn": "EMERALD name:&6&lBuyable_Only lore:&7|&7•_Status:&a_Enabled|&7|&7Click_to_show|&7all_the_villas luck:1 hide:enchants"
+      }
     }
   },
   "mySQL": {

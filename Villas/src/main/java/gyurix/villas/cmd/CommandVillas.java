@@ -10,20 +10,18 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import static gyurix.cryptidcommons.util.StrUtils.DF;
 import static gyurix.villas.VillasPlugin.pl;
 import static gyurix.villas.conf.ConfigManager.msg;
 
@@ -48,6 +46,8 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
                     msg.msg(sender, "info.header",
                             "villa", villa.getName(),
                             "area", villa.getArea(),
+                            "buyable", villa.isBuyable() ? "§ayes" : "§cno",
+                            "price", DF.format(villa.getPrice()),
                             "spawn", villa.getSpawn());
                     villa.getGrouppedPlayerNames().forEach((group, players) ->
                             msg.msg(sender, "info.player",
@@ -74,13 +74,37 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
             int to = Math.min(from + 10, results.size());
             for (int i = from; i < to; ++i) {
                 Villa v = results.get(i);
-                msg.msg(sender, "list.entry",
+                msg.msg(sender, v.isBuyable() ? "list.buyableEntry" : "list.entry",
                         "villa", v.getName(),
                         "players", v.getPlayers().size(),
-                        "rank", v.getPlayers().get(target.getUniqueId())
-                );
+                        "price", DF.format(v.getPrice()),
+                        "rank", v.getPlayers().get(target.getUniqueId()));
             }
         });
+    }
+
+    private void cmdListAll(CommandSender sender, String[] args) {
+        int page = 1;
+        try {
+            if (args.length > 1 && args[args.length - 1].matches("\\d"))
+                page = Integer.parseInt(args[args.length - 1]);
+        } catch (Throwable ignored) {
+        }
+        List<Villa> results = new ArrayList<>(VillaManager.villas.values());
+        if (!sender.hasPermission("villas.admin"))
+            results.removeIf(villa -> !villa.hasPermission(sender, Group::isSee, false));
+        int maxpage = Math.max(1, (results.size() + 9) / 10);
+        page = Math.min(Math.max(page, 1), maxpage);
+        msg.msg(sender, "listall.header", "page", page, "maxpage", maxpage);
+        int from = (page - 1) * 10;
+        int to = Math.min(from + 10, results.size());
+        for (int i = from; i < to; ++i) {
+            Villa v = results.get(i);
+            msg.msg(sender, v.isBuyable() ? "listall.buyableEntry" : "listall.entry",
+                    "villa", v.getName(),
+                    "players", v.getPlayers().size(),
+                    "price", DF.format(v.getPrice()));
+        }
     }
 
     private void cmdManage(CommandSender sender, String[] args) {
@@ -132,6 +156,10 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
             }
             case "list" -> {
                 cmdList(sender, args);
+                return true;
+            }
+            case "listall" -> {
+                cmdListAll(sender, args);
                 return true;
             }
             case "info" -> {

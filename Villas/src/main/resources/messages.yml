@@ -8,13 +8,6 @@ player:
 admin:
   create: Created villa &6&l<villa>
   exists: "&cVilla &e&l<villa>&c exists already"
-  list:
-    entry:
-    - '&e<villa>&f (<players> players)'
-    - ''
-    header:
-    - '&6&lVilla List - &e&lAll Villas&6&l - page &e&l<page> / <maxpage>'
-    - ''
   redefine: Set the area of villa &6&l<villa>&e to &f<area>
   remove: Removed villa &6&l<villa>
   removed: Your villa &6&l<villa>&e was removed by an admin
@@ -38,40 +31,57 @@ groupch: Changed the &6&l<player>&e's group in villa &6&l<villa>&e to &6&l<group
 groupchd: Your group in villa &6&l<villa>&e has been changed to &6&l<group>
 help:
   admin:
-  - '&6&lAdmin Commands'
-  - '&6• /villasa create <name>:&e Creates a villa'
-  - '&6• /villasa list [page]:&e Lists all of the villas'
-  - '&6• /villasa redefine <name>:&e Redefines the area of a villa'
-  - '&6• /villasa remove <name>:&e Removes a villa'
+    - '&6&lAdmin Commands'
+    - '&6• /villasa create <name>:&e Creates a villa'
+    - '&6• /villasa redefine <name>:&e Redefines the area of a villa'
+    - '&6• /villasa remove <name>:&e Removes a villa'
   header:
-  - '&e&m----------------------------------------------------'
-  - '&6&l                   &nVillas - Help Menu'
-  - '&e&m----------------------------------------------------'
+    - '&e&m----------------------------------------------------'
+    - '&6&l                   &nVillas - Help Menu'
+    - '&e&m----------------------------------------------------'
   player:
-  - '&6&lPlayer Commands'
-  - '&6• /villa [name]:&e Teleport to your villa / manage it'
-  - '&6• /villas OR /villas help:&e Shows this help menu'
-  - '&6• /villas info [name]:&e Info about a villa'
-  - '&6• /villas list [player] [page]:&e Lists villas'
-  - '&6• /villas manage [name]:&e Manage a villa'
-  - '&6• /villas setspawn [name]:&e Set the spawnpoint of a villa'
-  - '&6• /villas tp [name]:&e Teleport to a villa'
+    - '&6&lPlayer Commands'
+    - '&6• /villa [name]:&e Teleport to your villa / manage it'
+    - '&6• /villas OR /villas gui:&e Shows available villas in a GUI'
+    - '&6• /villas buy [name]:&e Buy this or the given villa'
+    - '&6• /villas help:&e Shows this help menu'
+    - '&6• /villas info [name]:&e Info about a villa'
+    - '&6• /villas list [player] [page]:&e Lists villas owned by you or the given player'
+    - '&6• /villas listall [page]:&e Lists all the villas'
+    - '&6• /villas manage [name]:&e Manage a villa'
+    - '&6• /villas setspawn [name]:&e Set the spawnpoint of a villa'
+    - '&6• /villas tp [name]:&e Teleport to a villa'
 info:
   header:
-  - '&6&lVilla Info - &e&l<villa>'
-  - '&e• Area:&f <area>'
-  - '&e• Spawn:&f <spawn>'
-  - '&e• Players:'
+    - '&6&lVilla Info - &e&l<villa>'
+    - '&e• Area:&f <area>'
+    - '&e• Buyable:&f <buyable>'
+    - '&e• Price:&f $<price>'
+    - '&e• Spawn:&f <spawn>'
+    - '&e• Players:'
   player:
-  - '&e  - <group> (<count>):&f <players>'
-  - ''
-list:
+    - '&e  - <group> (<count>):&f <players>'
+    - ''
+listall:
+  buyableEntry:
+    - '&e<villa>&f (&abuyable for $<price>&f, <players> players)'
+    - ''
   entry:
-  - '&e<villa>&f (<players> players, rank: <rank>)'
-  - ''
+    - '&e<villa>&f (&cnot buyable&f, <players> players)'
+    - ''
   header:
-  - '&6&lVilla List - &e&l<player>&6&l - page &e&l<page> / <maxpage>'
-  - ''
+    - '&6&lVilla List - &e&lAll Villas&6&l - page &e&l<page> / <maxpage>'
+    - ''
+list:
+  buyableEntry:
+    - '&e<villa>&f (&abuyable for $<price>&f, <players> players, rank: <rank>)'
+    - ''
+  entry:
+    - '&e<villa>&f (&cnot buyable&f, <players> players, rank: <rank>)'
+    - ''
+  header:
+    - '&6&lVilla List - &e&l<player>&6&l - page &e&l<page> / <maxpage>'
+    - ''
 missing:
   group: '&cYou did not enter the group argument'
   player: '&cYou did not enter the player argument'
@@ -82,17 +92,28 @@ noperm:
   info: '&cYou are not allowed to check the info of villa &e<villa>'
   manage: '&cYou are not allowed to manage villa &e<villa>'
   tp: '&cYou are not allowed to teleport to villa &e<villa>'
+buyable:
+  non: Villa &6&l<villa>&e is not buyable.
+  buy: Bought villa &6&l<villa>&e for &6&l$<price>
+  sell: Sold villa &6&l<villa>&e for &6&l$<price>
+  enable: Made villa &6&l<villa>&e buyable.
+  disable: Made villa &6&l<villa>&e non buyable.
 notin: '&cPlayer &e<player> &cis not added to villa &6&l<villa>'
 notinany: '&cYou are not added to any villa'
 prefix: '&6&lVillas ► &e'
+price:
+  enter: Enter the price of villa &6&l<villa>&e or &ccancel&e to the chat
+  cancel: Cancelled changing the price of villa &6&l<villa>
+  done: Set the price of villa &6&l<villa>&e to &6&l$<price>
 remove: Removed &6&l<player>&e from villa &6&l<villa>
 removed: You have been removed from villa &6&l<villa>
 setspawn: Set the spawn point of villa &6&l<villa>&e to &f<loc>
 tp: Teleported to villa &6&l<villa>
 wrong:
   group: '&cGroup &e<group>&c was not found in villa &e<villa>'
+  price: '&cThe entered price is not valid'
   player: '&cPlayer &e<player>&c was not found'
+  spawn: '&cThe villas spawn point needs to be inside the villas area'
   sub: '&cThe entered subcommand was not found'
   villa: '&cVilla &e<villa>&c was not found'
   villaLoc: '&cYou are not standing in a villa'
-  spawn: '&cThe villas spawn point needs to be inside the villas area'

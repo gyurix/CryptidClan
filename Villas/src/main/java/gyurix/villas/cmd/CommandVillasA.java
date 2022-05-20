@@ -10,16 +10,11 @@ import gyurix.cryptidcommons.util.StrUtils;
 import gyurix.villas.VillaManager;
 import gyurix.villas.data.Villa;
 import org.bukkit.Location;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
@@ -66,27 +61,6 @@ public class CommandVillasA implements CommandExecutor, TabCompleter {
         msg.msg(sender, "help.player");
     }
 
-    private void cmdList(CommandSender sender, String[] args) {
-        int page = 1;
-        try {
-            if (args.length > 1 && args[args.length - 1].matches("\\d"))
-                page = Integer.parseInt(args[args.length - 1]);
-        } catch (Throwable ignored) {
-        }
-        List<Villa> results = new ArrayList<>(VillaManager.villas.values());
-        int maxpage = Math.max(1, (results.size() + 9) / 10);
-        page = Math.min(Math.max(page, 1), maxpage);
-        msg.msg(sender, "admin.list.header", "page", page, "maxpage", maxpage);
-        int from = (page - 1) * 10;
-        int to = Math.min(from + 10, results.size());
-        for (int i = from; i < to; ++i) {
-            Villa v = results.get(i);
-            msg.msg(sender, "admin.list.entry",
-                    "villa", v.getName(),
-                    "players", v.getPlayers().size());
-        }
-    }
-
     private void cmdRedefine(CommandSender sender, String[] args) {
         withVilla(sender, args, villa -> {
             withArea(sender, area -> {
@@ -114,10 +88,6 @@ public class CommandVillasA implements CommandExecutor, TabCompleter {
             }
             case "help" -> {
                 cmdHelp(sender);
-                return true;
-            }
-            case "list" -> {
-                cmdList(sender, args);
                 return true;
             }
             case "redefine" -> {
