@@ -1,7 +1,12 @@
 package gyurix.villas.data;
 
+import com.nftworlds.wallet.objects.NFTPlayer;
+import com.nftworlds.wallet.objects.Network;
+import com.nftworlds.wallet.objects.Wallet;
 import gyurix.cryptidcommons.data.Area;
 import gyurix.cryptidcommons.data.Loc;
+import gyurix.cryptidcommons.data.WRLDRunnable;
+import gyurix.cryptidcommons.util.ItemUtils;
 import gyurix.villas.VillaManager;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +17,7 @@ import org.bukkit.entity.Player;
 import java.util.*;
 import java.util.function.Function;
 
+import static gyurix.cryptidcommons.util.StrUtils.DF;
 import static gyurix.villas.conf.ConfigManager.conf;
 import static gyurix.villas.conf.ConfigManager.msg;
 
@@ -23,6 +29,9 @@ public class Villa {
     private String name;
     private HashMap<UUID, String> players = new HashMap<>();
     private Loc spawn;
+
+    private String icon;
+
     private boolean buyable;
     private double price;
 
@@ -30,7 +39,17 @@ public class Villa {
         this.name = name;
         this.area = area;
         this.spawn = spawn;
+        this.icon = ItemUtils.itemToString(conf.getDefaultVillaIcon());
         conf.getGroups().values().forEach(group -> this.groups.put(group.getName(), group.clone()));
+    }
+
+    public List<UUID> getOwners() {
+        List<UUID> out = new ArrayList<>();
+        players.forEach((uuid, group) -> {
+            if (group.equals("owner"))
+                out.add(uuid);
+        });
+        return out;
     }
 
     public void addGroup(CommandSender sender, String groupName) {
@@ -96,7 +115,7 @@ public class Villa {
             return;
         }
         if (curGroup.equals("owner") && Collections.frequency(players.values(), "owner") == 1) {
-            msg.msg(sender, "group.lastowner", "player", pln, "group", group, "villa", name);
+            msg.msg(sender, "group.lastowner", "player", pln, "villa", name);
             return;
         }
         players.put(uuid, group);
@@ -137,18 +156,23 @@ public class Villa {
         return permission.apply(groups.get(group == null ? conf.getNonMemberGroup() : group)) || adminCheck && sender.hasPermission("villas.admin");
     }
 
-    public void kick(CommandSender sender, String pln) {
+    public boolean kick(CommandSender sender, String pln) {
         UUID uuid = Bukkit.getOfflinePlayer(pln).getUniqueId();
+        String curGroup = players.get(uuid);
+        if (curGroup.equals("owner") && Collections.frequency(players.values(), "owner") == 1) {
+            msg.msg(sender, "group.lastowner", "player", pln, "villa", name);
+            return false;
+        }
         if (players.remove(uuid) == null) {
             msg.msg(sender, "notin", "player", pln, "villa", name);
-            return;
+            return false;
         }
         msg.msg(sender, "remove", "player", pln, "villa", name);
         Player p = Bukkit.getPlayer(uuid);
-        if (p != null) {
+        if (p != null)
             msg.msg(p, "removed", "villa", name);
-        }
         VillaManager.saveVilla(this);
+        return true;
     }
 
     public void remove(CommandSender sender) {
@@ -186,6 +210,34 @@ public class Villa {
     }
 
     public void buy(Player plr) {
+        if (!buyable) {
+            msg.msg(plr, "buyable.non", "villa", name);
+            return;
+        }
+        if (price == 0 || plr.hasPermission("villas.free")) {
+            buyNow(plr, price);
+            return;
+        }
+        Wallet wallet = NFTPlayer.getByUUID(plr.getUniqueId()).getPrimaryWallet();
+        wallet.requestWRLD(price, Network.POLYGON, "Buying villa " + name, false,
+                (WRLDRunnable) () -> buyNow(plr, price));
+    }
 
+    private void buyNow(Player plr, double price) {
+        List<UUID> owners = getOwners();
+        if (!owners.isEmpty()) {
+            double split = price / owners.size();
+            for (UUID uuid : owners) {
+                Wallet wallet = NFTPlayer.getByUUID(uuid).getPrimaryWallet();
+                wallet.payWRLD(split, Network.POLYGON, "Selling villa " + name);
+                msg.msg(plr, "buyable.sell", "villa", name, "price", DF.format(price), "split", DF.format(split));
+                Group newMembersGroup = groups.get(conf.getNewMemberGroup());
+                newMembersGroup.setManage(false);
+                players.put(uuid, conf.getNewMemberGroup());
+            }
+        }
+        players.put(plr.getUniqueId(), "owner");
+        msg.msg(plr, "buyable.buy", "price", DF.format(price), "villa", name);
+        VillaManager.saveVilla(this);
     }
 }

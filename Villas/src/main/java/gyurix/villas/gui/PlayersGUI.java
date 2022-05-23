@@ -72,9 +72,10 @@ public class PlayersGUI extends CustomGUI {
             msg.msg(plr, "noperm.manage");
             return;
         }
-        if (right)
-            villa.kick(plr, pln);
-        else
+        if (right) {
+            if (villa.kick(plr, pln))
+                new PlayersGUI(plr,villa);
+        } else
             new PlayerGroupSelectorGUI(plr, villa, pln);
     }
 

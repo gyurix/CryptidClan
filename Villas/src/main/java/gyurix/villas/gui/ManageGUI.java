@@ -4,11 +4,13 @@ import gyurix.cryptidcommons.data.Loc;
 import gyurix.cryptidcommons.gui.CustomGUI;
 import gyurix.cryptidcommons.util.ChatDataReader;
 import gyurix.cryptidcommons.util.ItemUtils;
+import gyurix.cryptidcommons.util.StrUtils;
 import gyurix.villas.data.Group;
 import gyurix.villas.data.Villa;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import static gyurix.cryptidcommons.util.StrUtils.DF;
 import static gyurix.villas.VillaManager.saveVilla;
@@ -26,11 +28,21 @@ public class ManageGUI extends CustomGUI {
 
     @Override
     public ItemStack getCustomItem(String name) {
-        if (name.equals("price"))
-            return ItemUtils.fillVariables(config.getCustomItems().get("price"),
-                    "price", DF.format(villa.getPrice()));
-        else if (name.equals("buyable"))
-            return ItemUtils.fillVariables(config.getCustomItems().get(villa.isBuyable() ? "buyableEnabled" : "buyable"));
+        switch (name) {
+            case "price":
+                return ItemUtils.fillVariables(config.getCustomItems().get("price"),
+                        "price", DF.format(villa.getPrice()));
+            case "buyable":
+                return ItemUtils.fillVariables(config.getCustomItems().get(villa.isBuyable() ? "buyableEnabled" : "buyable"));
+            case "icon":
+                ItemStack icon = config.getCustomItems().get("icon");
+                ItemStack out = ItemUtils.stringToItemStack(villa.getIcon());
+                ItemMeta meta = out.getItemMeta();
+                meta.setDisplayName(icon.getItemMeta().getDisplayName());
+                meta.setLore(icon.getLore());
+                out.setItemMeta(meta);
+                return out;
+        }
         throw new RuntimeException("Unknown custom item " + name);
     }
 
@@ -40,6 +52,9 @@ public class ManageGUI extends CustomGUI {
             return;
         String type = config.getLayout().get(slot);
         switch (type) {
+            case "back" -> {
+                new VillasGUI(plr);
+            }
             case "buyable" -> {
                 if (!villa.hasPermission(plr, Group::isManage)) {
                     msg.msg(plr, "noperm.manage");
@@ -49,6 +64,13 @@ public class ManageGUI extends CustomGUI {
                 saveVilla(villa);
                 msg.msg(plr, villa.isBuyable() ? "buyable.enable" : "buyable.disable", "villa", villa.getName());
                 update();
+            }
+            case "icon" -> {
+                if (!villa.hasPermission(plr, Group::isManage)) {
+                    msg.msg(plr, "noperm.manage");
+                    return;
+                }
+                msg.msg(plr, "iconClick");
             }
             case "price" -> {
                 if (!villa.hasPermission(plr, Group::isManage)) {
@@ -68,11 +90,10 @@ public class ManageGUI extends CustomGUI {
                         return;
                     }
                     villa.setPrice(price);
+                    new ManageGUI(plr,villa);
                     saveVilla(villa);
                     msg.msg(plr, "price.done", "villa", villa.getName(), "price", DF.format(price));
                 }, () -> msg.msg(plr, "price.cancel", "villa", villa.getName()));
-                msg.msg(plr, villa.isBuyable() ? "buyable.enable" : "buyable.disable", "villa", villa.getName());
-                update();
             }
             case "exit" -> plr.closeInventory();
             case "tp" -> {
@@ -103,6 +124,26 @@ public class ManageGUI extends CustomGUI {
                 saveVilla(villa);
                 msg.msg(plr, "setspawn", "villa", villa.getName(), "loc", villa.getSpawn());
             }
+        }
+    }
+
+    @Override
+    public void onBottomClick(int slot, boolean rightClick, boolean shiftClick) {
+        ItemStack is = plr.getInventory().getItem(slot);
+        if (is != null) {
+            if (!villa.hasPermission(plr, Group::isManage)) {
+                msg.msg(plr, "noperm.manage");
+                return;
+            }
+            is = is.clone();
+            ItemMeta meta = is.getItemMeta();
+            meta.setDisplayName(null);
+            meta.setLore(null);
+            is.setItemMeta(meta);
+            villa.setIcon(ItemUtils.itemToString(is));
+            msg.msg(plr, "icon", "villa", villa.getName(), "icon", StrUtils.toCamelCase(is.getType().name()));
+            update();
+            saveVilla(villa);
         }
     }
 }

@@ -1,5 +1,7 @@
 package gyurix.cryptidcommons.gui;
 
+import com.nftworlds.wallet.event.PlayerTransactEvent;
+import gyurix.cryptidcommons.data.WRLDRunnable;
 import gyurix.cryptidcommons.util.ChatDataReader;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -66,5 +68,11 @@ public class GUIListener implements Listener {
         Inventory top = e.getView().getTopInventory();
         if (top.getHolder() instanceof CustomGUI)
             e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerTransact(PlayerTransactEvent<?> e) {
+        if (e.getPayload() instanceof WRLDRunnable)
+            ((WRLDRunnable) e.getPayload()).run();
     }
 }

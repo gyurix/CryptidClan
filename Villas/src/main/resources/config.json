@@ -1,5 +1,6 @@
 {
   "customGroupIcon": "SEA_PICKLE",
+  "defaultVillaIcon": "BRICK",
   "groupLimit": 28,
   "groups": {
     "banned": {
@@ -47,6 +48,9 @@
       "use": true
     }
   },
+  "villasBuy": "&7• &fRight-Click&7 to buy",
+  "villasManage": "&7• &fShift-Click&7 to manage",
+  "villasTp": "&7• &fLeft-Click&7 to tp",
   "groupsLore": [
     "&7",
     "&7• &eClick to change group"
@@ -105,11 +109,12 @@
     },
     "manage": {
       "layout": [
-        "glass glass glass   glass  glass    glass glass   glass exit",
-        "glass tp    players groups setspawn glass buyable price glass",
+        "back glass glass   glass  glass    glass glass   glass exit",
+        "glass tp    players groups setspawn icon buyable price glass",
         "glass glass glass   glass  glass    glass glass   glass glass"
       ],
       "staticItems": {
+        "back": "ARROW name:&c&l<--_Back lore:&7|&7Click_to_go_back|&7to_the_villas_gui",
         "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
         "glass": "BLACK_STAINED_GLASS_PANE name:&c",
         "groups": "PAPER name:&6&lGroups lore:&7|&7Click_to_manage|&7the_groups_and_permissions|&7of_this_villa",
@@ -118,6 +123,7 @@
         "tp": "COMPASS name:&6&lTeleport lore:&7|&7Click_to_teleport|&7to_this_villa"
       },
       "customItems": {
+        "icon": "PAPER name:&6&lVilla_Icon lore:&7|&7•_Click_to_an_item_in_your|&7__inventory_to_change_it",
         "buyable": "REDSTONE name:&6&lBuyable lore:&7|&7•_Status:&c_disabled|&7|&7Click_to_make_this|&7villa_buyable",
         "buyableEnabled": "SLIME_BALL name:&6&lBuyable lore:&7|&7•_Status:&a_enabled|&7|&7Click_to_make_this|&7villa_not_buyable luck:1 hide:enchants",
         "price": "EMERALD name:&6&lPrice lore:&7|&7•_Current_price:&c_$<price>|&7|&7Click_to_change_the|&7price_of_this_villa"
@@ -162,8 +168,10 @@
         "glass": "BLACK_STAINED_GLASS_PANE name:&c"
       },
       "customItems": {
+        "icon": "BRICK name:&6&l<villa> lore:&e•_&c<players>&e_players|&e•_&cNot_Buyable|&7",
+        "buyableIcon": "BRICK name:&6&l<villa> lore:&e•_&c<players>&e_players|&e•_Costs&c_$<price>|&7",
         "prev": "PLAYER_HEAD owner:MHF_arrowleft name:&6&l<--_Previous_Page lore:&7|&7Click_to_go|&7to_the_previous_page",
-        "page": "PLAYER_HEAD owner:MHF_chest name:&6&l--►_Page_◄-- lore:&e&l___<page>_/_<maxPage>___",
+        "page": "PLAYER_HEAD owner:MHF_chest name:&6&l-->_Page_<-- lore:&e&l___<page>_/_<maxPage>___",
         "next": "PLAYER_HEAD owner:MHF_arrowright name:&6&lNext_Page_--> lore:&7|&7Click_to_go|&7to_the_next_page",
         "orderPrice": "GOLD_INGOT name:&6&lOrder_By lore:&e&lPrice|&7|&7Click_to_order_the|&7villas_by_their_names",
         "orderName": "PAPER name:&6&lOrder_By lore:&e&lName|&7|&7Click_to_order_the|&7villas_by_their_prices",

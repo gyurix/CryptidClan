@@ -6,6 +6,7 @@ import gyurix.villas.VillaManager;
 import gyurix.villas.data.Group;
 import gyurix.villas.data.Villa;
 import gyurix.villas.gui.ManageGUI;
+import gyurix.villas.gui.VillasGUI;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -148,8 +149,12 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String string, @NotNull String[] args) {
-        String sub = args.length == 0 ? "help" : args[0].toLowerCase();
+        String sub = args.length == 0 ? "gui" : args[0].toLowerCase();
         switch (sub) {
+            case "gui" -> {
+                cmdGui(sender);
+                return true;
+            }
             case "help" -> {
                 cmdHelp(sender);
                 return true;
@@ -181,6 +186,14 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
         }
         msg.msg(sender, "wrong.sub");
         return true;
+    }
+
+    private void cmdGui(CommandSender sender) {
+        if (!(sender instanceof Player plr)) {
+            msg.msg(sender, "noconsole");
+            return;
+        }
+        new VillasGUI(plr);
     }
 
     @Override

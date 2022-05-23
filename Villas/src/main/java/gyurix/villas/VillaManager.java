@@ -51,6 +51,7 @@ public class VillaManager {
     }
 
     public static void removeVilla(Villa villa) {
+        villas.remove(villa.getName());
         Bukkit.getScheduler().runTaskAsynchronously(pl, () ->
                 conf.getMySQL().command("DELETE FROM `" + conf.getMySQL().table + "` WHERE `name` = ? LIMIT 1", villa.getName()));
     }

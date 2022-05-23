@@ -7,12 +7,14 @@ import gyurix.villas.data.Group;
 import gyurix.villas.data.Villa;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import static gyurix.cryptidcommons.util.StrUtils.DF;
 import static gyurix.villas.conf.ConfigManager.conf;
 import static gyurix.villas.conf.ConfigManager.msg;
 import static java.util.Comparator.comparing;
@@ -90,6 +92,7 @@ public class VillasGUI extends CustomGUI {
             case "buyable" -> {
                 buyable = !buyable;
                 calculateVillas();
+                update();
             }
             case "orderBy" -> {
                 orderByPrice = !orderByPrice;
@@ -123,8 +126,6 @@ public class VillasGUI extends CustomGUI {
             return;
         }
         if (right) {
-            if (!buyable)
-                return;
             villa.buy(plr);
         } else if (shift) {
             if (!villa.hasPermission(plr, Group::isInfo)) {
@@ -144,6 +145,33 @@ public class VillasGUI extends CustomGUI {
 
     @Override
     public void update() {
+        ItemStack glass = config.getStaticItem("glass");
+        for (int slot = 9; slot < 45; ++slot) {
+            int id = (page - 1) * 36 + slot - 9;
+            if (id >= villas.size()) {
+                inv.setItem(slot, glass);
+                continue;
+            }
+            Villa villa = villas.get(id);
+            ItemStack itemNameAndLore = ItemUtils.fillVariables(config.getCustomItems().get(villa.isBuyable() ? "buyableIcon" : "icon"),
+                    "villa", villa.getName(), "players", villa.getPlayers().size(), "price", DF.format(villa.getPrice()));
+            List<String> lore = new ArrayList<>();
+            if (villa.hasPermission(plr, Group::isTp))
+                lore.add(conf.getVillasTp());
+            if (villa.isBuyable() && !villa.getPlayers().containsKey(plr.getUniqueId()))
+                lore.add(conf.getVillasBuy());
+            if (villa.hasPermission(plr, Group::isInfo))
+                lore.add(conf.getVillasManage());
 
+            itemNameAndLore = ItemUtils.addLore(itemNameAndLore, lore);
+
+            ItemStack icon = ItemUtils.stringToItemStack(villa.getIcon());
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(itemNameAndLore.getLore());
+            meta.setDisplayName(itemNameAndLore.getItemMeta().getDisplayName());
+            icon.setItemMeta(meta);
+            inv.setItem(slot, icon);
+        }
+        super.update();
     }
 }

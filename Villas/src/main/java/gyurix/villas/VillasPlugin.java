@@ -20,7 +20,6 @@ public class VillasPlugin extends JavaPlugin {
     public void onEnable() {
         pl = this;
         ConfigManager.reload();
-        Bukkit.getPluginManager().registerEvents(new VillasListener(), this);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(pl, new MoveDetector(), 5, 5);
         GUIListener.register(this);
 

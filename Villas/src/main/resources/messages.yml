@@ -11,6 +11,8 @@ admin:
   redefine: Set the area of villa &6&l<villa>&e to &f<area>
   remove: Removed villa &6&l<villa>
   removed: Your villa &6&l<villa>&e was removed by an admin
+icon: Changed the icon of villa &6&l<villa>&e to &6&l<icon>
+iconClick: '&cClick to an item in your inventory for changing the villas icon'
 group:
   add: Enter the addable groups name or &ccancel&e to the chat
   already: '&cGroup &e<group> &cis already added to villa &e<villa>'
@@ -93,9 +95,9 @@ noperm:
   manage: '&cYou are not allowed to manage villa &e<villa>'
   tp: '&cYou are not allowed to teleport to villa &e<villa>'
 buyable:
-  non: Villa &6&l<villa>&e is not buyable.
+  non: "&cVilla &e<villa>&c is not buyable."
   buy: Bought villa &6&l<villa>&e for &6&l$<price>
-  sell: Sold villa &6&l<villa>&e for &6&l$<price>
+  sell: Sold villa &6&l<villa>&e for &6&l$<price>&e, your share of it was &6&l$<split>&e.
   enable: Made villa &6&l<villa>&e buyable.
   disable: Made villa &6&l<villa>&e non buyable.
 notin: '&cPlayer &e<player> &cis not added to villa &6&l<villa>'
