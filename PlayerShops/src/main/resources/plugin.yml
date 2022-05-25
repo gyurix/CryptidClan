@@ -1,0 +1,11 @@
+api-version: 1.13
+author: gyuriX
+depend: [ WorldEdit, WRLDPaymentsAPI ]
+main: gyurix.playershops.PlayerShops
+name: PlayerShops
+version: 1.0
+commands:
+  playershop:
+    aliases: [ pshop ]
+  playershopa:
+    aliases: [ pshopa ]

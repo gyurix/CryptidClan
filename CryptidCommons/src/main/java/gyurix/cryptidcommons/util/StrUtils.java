@@ -1,10 +1,7 @@
 package gyurix.cryptidcommons.util;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class StrUtils {
     private static final String brightColors = "9abcde";
@@ -65,6 +62,34 @@ public class StrUtils {
         if (am < 1000000000000L)
             return DF.format(am / 1000000000.0) + "B";
         return DF.format(am / 1000000000000.0) + "T";
+    }
+
+    public static long toTime(String in) {
+        in = in.replace(" ", "").replace(",", "");
+        long out = 0;
+        long cur = 0;
+        HashMap<String, Long> multipliers = new HashMap<>();
+        multipliers.put("w", 604800L);
+        multipliers.put("d", 86400L);
+        multipliers.put("h", 3600L);
+        multipliers.put("m", 60L);
+        StringBuilder curP = new StringBuilder();
+        for (char c : in.toCharArray()) {
+            if (c > 47 && c < 58) {
+                if (curP.length() > 0) {
+                    out += cur * multipliers.getOrDefault(curP.toString(), 0L);
+                    curP.setLength(0);
+                    cur = 0;
+                }
+                cur = cur * 10 + (c - 48);
+            } else
+                curP.append(c);
+        }
+        if (curP.length() > 0) {
+            out += cur * multipliers.getOrDefault(curP.toString(), 0L);
+            cur = 0;
+        }
+        return (out + cur) * 1000L;
     }
 
     public static String formatTime(long time) {

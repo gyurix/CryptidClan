@@ -1,0 +1,48 @@
+prefix: "&6&lPlayerShops ► &e"
+noconsole: '&cThis command can only be used by players'
+help:
+  player:
+    - "&6&lPlayer Shops - Help Menu"
+    - "&6&l/pshop OR /pshop help:&e Shows this help menu"
+    - "&6&l/pshop buy:&e Buy player shop so you could use it permanently"
+    - "&6&l/pshop info [player]:&e Info about your or other players shop"
+    - "&6&l/pshop rent <duration>:&e Rent out a player shop for the given duration"
+    - "&6&l/pshop view <player>:&e View other players shop"
+  admin:
+    - "&6&lAdmin Commands"
+    - "&6&l/pshopa OR /pshopa help:&e Shows this help menu"
+    - "&6&l/pshopa delete <player>:&e Deletes the given players shop"
+    - "&6&l/pshopa manage <player>:&e Manages the given players shop"
+    - "&6&l/pshopa setexpiration <player> <duration>:&e Sets the expiration of the given players renting status"
+    - "&6&l/pshopa togglebuy <player>:&e Toggles the given players shops bought status"
+delete:
+  category: "Deleted category &6&l<category>"
+  item: "Deleted item &6&l<item>"
+  shop: "&cDeleted &e<player>'s&c shop"
+info:
+  - "&6&lPlayer Shop Info - <player>"
+  - "&6• Bought:&e <bought>"
+  - "&6• Renting expires in:&e <rented>"
+  - "&6• Categories:&e <categories>"
+  - "&6• Items:&e <items>"
+permabuy:
+  done: "Bought permanent access to playershop"
+  already: "&cYou already bought permanent access to playershop"
+  enabled: "&aEnabled&e permanent access to playershop for &6&l<player>"
+  disable: "&cDisabled&e permanent access to playershop for &6&l<player>"
+rent:
+  done: "Rented out a playershop access for &6&l<time>"
+  extend: "Extended your playershop access by &6&l<time>&e, now it will expire in &6&l<expire>"
+  toolow: "&cThe minimum amount of renting time is &e<time>"
+  toohigh: "&cThe maximum amount of renting time is &e<time>"
+  toohighextend: "&cThe maximum amount of renting time (&e<time>&c) would be violated with this extension"
+  bought:
+    you: "&cYou already bought permanent access to your playershop"
+    others: "&cPlayer &e<player>&c already bought permanent access to his playershop"
+  setexpiration: "Set the expiration of &6&l<player>'s&e playershop access to &6&l<time>"
+missing:
+  player: "&cYou did not enter the player argument"
+  duration: "&cYou did not enter the duration argument"
+wrong:
+  player: "&cPlayer &e<player>&c was not found"
+  sub: "&cThe entered subcommand &e<sub>&c was not found"

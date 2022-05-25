@@ -109,8 +109,8 @@
     },
     "manage": {
       "layout": [
-        "back glass glass   glass  glass    glass glass   glass exit",
-        "glass tp    players groups setspawn icon buyable price glass",
+        "back  glass glass   glass  glass    glass glass   glass exit",
+        "glass tp    players groups setspawn icon  buyable price glass",
         "glass glass glass   glass  glass    glass glass   glass glass"
       ],
       "staticItems": {
