@@ -15,10 +15,28 @@ help:
     - "&6&l/pshopa manage <player>:&e Manages the given players shop"
     - "&6&l/pshopa setexpiration <player> <duration>:&e Sets the expiration of the given players renting status"
     - "&6&l/pshopa togglebuy <player>:&e Toggles the given players shops bought status"
+item:
+  buyable:
+    enable: "Enabled buying &6&l<item>&e from your player shop"
+    disable: "Disabled buying &6&l<item>&e from your player shop"
+  sellable:
+    enable: "Enabled selling &6&l<item>&e from your player shop"
+    disable: "Disabled selling &6&l<item>&e from your player shop"
+category:
+  limit: "&cYou are not allowed to create more than &e<limit>&c categories"
+  nosel: "&cYou did not select the categories icon"
+  nosub: "&cYou are not allowed to create sub categories"
+  enter: "Enter the name of the category or &6&lcancel&e to the chat"
+  cancel: "&cCancelled creating category"
+  remove: "Removed category &6&l<category>"
+claim:
+  done: "Claimed &6&l<amount>&e items"
+  non: "&cYou don't have any claimable items"
 delete:
   category: "Deleted category &6&l<category>"
   item: "Deleted item &6&l<item>"
   shop: "&cDeleted &e<player>'s&c shop"
+iconsel: "Selected icon &6&l<icon>&e"
 info:
   - "&6&lPlayer Shop Info - <player>"
   - "&6• Bought:&e <bought>"

@@ -1,12 +1,16 @@
 package gyurix.playershops.data;
 
+import gyurix.cryptidcommons.util.ItemUtils;
 import gyurix.cryptidcommons.util.StrUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import static gyurix.playershops.PlayerShopManager.save;
@@ -17,10 +21,10 @@ import static gyurix.playershops.conf.ConfigManager.msg;
 @NoArgsConstructor
 public class PlayerShop {
     private boolean bought;
-    private LinkedHashMap<String, Integer> overflow = new LinkedHashMap<>();
+    private LinkedHashMap<ItemStack, Integer> overflow = new LinkedHashMap<>();
     private UUID owner;
     private long rentedUntil;
-    private HashMap<Integer, ShopItem> shopItems = new HashMap<>();
+    private ShopItem shopItem = new ShopItem();
 
     public PlayerShop(UUID owner) {
         this.owner = owner;
@@ -33,16 +37,26 @@ public class PlayerShop {
         save(this);
     }
 
-
-    public int countCategories() {
-        return (int) shopItems.values().stream().filter(shopItem -> shopItem.categoryName != null).count();
+    public void claimItems(Player plr) {
+        int am = 0;
+        Iterator<Map.Entry<ItemStack, Integer>> it = overflow.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<ItemStack, Integer> entry = it.next();
+            ItemStack is = entry.getKey().clone();
+            is.setAmount(entry.getValue());
+            int remaining = ItemUtils.addItem(plr.getInventory(), is);
+            am += entry.getValue() - remaining;
+            if (remaining == 0) {
+                it.remove();
+                continue;
+            }
+            entry.setValue(remaining);
+        }
+        msg.msg(plr, am == 0 ? "claim.non" : "claim.done", "amount", am);
     }
 
-    public int countItems() {
-        int items = 0;
-        for (ShopItem shopItem : shopItems.values())
-            items += shopItem.categoryName == null ? 1 : shopItem.subItems.size();
-        return items;
+    public int countUnclaimedItems() {
+        return overflow.values().stream().reduce(Integer::sum).orElse(0);
     }
 
     public void extendRent(Player plr, long time) {
@@ -55,6 +69,10 @@ public class PlayerShop {
             msg.msg(plr, "rent.done", "time", StrUtils.formatTime(rentedUntil - curTime));
         }
         save(this);
+    }
+
+    public String getOwnerName() {
+        return Bukkit.getOfflinePlayer(owner).getName();
     }
 
 

@@ -19,7 +19,7 @@ public class GUIConfig implements PostProcessable {
     private final transient HashMap<Integer, ItemStack> staticMap = new HashMap<>();
     private String title;
 
-    public ItemStack getItem(String key, Object... vars) {
+    public ItemStack getCustomItem(String key, Object... vars) {
         return ItemUtils.fillVariables(customItems.get(key), vars);
     }
 

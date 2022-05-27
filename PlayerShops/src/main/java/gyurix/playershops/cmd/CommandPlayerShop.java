@@ -62,8 +62,8 @@ public class CommandPlayerShop implements CommandExecutor, TabCompleter {
             msg.msg(sender, "info",
                     "player", Bukkit.getOfflinePlayer(shop.getOwner()).getName(),
                     "bought", shop.isBought() ? "§ayes" : "§cno",
-                    "categories", shop.countCategories(),
-                    "items", shop.countItems(),
+                    "categories", shop.getShopItem().countCategories(),
+                    "items", shop.getShopItem().countItems(),
                     "rented", shop.isBought() || shop.getRentedUntil() < time ? "§cN/A" :
                             StrUtils.formatTime(shop.getRentedUntil() - time));
         });

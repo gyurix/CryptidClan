@@ -10,10 +10,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -27,6 +24,41 @@ import java.util.List;
 import java.util.UUID;
 
 public class ItemUtils {
+    public static int addItem(Inventory inv, ItemStack is) {
+        int left = is.getAmount();
+        int maxStack = is.getMaxStackSize();
+        int size = inv instanceof PlayerInventory ? 36 : inv.getSize();
+        for (int i = 0; i < size; i++) {
+            ItemStack current = inv.getItem(i);
+            if (itemSimilar(current, is)) {
+                int am = current.getAmount();
+                int canPlace = maxStack - am;
+                if (canPlace >= left) {
+                    current.setAmount(am + left);
+                    return 0;
+                } else if (canPlace > 0) {
+                    current.setAmount(am + canPlace);
+                    left -= canPlace;
+                }
+            }
+        }
+        for (int i = 0; i < size; i++) {
+            ItemStack current = inv.getItem(i);
+            if (current == null || current.getType() == Material.AIR) {
+                current = is.clone();
+                if (maxStack >= left) {
+                    current.setAmount(left);
+                    inv.setItem(i, current);
+                    return 0;
+                } else {
+                    current.setAmount(maxStack);
+                    left -= maxStack;
+                    inv.setItem(i, current);
+                }
+            }
+        }
+        return left;
+    }
 
     public static ItemStack addLore(ItemStack is, String... lore) {
         is = is.clone();
@@ -92,6 +124,17 @@ public class ItemUtils {
         return is;
     }
 
+    public static ItemStack fillVariables(ItemStack is, ItemStack from, Object... vars) {
+        if (is == null)
+            return null;
+        is = is.clone();
+        ItemMeta meta = is.getItemMeta();
+        meta.setDisplayName(StrUtils.fillVariables(from.getItemMeta().getDisplayName(), vars));
+        meta.setLore(StrUtils.fillVariables(from.getItemMeta().getLore(), vars));
+        is.setItemMeta(meta);
+        return is;
+    }
+
     public static Material getMaterial(String s) {
         try {
             return Material.valueOf(s.toUpperCase());
@@ -102,7 +145,7 @@ public class ItemUtils {
     }
 
     public static String getName(ItemStack is) {
-        String s = "§e" + is.getAmount() + "x §f";
+        String s = is.getAmount() > 1 ? "§e" + is.getAmount() + "x §f" : "§f";
         return s + ChatColor.stripColor(is.getItemMeta().hasDisplayName() ? is.getItemMeta().getDisplayName() : StrUtils.toCamelCase(is.getType().name()));
     }
 
@@ -112,6 +155,18 @@ public class ItemUtils {
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         is.setItemMeta(meta);
         return is;
+    }
+
+    public static boolean itemSimilar(ItemStack item1, ItemStack item2) {
+        if (item1 == item2)
+            return true;
+        if (item1 == null || item2 == null || item1.getType() == Material.AIR || item2.getType() == Material.AIR)
+            return false;
+        item1 = item1.clone();
+        item1.setAmount(1);
+        item2 = item2.clone();
+        item2.setAmount(1);
+        return itemToString(item1).equals(itemToString(item2));
     }
 
     public static String itemToString(ItemStack is) {
@@ -186,6 +241,14 @@ public class ItemUtils {
         meta.setOwner(owner);
         is.setItemMeta(meta);
         return is;
+    }
+
+    public static ItemStack makeSkull(ItemStack nameAndLore, String owner, String... vars) {
+        ItemStack is = makeItem(Material.PLAYER_HEAD, nameAndLore.getItemMeta().getDisplayName(), nameAndLore.getItemMeta().getLore());
+        SkullMeta meta = (SkullMeta) is.getItemMeta();
+        meta.setOwner(owner);
+        is.setItemMeta(meta);
+        return fillVariables(is, (Object[]) vars);
     }
 
     public static ItemStack setAmount(ItemStack is, int amount) {

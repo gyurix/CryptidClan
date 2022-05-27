@@ -2,14 +2,14 @@
   "serverFeePercentage": 2.5,
   "rentPricePerDay": 30,
   "categoryLimits": {
-    "default": 3,
+    "admin": 9,
     "vip": 5,
-    "admin": 9
+    "default": 3
   },
   "itemLimits": {
-    "default": 3,
+    "admin": 9,
     "vip": 5,
-    "admin": 9
+    "default": 3
   },
   "minRentTime": "2h",
   "maxRentTime": "1w",
@@ -17,6 +17,11 @@
   "categoryLore": [
     "&7",
     "&7Click to open category"
+  ],
+  "editCategoryLore": [
+    "&7",
+    "&7Click to open category",
+    "&7Shift + Right Click to delete category"
   ],
   "buyLore": [
     "&7",
@@ -82,7 +87,7 @@
       },
       "customItems": {
         "player": "PAPER name:&6&l<player>'s_Shop lore:&7Click_to_an_item|&7or_a_category",
-        "playerManage": "PAPER name:&6&l<player>'s_Shop lore:&7|&7•_Left_Click_to_an_item|&7in_your_inventory|&7then_to_a_slot_in_the|&7gui_to_add_item|&7|&7•_Right_Click_to_a_slot|&7in_the_gui_to_add_category",
+        "playerManage": "PAPER name:&6&l<player>'s_Shop lore:&7|&7•_Click_to_an_item|&7in_your_inventory|&7to_select_the_icon_of_a_new_slot|&7|&7After_that|&7•_Right_Click_to_a_slot|&7in_the_gui_to_add_category",
         "claim": "CHEST name:&6&lUnclaimed_Items lore:&7|&7•_You_have_&c<amount>|&7__unclaimed_items|&7|&7•_Click_to_claim_them",
         "claimNo": "CHEST name:&6&lUnclaimed_Items lore:&7|&7•_You_have_no|&7__unclaimed_items"
       },
@@ -104,7 +109,7 @@
       },
       "customItems": {
         "player": "PAPER name:&6&l<player>'s_Shop lore:&7|&7Click_to_an_item|&7to_buy_or_sell_it",
-        "categoryIcon": "PAPER name:&6&l<category> lore:&7|&7Click_to_an_item|&7to_buy_or_sell_it"
+        "category": "PAPER name:&6&l<category> lore:&7|&7Click_to_an_item|&7to_buy_or_sell_it"
       },
       "title": "&4<player>'s Shop - <category>"
     },
