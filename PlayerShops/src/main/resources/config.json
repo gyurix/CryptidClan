@@ -1,4 +1,11 @@
 {
+  "mySQL": {
+    "database": "minecraft",
+    "host": "localhost",
+    "password": "p&7h5y%_pC4Pk6tH",
+    "table": "playershops",
+    "username": "minecraft"
+  },
   "serverFeePercentage": 2.5,
   "rentPricePerDay": 30,
   "categoryLimits": {
@@ -29,7 +36,7 @@
     "&e• Buy price per item:&c <buyPrice>",
     "&7",
     "&f• Left Click to &abuy 1",
-    "&f• Shift Left Click to &abuy more"
+    "&f• Shift Left Click to &abuy 16"
   ],
   "sellLore": [
     "&7",
@@ -37,7 +44,7 @@
     "&e• Sell price per item:&c <sellPrice>",
     "&7",
     "&f• Right Click to &csell 1",
-    "&f• Shift Right Click to &csell more"
+    "&f• Shift Right Click to &csell 16"
   ],
   "buySellLore": [
     "&7",
@@ -47,10 +54,10 @@
     "&e• Sell price per item:&c <sellPrice>",
     "&7",
     "&7• &fLeft Click&7 to &abuy 1",
-    "&7• &fShift + Left Click&7 to &abuy more",
+    "&7• &fShift + Left Click&7 to &abuy 16",
     "&7",
     "&7• &fRight Click to &csell 1",
-    "&7• &fShift + Right Click to &csell more"
+    "&7• &fShift + Right Click to &csell 16"
   ],
   "editLore": [
     "&7",
@@ -87,7 +94,7 @@
       },
       "customItems": {
         "player": "PAPER name:&6&l<player>'s_Shop lore:&7Click_to_an_item|&7or_a_category",
-        "playerManage": "PAPER name:&6&l<player>'s_Shop lore:&7|&7•_Click_to_an_item|&7in_your_inventory|&7to_select_the_icon_of_a_new_slot|&7|&7After_that|&7•_Right_Click_to_a_slot|&7in_the_gui_to_add_category",
+        "playerManage": "PAPER name:&6&l<player>'s_Shop lore:&7|&e•_Click_to_an_item_in_your_inventory|&7to_select_the_icon_of_a_new_slot|&7|&6After_that|&7|&e•_Right_Click_to_a_slot|&ein_the_gui_to_add_category",
         "claim": "CHEST name:&6&lUnclaimed_Items lore:&7|&7•_You_have_&c<amount>|&7__unclaimed_items|&7|&7•_Click_to_claim_them",
         "claimNo": "CHEST name:&6&lUnclaimed_Items lore:&7|&7•_You_have_no|&7__unclaimed_items"
       },
@@ -131,7 +138,7 @@
         "player": "PAPER name:&6&l<player>'s_Shop lore:&7|&7Click_to_an_item|&7or_a_category",
         "buyable": "EMERALD name:&6&lAllow_Buying lore:&7|&e•_Status:_&cdisabled|&7|&7•_Click_to_enable_buying",
         "buyableYes": "EMERALD name:&6&lAllow_Buying lore:&7|&e•_Status:_&aenabled|&7|&7•_Click_to_disable_buying luck:1 hide:enchants",
-        "buyPrice": "LIME_DYE name:&6&lBuy_Price lore:&7|&e•_Gross_Price:_&c$<price>|&e•_Server_Tax:_&c$<tax>_(<tax>_%)|&e•_Net_Price:_&c$<netPrice>|&7|&7•_Click_to_change",
+        "buyPrice": "LIME_DYE name:&6&lBuy_Price lore:&7|&e•_Gross_Price:_&c$<price>|&e•_Server_Tax:_&c$<tax>_(<taxPct>_%)|&e•_Net_Price:_&c$<netPrice>|&7|&7•_Click_to_change",
         "depositItems": "CHEST name:&6&lDeposit_Items lore:&7|&e•_Current_Stock:_&c<stock>|&7|&7•_Click_to_deposit_items",
         "withdrawItems": "ENDER_CHEST name:&6&lWithdraw_Items lore:&7|&e•_Current_Stock:_&c<stock>|&7|&7•_Click_to_withdraw_items luck:1 hide:enchants",
         "withdrawItemsNo": "ENDER_CHEST name:&6&lWithdraw_Items lore:&7|&e•_Current_Stock:_&c<stock>",

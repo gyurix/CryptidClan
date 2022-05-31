@@ -145,7 +145,7 @@ public class ItemUtils {
     }
 
     public static String getName(ItemStack is) {
-        String s = is.getAmount() > 1 ? "§e" + is.getAmount() + "x §f" : "§f";
+        String s = is.getAmount() > 1 ? is.getAmount() + "x " : "";
         return s + ChatColor.stripColor(is.getItemMeta().hasDisplayName() ? is.getItemMeta().getDisplayName() : StrUtils.toCamelCase(is.getType().name()));
     }
 

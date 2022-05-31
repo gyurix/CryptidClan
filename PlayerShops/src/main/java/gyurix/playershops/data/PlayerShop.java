@@ -25,7 +25,6 @@ public class PlayerShop {
     private UUID owner;
     private long rentedUntil;
     private ShopItem shopItem = new ShopItem();
-
     public PlayerShop(UUID owner) {
         this.owner = owner;
         save(this);
@@ -75,6 +74,10 @@ public class PlayerShop {
         return Bukkit.getOfflinePlayer(owner).getName();
     }
 
+    public void setBought(boolean bought) {
+        this.bought = bought;
+        save(this);
+    }
 
     public void setRentedUntil(long rentedUntil) {
         this.rentedUntil = rentedUntil;

@@ -1,33 +1,80 @@
 prefix: "&6&lPlayerShops ► &e"
 noconsole: '&cThis command can only be used by players'
+noperm: "&cYou don't have permission for this command"
 help:
   player:
     - "&6&lPlayer Shops - Help Menu"
-    - "&6&l/pshop OR /pshop help:&e Shows this help menu"
-    - "&6&l/pshop buy:&e Buy player shop so you could use it permanently"
-    - "&6&l/pshop info [player]:&e Info about your or other players shop"
-    - "&6&l/pshop rent <duration>:&e Rent out a player shop for the given duration"
-    - "&6&l/pshop view <player>:&e View other players shop"
+    - "&6/pshop OR /pshop help:&e Shows this help menu"
+    - "&6/pshop buy:&e Buy player shop so you could use it permanently"
+    - "&6/pshop info [player]:&e Info about your or other players shop"
+    - "&6/pshop rent <duration>:&e Rent out a player shop for the given duration"
+    - "&6/pshop view <player>:&e View other players shop"
   admin:
     - "&6&lAdmin Commands"
-    - "&6&l/pshopa OR /pshopa help:&e Shows this help menu"
-    - "&6&l/pshopa delete <player>:&e Deletes the given players shop"
-    - "&6&l/pshopa manage <player>:&e Manages the given players shop"
-    - "&6&l/pshopa setexpiration <player> <duration>:&e Sets the expiration of the given players renting status"
-    - "&6&l/pshopa togglebuy <player>:&e Toggles the given players shops bought status"
+    - "&6/pshopa OR /pshopa help:&e Shows this help menu"
+    - "&6/pshopa delete <player>:&e Deletes the given players shop"
+    - "&6/pshopa manage <player>:&e Manages the given players shop"
+    - "&6/pshopa setexpiration <player> <duration>:&e Sets the expiration of the given players renting status"
+    - "&6/pshopa togglebuy <player>:&e Toggles the given players shops bought status"
+wrld:
+  deposit:
+    enter: "Enter the amount of depositable $WRLD or &6&lcancel&e to the chat"
+    cancel: "Cancelled depositing $WRLD to the shop"
+    done: "Deposited &6&l$<amount>&e to the shop"
+  withdraw:
+    enter: "Enter the withdrawable amount of depositable $WRLD or &6&lcancel&e to the chat"
+    cancel: "Cancelled withdrawing $WRLD from the shop"
+    done: "Withdrawn &6&l$<amount>&e from the shop"
+    notenough: "&cShop item &e<item>&c does not have enough accumulated &e&l$WRLD&c for this transaction"
+buy:
+  enter: "Enter the amount of buyable &6&l<item>&e or &6&lcancel&e to the chat"
+  cancel: "Cancelled buying &6&l<item>"
+  done: "Bought &6&l<item>&e for &6&l$<price>"
+  notenough: "&cYou don't have enough inventory space for this purchase"
+  notenoughshop: "&cThe shop does not have enough stock for this purchase"
+  disabled: "&cBuying is disabled for this item"
+sell:
+  enter: "Enter the amount of sellable &6&l<item>&e or &6&lcancel&e to the chat"
+  cancel: "Cancelled selling &6&l<item>"
+  done: "Sold &6&l<item>&e for &6&l$<price>"
+  notenough: "&cYou don't have enough sellable items in your inventory"
+  notenoughshop: "&cThe shop does not have enough accumulated &e$WRLD&c for this transfer"
+  disabled: "&cSelling is disabled for this item"
 item:
+  limit: "&cYou are not allowed to create more than &e<limit>&c items"
+  deposit:
+    enter: "Enter the amount of depositable &6&l<item>&e or &6&lcancel&e to the chat"
+    cancel: "Cancelled depositing &6&l<item>&e to the shop"
+    done: "Deposited &6&l<item>&e to the shop"
+    notenough: "&cYou don't have enough &e&l<item>&c for this transaction"
+  withdraw:
+    enter: "Enter the withdrawable amount of &6&l<item>&e or &6&lcancel&e to the chat"
+    cancel: "Cancelled depositing &6&l<item>&e to the shop"
+    done: "Withdrawn &6&l<item>&e from the shop"
+    notenough: "&cYour shop does not have enough collectable &e&l<item>&c for this transaction"
+  buyPrice:
+    enter: "Enter the buying price of &6&l<item>&e or &6&lcancel&e to the chat"
+    cancel: "&cCancelled changing buying price of &6&l<item>"
+    done: "Changed the buying price of &6&l<item>&e to &6&l$<price>"
+  sellPrice:
+    enter: "Enter the selling price of &6&l<item>&e or &6&lcancel&e to the chat"
+    cancel: "&cCancelled changing selling price of &6&l<item>"
+    done: "Changed the selling price of &6&l<item>&e to &6&l$<price>"
   buyable:
     enable: "Enabled buying &6&l<item>&e from your player shop"
     disable: "Disabled buying &6&l<item>&e from your player shop"
   sellable:
     enable: "Enabled selling &6&l<item>&e from your player shop"
     disable: "Disabled selling &6&l<item>&e from your player shop"
+  nosel: "&cYou did not select the sellable item"
+  create: "Created shop item <item>"
 category:
+  cancel: "&cCancelled creating category"
+  create: "Created category &6&l<category>"
+  enter: "Enter the name of the category or &6&lcancel&e to the chat"
   limit: "&cYou are not allowed to create more than &e<limit>&c categories"
   nosel: "&cYou did not select the categories icon"
   nosub: "&cYou are not allowed to create sub categories"
-  enter: "Enter the name of the category or &6&lcancel&e to the chat"
-  cancel: "&cCancelled creating category"
   remove: "Removed category &6&l<category>"
 claim:
   done: "Claimed &6&l<amount>&e items"
@@ -35,7 +82,7 @@ claim:
 delete:
   category: "Deleted category &6&l<category>"
   item: "Deleted item &6&l<item>"
-  shop: "&cDeleted &e<player>'s&c shop"
+  shop: "Deleted &6&l<player>'s&e shop"
 iconsel: "Selected icon &6&l<icon>&e"
 info:
   - "&6&lPlayer Shop Info - <player>"
@@ -46,7 +93,7 @@ info:
 permabuy:
   done: "Bought permanent access to playershop"
   already: "&cYou already bought permanent access to playershop"
-  enabled: "&aEnabled&e permanent access to playershop for &6&l<player>"
+  enable: "&aEnabled&e permanent access to playershop for &6&l<player>"
   disable: "&cDisabled&e permanent access to playershop for &6&l<player>"
 rent:
   done: "Rented out a playershop access for &6&l<time>"
@@ -64,3 +111,5 @@ missing:
 wrong:
   player: "&cPlayer &e<player>&c was not found"
   sub: "&cThe entered subcommand &e<sub>&c was not found"
+  price: "&cThe entered price is incorrect"
+  amount: "&cThe entered amount is incorrect"

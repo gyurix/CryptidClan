@@ -7,6 +7,7 @@ import gyurix.cryptidcommons.data.WRLDRunnable;
 import gyurix.cryptidcommons.util.StrUtils;
 import gyurix.playershops.PlayerShopManager;
 import gyurix.playershops.data.PlayerShop;
+import gyurix.playershops.gui.ShopGUI;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -101,12 +102,16 @@ public class CommandPlayerShop implements CommandExecutor, TabCompleter {
     }
 
     private void cmdView(CommandSender sender, String[] args) {
-
+        if (!(sender instanceof Player plr)) {
+            msg.msg(sender, "noconsole");
+            return;
+        }
+        withPlayerShop(sender, args, (shop) -> new ShopGUI(plr, shop, shop.getOwner().equals(plr.getUniqueId()), shop.getShopItem()));
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String string, @NotNull String[] args) {
-        String sub = args[0].toLowerCase();
+        String sub = args.length == 0 ? "help" : args[0].toLowerCase();
         switch (sub) {
             case "buy" -> cmdBuy(sender);
             case "help" -> cmdHelp(sender);

@@ -6,6 +6,7 @@ import com.nftworlds.wallet.objects.Wallet;
 import gyurix.cryptidcommons.gui.CustomGUI;
 import gyurix.cryptidcommons.util.ChatDataReader;
 import gyurix.cryptidcommons.util.ItemUtils;
+import gyurix.playershops.PlayerShopManager;
 import gyurix.playershops.data.PlayerShop;
 import gyurix.playershops.data.ShopItem;
 import org.bukkit.entity.Player;
@@ -50,6 +51,7 @@ public class ShopGUI extends CustomGUI {
             shopItemCreate(slot, right);
             return;
         }
+        System.out.println();
         if (shopItem.categoryName != null) {
             if (right && shift) {
                 category.subItems.remove(slot);
@@ -95,6 +97,7 @@ public class ShopGUI extends CustomGUI {
 
             default -> {
                 ShopItem shopItem = category.subItems.get(slot);
+                System.out.println("Selected item: " + admin + " - " + shopItem);
                 if (admin) {
                     handleAdminClick(slot, shopItem, right, shift);
                     return;
@@ -124,15 +127,33 @@ public class ShopGUI extends CustomGUI {
             plr.closeInventory();
             msg.msg(plr, "category.enter");
             new ChatDataReader(plr, (categoryName) -> {
-
+                msg.msg(plr, "category.create", "category", categoryName);
+                category.subItems.put(slot, new ShopItem(icon, categoryName));
+                PlayerShopManager.save(shop);
+                update();
             }, () -> {
                 msg.msg(plr, "category.cancel");
                 plr.openInventory(inv);
             });
+            return;
         }
+        int itemLimit = conf.getItemLimit(plr);
+        if (shop.getShopItem().countCategories() >= itemLimit) {
+            msg.msg(plr, "item.limit", "limit", itemLimit);
+            return;
+        }
+        if (icon == null) {
+            msg.msg(plr, "item.nosel");
+            return;
+        }
+        msg.msg(plr, "item.create", "item", ItemUtils.getName(icon));
+        category.subItems.put(slot, new ShopItem(icon));
+        PlayerShopManager.save(shop);
+        update();
     }
 
     private void shopItemManage(ShopItem shopItem, boolean right, boolean shift) {
+        System.out.println("ItemManage - " + ItemUtils.getName(shopItem.item) + " - " + right + " - " + shift);
         if (shift) {
             if (right) {
                 double wrld = shopItem.removeFrom(shop);
@@ -142,18 +163,34 @@ public class ShopGUI extends CustomGUI {
                 }
                 return;
             }
-            shopItem.buyable = !shopItem.buyable;
-            msg.msg(plr, "item.buyable." + (shopItem.buyable ? "enable" : "disable"), "item", ItemUtils.getName(shopItem.item));
+            new ManageGUI(plr, shop, shopItem, category);
             return;
         }
         if (right) {
             shopItem.sellable = !shopItem.sellable;
+            update();
             msg.msg(plr, "item.sellable." + (shopItem.sellable ? "enable" : "disable"), "item", ItemUtils.getName(shopItem.item));
+            return;
         }
+        shopItem.buyable = !shopItem.buyable;
+        update();
+        msg.msg(plr, "item.buyable." + (shopItem.buyable ? "enable" : "disable"), "item", ItemUtils.getName(shopItem.item));
     }
 
     private void shopItemUse(ShopItem shopItem, boolean right, boolean shift) {
-
+        if (shift) {
+            if (right) {
+                shopItem.sellMore(this, shop, plr);
+                return;
+            }
+            shopItem.buyMore(this, shop, plr);
+            return;
+        }
+        if (right) {
+            shopItem.sell1(this, shop, plr);
+            return;
+        }
+        shopItem.buy1(this, shop, plr);
     }
 
     @Override

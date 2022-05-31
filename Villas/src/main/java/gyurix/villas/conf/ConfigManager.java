@@ -9,7 +9,6 @@ import gyurix.cryptidcommons.conf.adapters.StringAdapter;
 import gyurix.cryptidcommons.conf.adapters.StringSerializableAdapter;
 import lombok.SneakyThrows;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.FileReader;
@@ -23,7 +22,7 @@ public class ConfigManager {
     public static Gson gson = new GsonBuilder()
             .registerTypeAdapterFactory(new StringSerializableAdapter())
             .registerTypeAdapterFactory(new PostProcessableAdapter())
-            .registerTypeAdapter(ItemStack.class, new ItemStackAdapter().nullSafe())
+            .registerTypeAdapterFactory(new ItemStackAdapter())
             .registerTypeAdapter(String.class, new StringAdapter().nullSafe())
             .serializeNulls()
             .setPrettyPrinting()
