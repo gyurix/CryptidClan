@@ -74,7 +74,7 @@ public class PlayersGUI extends CustomGUI {
         }
         if (right) {
             if (villa.kick(plr, pln))
-                new PlayersGUI(plr,villa);
+                new PlayersGUI(plr, villa);
         } else
             new PlayerGroupSelectorGUI(plr, villa, pln);
     }

@@ -16,17 +16,69 @@ import static gyurix.playershops.conf.ConfigManager.conf;
 import static gyurix.playershops.conf.ConfigManager.msg;
 
 public class ShopGUI extends CustomGUI {
-    private boolean admin;
-    private ShopItem category;
+    private final ShopItem category;
     private ItemStack icon;
-    private PlayerShop shop;
+    private final boolean manage;
+    private final PlayerShop shop;
 
-    public ShopGUI(Player plr, PlayerShop shop, boolean admin, ShopItem category) {
+    public ShopGUI(Player plr, PlayerShop shop, boolean manage, ShopItem category) {
         super(plr, conf.guis.get(category.categoryName.isEmpty() ? "shop" : "category"));
-        this.admin = admin;
         this.category = category;
+        this.manage = manage;
         this.shop = shop;
         open("player", shop.getOwnerName());
+    }
+
+    private void createCategory(int slot) {
+        if (!category.categoryName.isEmpty()) {
+            msg.msg(plr, "category.nosub");
+            return;
+        }
+        int categoryLimit = conf.getCategoryLimit(plr);
+        if (shop.getShopItem().countCategories() >= categoryLimit) {
+            msg.msg(plr, "category.limit", "limit", categoryLimit);
+            return;
+        }
+        if (icon == null) {
+            msg.msg(plr, "category.nosel");
+            return;
+        }
+        plr.closeInventory();
+        msg.msg(plr, "category.enter");
+        new ChatDataReader(plr, (categoryName) -> {
+            msg.msg(plr, "category.create", "category", categoryName);
+            category.subItems.put(slot, new ShopItem(icon, categoryName));
+            PlayerShopManager.save(shop);
+            update();
+        }, () -> {
+            msg.msg(plr, "category.cancel");
+            plr.openInventory(inv);
+        });
+    }
+
+    private void createItem(int slot) {
+        int itemLimit = conf.getItemLimit(plr);
+        if (shop.getShopItem().countCategories() >= itemLimit) {
+            msg.msg(plr, "item.limit", "limit", itemLimit);
+            return;
+        }
+        if (icon == null) {
+            msg.msg(plr, "item.nosel");
+            return;
+        }
+        String license = conf.categoryLicenses.get(icon.getType());
+        if (license == null) {
+            msg.msg(plr, "license.notlistable");
+            return;
+        }
+        if (!shop.getLicenses().contains(license)) {
+            msg.msg(plr, "license.required", "license", license);
+            return;
+        }
+        msg.msg(plr, "item.create", "item", ItemUtils.getName(icon));
+        category.subItems.put(slot, new ShopItem(icon));
+        PlayerShopManager.save(shop);
+        update();
     }
 
     @Override
@@ -37,7 +89,7 @@ public class ShopGUI extends CustomGUI {
                 return config.getCustomItem(unclaimed == 0 ? "claimNo" : "claim", "amount", unclaimed);
             }
             case "player" -> {
-                return ItemUtils.makeSkull(config.getCustomItem(admin ? "playerManage" : "player"), shop.getOwnerName(), "player", shop.getOwnerName());
+                return ItemUtils.makeSkull(config.getCustomItem("player"), shop.getOwnerName(), "player", shop.getOwnerName());
             }
             case "category" -> {
                 return ItemUtils.fillVariables(category.item, config.getCustomItem("category", "category", category.categoryName));
@@ -48,10 +100,13 @@ public class ShopGUI extends CustomGUI {
 
     private void handleAdminClick(int slot, ShopItem shopItem, boolean right, boolean shift) {
         if (shopItem == null) {
-            shopItemCreate(slot, right);
+            if (right) {
+                createCategory(slot);
+                return;
+            }
+            createItem(slot);
             return;
         }
-        System.out.println();
         if (shopItem.categoryName != null) {
             if (right && shift) {
                 category.subItems.remove(slot);
@@ -60,7 +115,7 @@ public class ShopGUI extends CustomGUI {
                 msg.msg(plr, "category.remove", "category", shopItem.categoryName);
                 return;
             }
-            new ShopGUI(plr, shop, admin, shopItem);
+            new ShopGUI(plr, shop, manage, shopItem);
             return;
         }
 
@@ -69,7 +124,7 @@ public class ShopGUI extends CustomGUI {
 
     @Override
     public void onBottomClick(int slot, boolean rightClick, boolean shiftClick) {
-        if (!admin)
+        if (!manage)
             return;
         ItemStack is = plr.getInventory().getItem(slot);
         if (is == null)
@@ -86,10 +141,10 @@ public class ShopGUI extends CustomGUI {
         switch (type) {
             case "back" -> {
                 if (!category.categoryName.isEmpty())
-                    new ShopGUI(plr, shop, admin, shop.getShopItem());
+                    new ShopGUI(plr, shop, manage, shop.getShopItem());
             }
             case "claim" -> {
-                if (!category.categoryName.isEmpty() || !admin)
+                if (!category.categoryName.isEmpty() || !manage)
                     return;
                 shop.claimItems(plr);
             }
@@ -97,8 +152,7 @@ public class ShopGUI extends CustomGUI {
 
             default -> {
                 ShopItem shopItem = category.subItems.get(slot);
-                System.out.println("Selected item: " + admin + " - " + shopItem);
-                if (admin) {
+                if (manage) {
                     handleAdminClick(slot, shopItem, right, shift);
                     return;
                 }
@@ -109,51 +163,7 @@ public class ShopGUI extends CustomGUI {
         }
     }
 
-    private void shopItemCreate(int slot, boolean createCategory) {
-        if (createCategory) {
-            if (!category.categoryName.isEmpty()) {
-                msg.msg(plr, "category.nosub");
-                return;
-            }
-            int categoryLimit = conf.getCategoryLimit(plr);
-            if (shop.getShopItem().countCategories() >= categoryLimit) {
-                msg.msg(plr, "category.limit", "limit", categoryLimit);
-                return;
-            }
-            if (icon == null) {
-                msg.msg(plr, "category.nosel");
-                return;
-            }
-            plr.closeInventory();
-            msg.msg(plr, "category.enter");
-            new ChatDataReader(plr, (categoryName) -> {
-                msg.msg(plr, "category.create", "category", categoryName);
-                category.subItems.put(slot, new ShopItem(icon, categoryName));
-                PlayerShopManager.save(shop);
-                update();
-            }, () -> {
-                msg.msg(plr, "category.cancel");
-                plr.openInventory(inv);
-            });
-            return;
-        }
-        int itemLimit = conf.getItemLimit(plr);
-        if (shop.getShopItem().countCategories() >= itemLimit) {
-            msg.msg(plr, "item.limit", "limit", itemLimit);
-            return;
-        }
-        if (icon == null) {
-            msg.msg(plr, "item.nosel");
-            return;
-        }
-        msg.msg(plr, "item.create", "item", ItemUtils.getName(icon));
-        category.subItems.put(slot, new ShopItem(icon));
-        PlayerShopManager.save(shop);
-        update();
-    }
-
     private void shopItemManage(ShopItem shopItem, boolean right, boolean shift) {
-        System.out.println("ItemManage - " + ItemUtils.getName(shopItem.item) + " - " + right + " - " + shift);
         if (shift) {
             if (right) {
                 double wrld = shopItem.removeFrom(shop);
@@ -195,7 +205,7 @@ public class ShopGUI extends CustomGUI {
 
     @Override
     public void update() {
-        category.subItems.forEach((slot, item) -> inv.setItem(slot, item.getDisplayItem(admin)));
+        category.subItems.forEach((slot, item) -> inv.setItem(slot, item.getDisplayItem(manage)));
         super.update();
     }
 }

@@ -1,35 +1,4 @@
 {
-  "mySQL": {
-    "database": "minecraft",
-    "host": "localhost",
-    "password": "p&7h5y%_pC4Pk6tH",
-    "table": "playershops",
-    "username": "minecraft"
-  },
-  "serverFeePercentage": 2.5,
-  "rentPricePerDay": 30,
-  "categoryLimits": {
-    "admin": 9,
-    "vip": 5,
-    "default": 3
-  },
-  "itemLimits": {
-    "admin": 9,
-    "vip": 5,
-    "default": 3
-  },
-  "minRentTime": "2h",
-  "maxRentTime": "1w",
-  "purchasePrice": 200,
-  "categoryLore": [
-    "&7",
-    "&7Click to open category"
-  ],
-  "editCategoryLore": [
-    "&7",
-    "&7Click to open category",
-    "&7Shift + Right Click to delete category"
-  ],
   "buyLore": [
     "&7",
     "&e• Max buyable amount:&c <maxBuy>",
@@ -37,14 +6,6 @@
     "&7",
     "&f• Left Click to &abuy 1",
     "&f• Shift Left Click to &abuy 16"
-  ],
-  "sellLore": [
-    "&7",
-    "&e• Max sellable amount:&c <maxSell>",
-    "&e• Sell price per item:&c <sellPrice>",
-    "&7",
-    "&f• Right Click to &csell 1",
-    "&f• Shift Right Click to &csell 16"
   ],
   "buySellLore": [
     "&7",
@@ -58,6 +19,61 @@
     "&7",
     "&7• &fRight Click to &csell 1",
     "&7• &fShift + Right Click to &csell 16"
+  ],
+  "categoryLicenseCosts": {
+    "armor": 10,
+    "weapon": 15
+  },
+  "categoryLicenses": {
+    "ARROW": "weapon",
+    "BOW": "weapon",
+    "DIAMOND_AXE": "weapon",
+    "DIAMOND_BOOTS": "armor",
+    "DIAMOND_CHESTPLATE": "armor",
+    "DIAMOND_HELMET": "armor",
+    "DIAMOND_LEGGINGS": "armor",
+    "DIAMOND_SWORD": "weapon",
+    "GOLDEN_AXE": "weapon",
+    "GOLDEN_BOOTS": "armor",
+    "GOLDEN_CHESTPLATE": "armor",
+    "GOLDEN_HELMET": "armor",
+    "GOLDEN_LEGGINGS": "armor",
+    "GOLDEN_SWORD": "weapon",
+    "IRON_AXE": "weapon",
+    "IRON_BOOTS": "armor",
+    "IRON_CHESTPLATE": "armor",
+    "IRON_HELMET": "armor",
+    "IRON_LEGGINGS": "armor",
+    "IRON_SWORD": "weapon",
+    "LEATHER_BOOTS": "armor",
+    "LEATHER_CHESTPLATE": "armor",
+    "LEATHER_HELMET": "armor",
+    "LEATHER_LEGGINGS": "armor",
+    "NETHERITE_BOOTS": "armor",
+    "NETHERITE_CHESTPLATE": "armor",
+    "NETHERITE_HELMET": "armor",
+    "NETHERITE_LEGGINGS": "armor",
+    "SHIELD": "armor",
+    "SPECTRAL_ARROW": "weapon",
+    "STONE_AXE": "weapon",
+    "STONE_SWORD": "weapon",
+    "TIPPED_ARROW": "weapon",
+    "WOODEN_AXE": "weapon",
+    "WOODEN_SWORD": "weapon"
+  },
+  "categoryLimits": {
+    "admin": 9,
+    "default": 3,
+    "vip": 5
+  },
+  "categoryLore": [
+    "&7",
+    "&7Click to open category"
+  ],
+  "editCategoryLore": [
+    "&7",
+    "&7Click to open category",
+    "&7Shift + Right Click to delete category"
   ],
   "editLore": [
     "&7",
@@ -79,28 +95,11 @@
     "&7"
   ],
   "guis": {
-    "shop": {
-      "layout": [
-        "claim glass glass glass player glass glass glass exit",
-        "glass glass glass glass glass  glass glass glass glass",
-        "glass glass glass glass glass  glass glass glass glass",
-        "glass glass glass glass glass  glass glass glass glass",
-        "glass glass glass glass glass  glass glass glass glass",
-        "glass glass glass glass glass  glass glass glass glass"
-      ],
-      "staticItems": {
-        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
-        "glass": "BLACK_STAINED_GLASS_PANE name:&c"
-      },
-      "customItems": {
-        "player": "PAPER name:&6&l<player>'s_Shop lore:&7Click_to_an_item|&7or_a_category",
-        "playerManage": "PAPER name:&6&l<player>'s_Shop lore:&7|&e•_Click_to_an_item_in_your_inventory|&7to_select_the_icon_of_a_new_slot|&7|&6After_that|&7|&e•_Right_Click_to_a_slot|&ein_the_gui_to_add_category",
-        "claim": "CHEST name:&6&lUnclaimed_Items lore:&7|&7•_You_have_&c<amount>|&7__unclaimed_items|&7|&7•_Click_to_claim_them",
-        "claimNo": "CHEST name:&6&lUnclaimed_Items lore:&7|&7•_You_have_no|&7__unclaimed_items"
-      },
-      "title": "&4<player>'s Shop"
-    },
     "category": {
+      "customItems": {
+        "category": "PAPER name:&6&l<category> lore:&7|&7Click_to_an_item|&7to_buy_or_sell_it",
+        "player": "PAPER name:&6&l<player>'s_Shop lore:&7|&7Click_to_an_item|&7to_buy_or_sell_it"
+      },
       "layout": [
         "back  glass glass player glass category glass glass exit",
         "glass glass glass glass  glass glass    glass glass glass",
@@ -114,13 +113,24 @@
         "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
         "glass": "BLACK_STAINED_GLASS_PANE name:&c"
       },
-      "customItems": {
-        "player": "PAPER name:&6&l<player>'s_Shop lore:&7|&7Click_to_an_item|&7to_buy_or_sell_it",
-        "category": "PAPER name:&6&l<category> lore:&7|&7Click_to_an_item|&7to_buy_or_sell_it"
-      },
       "title": "&4<player>'s Shop - <category>"
     },
     "manage": {
+      "customItems": {
+        "buyPrice": "LIME_DYE name:&6&lBuy_Price lore:&7|&e•_Gross_Price:_&c$<price>|&e•_Server_Tax:_&c$<tax>_(<taxPct>_%)|&e•_Net_Price:_&c$<netPrice>|&7|&7•_Click_to_change",
+        "buyable": "EMERALD name:&6&lAllow_Buying lore:&7|&e•_Status:_&cdisabled|&7|&7•_Click_to_enable_buying",
+        "buyableYes": "EMERALD name:&6&lAllow_Buying lore:&7|&e•_Status:_&aenabled|&7|&7•_Click_to_disable_buying luck:1 hide:enchants",
+        "depositItems": "CHEST name:&6&lDeposit_Items lore:&7|&e•_Current_Stock:_&c<stock>|&7|&7•_Click_to_deposit_items",
+        "depositWrld": "GOLD_INGOT name:&6&lDeposit_WRLD lore:&7|&e•_Stored_Funds:_&c$<stored>|&7|&7•_Click_to_deposit_WRLD",
+        "player": "PAPER name:&6&l<player>'s_Shop lore:&7|&7Click_to_an_item|&7or_a_category",
+        "sellPrice": "RED_DYE name:&6&lSell_Price lore:&7|&e•_Gross_Price:_&c$<price>|&e•_Server_Tax:_&c$<tax>_(<taxPct>_%)|&e•_Net_Price:_&c$<netPrice>|&7|&7•_Click_to_change",
+        "sellable": "REDSTONE name:&6&lAllow_Selling lore:&7|&e•_Status:_&cdisabled|&7|&7•_Click_to_enable_selling",
+        "sellableYes": "REDSTONE name:&6&lAllow_Selling lore:&7|&e•_Status:_&aenabled|&7|&7•_Click_to_disable_selling luck:1 hide:enchants",
+        "withdrawItems": "ENDER_CHEST name:&6&lWithdraw_Items lore:&7|&e•_Current_Stock:_&c<stock>|&7|&7•_Click_to_withdraw_items luck:1 hide:enchants",
+        "withdrawItemsNo": "ENDER_CHEST name:&6&lWithdraw_Items lore:&7|&e•_Current_Stock:_&c<stock>",
+        "withdrawWrld": "IRON_INGOT name:&6&lWithdraw_WRLD lore:&7|&e•_Stored_Funds:_&c$<stored>|&7|&7•_Click_to_withdraw_WRLD luck:1 hide:enchants",
+        "withdrawWrldNo": "IRON_INGOT name:&6&lWithdraw_WRLD lore:&7|&e•_Stored_Funds:_&c$<stored>"
+      },
       "layout": [
         "back  glass glass    item      glass delete       glass         glass exit",
         "glass glass glass    glass     glass glass        glass         glass glass",
@@ -134,22 +144,53 @@
         "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
         "glass": "BLACK_STAINED_GLASS_PANE name:&c"
       },
-      "customItems": {
-        "player": "PAPER name:&6&l<player>'s_Shop lore:&7|&7Click_to_an_item|&7or_a_category",
-        "buyable": "EMERALD name:&6&lAllow_Buying lore:&7|&e•_Status:_&cdisabled|&7|&7•_Click_to_enable_buying",
-        "buyableYes": "EMERALD name:&6&lAllow_Buying lore:&7|&e•_Status:_&aenabled|&7|&7•_Click_to_disable_buying luck:1 hide:enchants",
-        "buyPrice": "LIME_DYE name:&6&lBuy_Price lore:&7|&e•_Gross_Price:_&c$<price>|&e•_Server_Tax:_&c$<tax>_(<taxPct>_%)|&e•_Net_Price:_&c$<netPrice>|&7|&7•_Click_to_change",
-        "depositItems": "CHEST name:&6&lDeposit_Items lore:&7|&e•_Current_Stock:_&c<stock>|&7|&7•_Click_to_deposit_items",
-        "withdrawItems": "ENDER_CHEST name:&6&lWithdraw_Items lore:&7|&e•_Current_Stock:_&c<stock>|&7|&7•_Click_to_withdraw_items luck:1 hide:enchants",
-        "withdrawItemsNo": "ENDER_CHEST name:&6&lWithdraw_Items lore:&7|&e•_Current_Stock:_&c<stock>",
-        "sellable": "REDSTONE name:&6&lAllow_Selling lore:&7|&e•_Status:_&cdisabled|&7|&7•_Click_to_enable_selling",
-        "sellableYes": "REDSTONE name:&6&lAllow_Selling lore:&7|&e•_Status:_&aenabled|&7|&7•_Click_to_disable_selling luck:1 hide:enchants",
-        "sellPrice": "RED_DYE name:&6&lSell_Price lore:&7|&e•_Gross_Price:_&c$<price>|&e•_Server_Tax:_&c$<tax>_(<tax>_%)|&e•_Net_Price:_&c$<netPrice>|&7|&7•_Click_to_change",
-        "depositWrld": "GOLD_INGOT name:&6&lDeposit_WRLD lore:&7|&e•_Stored_Funds:_&c$<stored>|&7|&7•_Click_to_deposit_WRLD",
-        "withdrawWrld": "IRON_INGOT name:&6&lWithdraw_WRLD lore:&7|&e•_Stored_Funds:_&c$<stored>|&7|&7•_Click_to_withdraw_WRLD luck:1 hide:enchants",
-        "withdrawWrldNo": "IRON_INGOT name:&6&lWithdraw_WRLD lore:&7|&e•_Stored_Funds:_&c$<stored>"
-      },
       "title": "&4<player>'s Shop - <category>"
+    },
+    "shop": {
+      "customItems": {
+        "claim": "CHEST name:&6&lUnclaimed_Items lore:&7|&7•_You_have_&c<amount>|&7__unclaimed_items|&7|&7•_Click_to_claim_them",
+        "claimNo": "CHEST name:&6&lUnclaimed_Items lore:&7|&7•_You_have_no|&7__unclaimed_items",
+        "player": "PAPER name:&6&l<player>'s_Shop lore:&7Click_to_an_item|&7or_a_category",
+        "playerManage": "PAPER name:&6&l<player>'s_Shop lore:&7|&e•_Click_to_an_item_in_your_inventory|&7to_select_the_icon_of_a_new_slot|&7|&6After_that|&7|&e•_Right_Click_to_a_slot|&ein_the_gui_to_add_category"
+      },
+      "layout": [
+        "claim glass glass glass player glass glass glass exit",
+        "glass glass glass glass glass  glass glass glass glass",
+        "glass glass glass glass glass  glass glass glass glass",
+        "glass glass glass glass glass  glass glass glass glass",
+        "glass glass glass glass glass  glass glass glass glass",
+        "glass glass glass glass glass  glass glass glass glass"
+      ],
+      "staticItems": {
+        "exit": "BARRIER name:&c&lClose_GUI lore:&7|&7Click_to_close|&7this_gui",
+        "glass": "BLACK_STAINED_GLASS_PANE name:&c"
+      },
+      "title": "&4<player>'s Shop"
     }
-  }
+  },
+  "itemLimits": {
+    "admin": 9,
+    "default": 3,
+    "vip": 5
+  },
+  "maxRentTime": "1w",
+  "minRentTime": "2h",
+  "mySQL": {
+    "database": "minecraft",
+    "host": "localhost",
+    "password": "p&7h5y%_pC4Pk6tH",
+    "table": "playershops",
+    "username": "minecraft"
+  },
+  "purchasePrice": 200,
+  "rentPricePerDay": 30,
+  "sellLore": [
+    "&7",
+    "&e• Max sellable amount:&c <maxSell>",
+    "&e• Sell price per item:&c <sellPrice>",
+    "&7",
+    "&f• Right Click to &csell 1",
+    "&f• Shift Right Click to &csell 16"
+  ],
+  "serverFeePercentage": 2.5
 }

@@ -8,10 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import static gyurix.playershops.PlayerShopManager.save;
 import static gyurix.playershops.conf.ConfigManager.conf;
@@ -21,10 +18,12 @@ import static gyurix.playershops.conf.ConfigManager.msg;
 @NoArgsConstructor
 public class PlayerShop {
     private boolean bought;
-    private LinkedHashMap<ItemStack, Integer> overflow = new LinkedHashMap<>();
+    private final TreeSet<String> licenses = new TreeSet<>();
+    private final LinkedHashMap<ItemStack, Integer> overflow = new LinkedHashMap<>();
     private UUID owner;
     private long rentedUntil;
-    private ShopItem shopItem = new ShopItem();
+    private final ShopItem shopItem = new ShopItem();
+
     public PlayerShop(UUID owner) {
         this.owner = owner;
         save(this);

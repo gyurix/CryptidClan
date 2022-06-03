@@ -8,6 +8,7 @@ import gyurix.cryptidcommons.util.StrUtils;
 import gyurix.playershops.PlayerShopManager;
 import gyurix.playershops.data.PlayerShop;
 import gyurix.playershops.gui.ShopGUI;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -16,18 +17,19 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import static gyurix.cryptidcommons.util.StrUtils.filterStart;
-import static gyurix.cryptidcommons.util.StrUtils.toTime;
+import static gyurix.cryptidcommons.util.StrUtils.*;
 import static gyurix.playershops.PlayerShopsPlugin.pl;
 import static gyurix.playershops.conf.ConfigManager.conf;
 import static gyurix.playershops.conf.ConfigManager.msg;
 
 public class CommandPlayerShop implements CommandExecutor, TabCompleter {
-    private final List<String> subCommands = List.of("buy", "help", "info", "rent", "view");
+    private final List<String> subCommands = List.of("buy", "buylicense", "help", "info", "license", "rent", "view");
 
     public CommandPlayerShop() {
         PluginCommand pcmd = pl.getCommand("playershop");
@@ -51,6 +53,41 @@ public class CommandPlayerShop implements CommandExecutor, TabCompleter {
         });
     }
 
+    private void cmdBuyLicense(CommandSender sender, String[] args) {
+        if (args.length == 1) {
+            msg.msg(sender, "missing.license");
+            return;
+        }
+        String license = args[1].toLowerCase();
+        if (!conf.categoryLicenseCosts.containsKey(license)) {
+            msg.msg(sender, "wrong.license", "license", license);
+            return;
+        }
+        withPlayerShop(sender, (String[]) ArrayUtils.subarray(args, 1, args.length), (shop) -> {
+            boolean admin = sender.hasPermission("playershops.admin");
+            boolean own = shop.getOwnerName().equals(sender.getName());
+            if (!admin && !own) {
+                msg.msg(sender, "license.notallowed");
+                return;
+            }
+            if (shop.getLicenses().contains(license)) {
+                msg.msg(sender, "license.already", "license", license);
+                return;
+            }
+            WRLDRunnable postBuy = () -> {
+                shop.getLicenses().add(license);
+                PlayerShopManager.save(shop);
+                msg.msg(sender, own ? "license.buy" : "license.buyothers", "license", license, "player", shop.getOwnerName());
+            };
+            if (admin) {
+                postBuy.run();
+                return;
+            }
+            Wallet wallet = NFTPlayer.getByUUID(((Player) sender).getUniqueId()).getPrimaryWallet();
+            wallet.requestWRLD(conf.getCategoryLicenseCosts().get(license), Network.POLYGON, "PlayerShop license " + license, false, postBuy);
+        });
+    }
+
     private void cmdHelp(CommandSender sender) {
         msg.msg(sender, "help.player");
         if (sender.hasPermission("playershops.admin"))
@@ -67,6 +104,21 @@ public class CommandPlayerShop implements CommandExecutor, TabCompleter {
                     "items", shop.getShopItem().countItems(),
                     "rented", shop.isBought() || shop.getRentedUntil() < time ? "§cN/A" :
                             StrUtils.formatTime(shop.getRentedUntil() - time));
+        });
+    }
+
+    private void cmdLicense(CommandSender sender, String[] args) {
+        withPlayerShop(sender, args, (shop) -> {
+            List<String> availableLicenses = new ArrayList<>();
+            List<String> purchasedLicenses = new ArrayList<>();
+            for (Map.Entry<String, Double> e : conf.categoryLicenseCosts.entrySet()) {
+                String name = e.getKey() + " ($" + DF.format(e.getValue()) + ")";
+                (shop.getLicenses().contains(e.getKey()) ? purchasedLicenses : availableLicenses).add(name);
+            }
+            msg.msg(sender, "license.list",
+                    "player", shop.getOwnerName(),
+                    "available", StringUtils.join(availableLicenses, ", "),
+                    "purchased", StringUtils.join(purchasedLicenses, ", "));
         });
     }
 
@@ -106,7 +158,14 @@ public class CommandPlayerShop implements CommandExecutor, TabCompleter {
             msg.msg(sender, "noconsole");
             return;
         }
-        withPlayerShop(sender, args, (shop) -> new ShopGUI(plr, shop, shop.getOwner().equals(plr.getUniqueId()), shop.getShopItem()));
+        withPlayerShop(sender, args, (shop) -> {
+            boolean manage = shop.getOwner().equals(plr.getUniqueId());
+            if (!manage && !shop.isBought() && shop.getRentedUntil() < System.currentTimeMillis()) {
+                msg.msg(sender, "closed", "player", shop.getOwnerName());
+                return;
+            }
+            new ShopGUI(plr, shop, manage, shop.getShopItem());
+        });
     }
 
     @Override
@@ -114,8 +173,10 @@ public class CommandPlayerShop implements CommandExecutor, TabCompleter {
         String sub = args.length == 0 ? "help" : args[0].toLowerCase();
         switch (sub) {
             case "buy" -> cmdBuy(sender);
+            case "buylicense" -> cmdBuyLicense(sender, args);
             case "help" -> cmdHelp(sender);
             case "info" -> cmdInfo(sender, args);
+            case "license" -> cmdLicense(sender, args);
             case "rent" -> cmdRent(sender, args);
             case "view" -> cmdView(sender, args);
             default -> msg.msg(sender, "wrong.sub");

@@ -47,6 +47,26 @@ public class ManageGUI extends CustomGUI {
     }
 
     @Override
+    public void onBottomClick(int slot, boolean rightClick, boolean shiftClick) {
+        ItemStack is = plr.getInventory().getItem(slot);
+        if (is != null) {
+            if (!villa.hasPermission(plr, Group::isManage)) {
+                msg.msg(plr, "noperm.manage");
+                return;
+            }
+            is = is.clone();
+            ItemMeta meta = is.getItemMeta();
+            meta.setDisplayName(null);
+            meta.setLore(null);
+            is.setItemMeta(meta);
+            villa.setIcon(ItemUtils.itemToString(is));
+            msg.msg(plr, "icon", "villa", villa.getName(), "icon", StrUtils.toCamelCase(is.getType().name()));
+            update();
+            saveVilla(villa);
+        }
+    }
+
+    @Override
     public void onClick(int slot, boolean right, boolean shift) {
         if (slot >= inv.getSize() || slot < 0)
             return;
@@ -90,7 +110,7 @@ public class ManageGUI extends CustomGUI {
                         return;
                     }
                     villa.setPrice(price);
-                    new ManageGUI(plr,villa);
+                    new ManageGUI(plr, villa);
                     saveVilla(villa);
                     msg.msg(plr, "price.done", "villa", villa.getName(), "price", DF.format(price));
                 }, () -> msg.msg(plr, "price.cancel", "villa", villa.getName()));
@@ -124,26 +144,6 @@ public class ManageGUI extends CustomGUI {
                 saveVilla(villa);
                 msg.msg(plr, "setspawn", "villa", villa.getName(), "loc", villa.getSpawn());
             }
-        }
-    }
-
-    @Override
-    public void onBottomClick(int slot, boolean rightClick, boolean shiftClick) {
-        ItemStack is = plr.getInventory().getItem(slot);
-        if (is != null) {
-            if (!villa.hasPermission(plr, Group::isManage)) {
-                msg.msg(plr, "noperm.manage");
-                return;
-            }
-            is = is.clone();
-            ItemMeta meta = is.getItemMeta();
-            meta.setDisplayName(null);
-            meta.setLore(null);
-            is.setItemMeta(meta);
-            villa.setIcon(ItemUtils.itemToString(is));
-            msg.msg(plr, "icon", "villa", villa.getName(), "icon", StrUtils.toCamelCase(is.getType().name()));
-            update();
-            saveVilla(villa);
         }
     }
 }

@@ -35,6 +35,14 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
         pcmd.setTabCompleter(this);
     }
 
+    private void cmdGui(CommandSender sender) {
+        if (!(sender instanceof Player plr)) {
+            msg.msg(sender, "noconsole");
+            return;
+        }
+        new VillasGUI(plr);
+    }
+
     private void cmdHelp(CommandSender sender) {
         msg.msg(sender, "help.header");
         if (sender.hasPermission("villas.admin"))
@@ -186,14 +194,6 @@ public class CommandVillas implements CommandExecutor, TabCompleter {
         }
         msg.msg(sender, "wrong.sub");
         return true;
-    }
-
-    private void cmdGui(CommandSender sender) {
-        if (!(sender instanceof Player plr)) {
-            msg.msg(sender, "noconsole");
-            return;
-        }
-        new VillasGUI(plr);
     }
 
     @Override

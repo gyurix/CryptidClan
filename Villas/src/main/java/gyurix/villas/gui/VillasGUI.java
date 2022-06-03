@@ -23,8 +23,8 @@ public class VillasGUI extends CustomGUI {
     private final List<Villa> villas = new ArrayList<>();
 
     private boolean buyable;
-    private boolean orderByPrice;
     private boolean desc;
+    private boolean orderByPrice;
     private int page = 1, maxPage;
 
     public VillasGUI(Player plr) {
@@ -119,30 +119,6 @@ public class VillasGUI extends CustomGUI {
         }
     }
 
-    private void villaClick(Villa villa, boolean right, boolean shift) {
-        if (!villa.hasPermission(plr, Group::isSee)) {
-            calculateVillas();
-            update();
-            return;
-        }
-        if (right) {
-            villa.buy(plr);
-        } else if (shift) {
-            if (!villa.hasPermission(plr, Group::isInfo)) {
-                msg.msg(plr, "noperm.info");
-                return;
-            }
-            new ManageGUI(plr, villa);
-        } else {
-            if (!villa.hasPermission(plr, Group::isTp)) {
-                msg.msg(plr, "noperm.tp");
-                return;
-            }
-            msg.msg(plr, "tp", "villa", villa.getName());
-            plr.teleport(villa.getSpawn().toLocation());
-        }
-    }
-
     @Override
     public void update() {
         ItemStack glass = config.getStaticItem("glass");
@@ -173,5 +149,29 @@ public class VillasGUI extends CustomGUI {
             inv.setItem(slot, icon);
         }
         super.update();
+    }
+
+    private void villaClick(Villa villa, boolean right, boolean shift) {
+        if (!villa.hasPermission(plr, Group::isSee)) {
+            calculateVillas();
+            update();
+            return;
+        }
+        if (right) {
+            villa.buy(plr);
+        } else if (shift) {
+            if (!villa.hasPermission(plr, Group::isInfo)) {
+                msg.msg(plr, "noperm.info");
+                return;
+            }
+            new ManageGUI(plr, villa);
+        } else {
+            if (!villa.hasPermission(plr, Group::isTp)) {
+                msg.msg(plr, "noperm.tp");
+                return;
+            }
+            msg.msg(plr, "tp", "villa", villa.getName());
+            plr.teleport(villa.getSpawn().toLocation());
+        }
     }
 }

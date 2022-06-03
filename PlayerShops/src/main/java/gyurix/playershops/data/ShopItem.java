@@ -115,6 +115,7 @@ public class ShopItem {
     }
 
     public void depositItems(CustomGUI gui, PlayerShop shop, Player plr) {
+        plr.closeInventory();
         msg.msg(plr, "item.deposit.enter", "item", ItemUtils.getName(item));
         new ChatDataReader(plr, (am) -> {
             try {
@@ -150,6 +151,7 @@ public class ShopItem {
     }
 
     public void depositWrld(CustomGUI gui, PlayerShop shop, Player plr) {
+        plr.closeInventory();
         msg.msg(plr, "wrld.deposit.enter", "item", ItemUtils.getName(item));
         new ChatDataReader(plr, (am) -> {
             try {
@@ -304,6 +306,7 @@ public class ShopItem {
     }
 
     public void withdrawItems(CustomGUI gui, PlayerShop shop, Player plr) {
+        plr.closeInventory();
         msg.msg(plr, "item.withdraw.enter", "item", ItemUtils.getName(item));
         new ChatDataReader(plr, (am) -> {
             try {
@@ -339,6 +342,7 @@ public class ShopItem {
     }
 
     public void withdrawWrld(CustomGUI gui, PlayerShop shop, Player plr) {
+        plr.closeInventory();
         msg.msg(plr, "wrld.withdraw.enter", "item", ItemUtils.getName(item));
         new ChatDataReader(plr, (am) -> {
             try {

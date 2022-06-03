@@ -25,15 +25,13 @@ import static gyurix.villas.conf.ConfigManager.msg;
 @NoArgsConstructor
 public class Villa {
     private Area area;
+    private boolean buyable;
     private HashMap<String, Group> groups = new HashMap<>();
+    private String icon;
     private String name;
     private HashMap<UUID, String> players = new HashMap<>();
-    private Loc spawn;
-
-    private String icon;
-
-    private boolean buyable;
     private double price;
+    private Loc spawn;
 
     public Villa(String name, Area area, Loc spawn) {
         this.name = name;
@@ -41,15 +39,6 @@ public class Villa {
         this.spawn = spawn;
         this.icon = ItemUtils.itemToString(conf.getDefaultVillaIcon());
         conf.getGroups().values().forEach(group -> this.groups.put(group.getName(), group.clone()));
-    }
-
-    public List<UUID> getOwners() {
-        List<UUID> out = new ArrayList<>();
-        players.forEach((uuid, group) -> {
-            if (group.equals("owner"))
-                out.add(uuid);
-        });
-        return out;
     }
 
     public void addGroup(CommandSender sender, String groupName) {
@@ -99,6 +88,38 @@ public class Villa {
         VillaManager.saveVilla(this);
     }
 
+    public void buy(Player plr) {
+        if (!buyable) {
+            msg.msg(plr, "buyable.non", "villa", name);
+            return;
+        }
+        if (price == 0 || plr.hasPermission("villas.free")) {
+            buyNow(plr, price);
+            return;
+        }
+        Wallet wallet = NFTPlayer.getByUUID(plr.getUniqueId()).getPrimaryWallet();
+        wallet.requestWRLD(price, Network.POLYGON, "Buying villa " + name, false,
+                (WRLDRunnable) () -> buyNow(plr, price));
+    }
+
+    private void buyNow(Player plr, double price) {
+        List<UUID> owners = getOwners();
+        if (!owners.isEmpty()) {
+            double split = price / owners.size();
+            for (UUID uuid : owners) {
+                Wallet wallet = NFTPlayer.getByUUID(uuid).getPrimaryWallet();
+                wallet.payWRLD(split, Network.POLYGON, "Selling villa " + name);
+                msg.msg(plr, "buyable.sell", "villa", name, "price", DF.format(price), "split", DF.format(split));
+                Group newMembersGroup = groups.get(conf.getNewMemberGroup());
+                newMembersGroup.setManage(false);
+                players.put(uuid, conf.getNewMemberGroup());
+            }
+        }
+        players.put(plr.getUniqueId(), "owner");
+        msg.msg(plr, "buyable.buy", "price", DF.format(price), "villa", name);
+        VillaManager.saveVilla(this);
+    }
+
     public void changeGroup(CommandSender sender, String pln, String group) {
         if (!hasPermission(sender, Group::isManage)) {
             msg.msg(sender, "noperm.manage");
@@ -132,6 +153,15 @@ public class Villa {
         players.forEach((uuid, group) -> {
             TreeSet<String> list = out.computeIfAbsent(group, k -> new TreeSet<>());
             list.add(Bukkit.getOfflinePlayer(uuid).getName());
+        });
+        return out;
+    }
+
+    public List<UUID> getOwners() {
+        List<UUID> out = new ArrayList<>();
+        players.forEach((uuid, group) -> {
+            if (group.equals("owner"))
+                out.add(uuid);
         });
         return out;
     }
@@ -206,38 +236,6 @@ public class Villa {
         }
         groups.remove(groupName);
         msg.msg(sender, "group.remove", "group", group.getName());
-        VillaManager.saveVilla(this);
-    }
-
-    public void buy(Player plr) {
-        if (!buyable) {
-            msg.msg(plr, "buyable.non", "villa", name);
-            return;
-        }
-        if (price == 0 || plr.hasPermission("villas.free")) {
-            buyNow(plr, price);
-            return;
-        }
-        Wallet wallet = NFTPlayer.getByUUID(plr.getUniqueId()).getPrimaryWallet();
-        wallet.requestWRLD(price, Network.POLYGON, "Buying villa " + name, false,
-                (WRLDRunnable) () -> buyNow(plr, price));
-    }
-
-    private void buyNow(Player plr, double price) {
-        List<UUID> owners = getOwners();
-        if (!owners.isEmpty()) {
-            double split = price / owners.size();
-            for (UUID uuid : owners) {
-                Wallet wallet = NFTPlayer.getByUUID(uuid).getPrimaryWallet();
-                wallet.payWRLD(split, Network.POLYGON, "Selling villa " + name);
-                msg.msg(plr, "buyable.sell", "villa", name, "price", DF.format(price), "split", DF.format(split));
-                Group newMembersGroup = groups.get(conf.getNewMemberGroup());
-                newMembersGroup.setManage(false);
-                players.put(uuid, conf.getNewMemberGroup());
-            }
-        }
-        players.put(plr.getUniqueId(), "owner");
-        msg.msg(plr, "buyable.buy", "price", DF.format(price), "villa", name);
         VillaManager.saveVilla(this);
     }
 }
