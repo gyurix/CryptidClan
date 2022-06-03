@@ -1,0 +1,64 @@
+{
+  "announceMessages": {
+    "5": {
+      "actionbar": "&c<player> is on a streak of 5 kills",
+      "chat": "&6&l<player>&e is on a streak of 5 kills",
+      "subtitle": "",
+      "title": ""
+    },
+    "10": {
+      "actionbar": "&c<player> is on a streak of 10 kills",
+      "chat": "&6&l<player>&e is on a streak of 10 kills",
+      "subtitle": "<player>",
+      "title": "10 KILLS"
+    },
+    "25": {
+      "actionbar": "&c<player> is on a streak of 25 kills",
+      "chat": "&6&l<player>&e is on a streak of 25 kills",
+      "subtitle": "&e<player>",
+      "title": "&c&l25 KILLS"
+    },
+    "50": {
+      "actionbar": "&c<player> is on a streak of 50 kills",
+      "chat": "&6&l<player>&e is on a streak of 50 kills",
+      "subtitle": "&c<player>",
+      "title": "&4&l&n50 KILLS"
+    }
+  },
+  "commandRewards": {
+    "5": [
+      "bc <player> with a streak of <streak> kills got killed by <killer>",
+      "msg <killer> Received 10 diamonds for killing <player>",
+      "give <killer> diamond 10"
+    ],
+    "10": [
+      "bc <player> with a streak of <streak> kills got killed by <killer>",
+      "msg <killer> Received 20 diamonds for killing <player>",
+      "give <killer> diamond 20"
+    ],
+    "25": [
+      "bc <player> with a streak of <streak> kills got killed by <killer>",
+      "msg <killer> Received 30 diamonds for killing <player>",
+      "give <killer> diamond 30"
+    ],
+    "50": [
+      "bc <player> a streak of <streak> kills got killed by <killer>",
+      "msg <killer> Received 50 diamonds for killing <player>",
+      "give <killer> diamond 50"
+    ]
+  },
+  "damageExpireMs": 15000,
+  "mySQL": {
+    "database": "minecraft",
+    "host": "localhost",
+    "password": "p&7h5y%_pC4Pk6tH",
+    "table": "bountysystem",
+    "username": "minecraft"
+  },
+  "wrldRewards": {
+    "5": 2,
+    "10": 10,
+    "25": 30,
+    "50": 100
+  }
+}

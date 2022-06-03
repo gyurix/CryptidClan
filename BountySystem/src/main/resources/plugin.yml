@@ -1,0 +1,9 @@
+api-version: 1.13
+author: gyuriX
+depend: [ WorldEdit, WRLDPaymentsAPI ]
+main: gyurix.bountysystem.BountySystemPlugin
+name: BountySystem
+version: 1.0
+softdepend: [ Villas ]
+commands:
+  bounty:

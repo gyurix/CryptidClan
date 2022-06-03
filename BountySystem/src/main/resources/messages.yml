@@ -1,0 +1,3 @@
+list:
+  header: "&6&lBounties - Page &e&l<page>&6&l of &e&l<maxPage>"
+  entry: "&6<position>. <player> (&e<streak> kills&6):&f $<bounty>"
