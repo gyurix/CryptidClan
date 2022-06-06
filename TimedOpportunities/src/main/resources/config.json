@@ -1,0 +1,84 @@
+{
+  "holoLines": [
+    "&6&lSupply Drop",
+    "&eOpen the chest to collect loot"
+  ],
+  "announceMessages": {
+    "-1": {
+      "actionbar": "",
+      "chat": "&6All the rewards got claimed from supply drop",
+      "subtitle": "&6Supply Drop",
+      "title": "&4Ended"
+    },
+    "0": {
+      "actionbar": "",
+      "chat": "&6Supply drop landed to &e<loc>",
+      "subtitle": "&6&lSupply Drop Landing NOW",
+      "title": "NOW"
+    },
+    "1": {
+      "actionbar": "",
+      "chat": "&eSupply drop landing to <loc> in 1 seconds...",
+      "subtitle": "&6&lSupply Drop Landing",
+      "title": "1s"
+    },
+    "2": {
+      "actionbar": "",
+      "chat": "&eSupply drop landing to <loc> in 2 seconds...",
+      "subtitle": "&6&lSupply Drop Landing",
+      "title": "2s"
+    },
+    "3": {
+      "actionbar": "",
+      "chat": "&eSupply drop landing to <loc> in 3 seconds...",
+      "subtitle": "&6&lSupply Drop Landing",
+      "title": "3s"
+    },
+    "5": {
+      "actionbar": "",
+      "chat": "&eSupply drop landing to <loc> in 5 seconds...",
+      "subtitle": "&6&lSupply Drop Landing",
+      "title": "5s"
+    }
+  },
+  "rewards": [
+    {
+      "chance": 0.05,
+      "item": "DIAMOND 5",
+      "commands": [
+        "give <player> diamond 5"
+      ]
+    },
+    {
+      "chance": 0.1,
+      "item": "GOLD_INGOT 10",
+      "commands": [
+        "give <player> gold_ingot 10"
+      ]
+    }
+  ],
+  "pickupIcon": "BARRIER name:&cThis_reward_is_already_picked_up",
+  "locations": [],
+  "spawningTimes": [
+    "0h",
+    "4h",
+    "8h",
+    "12h",
+    "16h",
+    "18h",
+    "20h",
+    "22h"
+  ],
+  "lootGUI": {
+    "title": "Loot",
+    "layout": [
+      "glass glass glass glass glass  glass glass glass glass",
+      "glass glass glass glass glass  glass glass glass glass",
+      "glass glass glass glass glass  glass glass glass glass"
+    ],
+    "staticItems": {
+      "glass": "BLACK_STAINED_GLASS_PANE name:&c",
+      "claimed": "RED_STAINED_GLASS_PANE name:&4&lClaimed lore:&e|&cThis_reward_got|&cclaimed_already"
+    }
+  }
+}

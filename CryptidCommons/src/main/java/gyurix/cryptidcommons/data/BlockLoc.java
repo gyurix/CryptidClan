@@ -1,12 +1,14 @@
 package gyurix.cryptidcommons.data;
 
 import gyurix.cryptidcommons.conf.StringSerializable;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
 @Getter
+@EqualsAndHashCode
 public class BlockLoc implements StringSerializable {
     private final String world;
     private final int x;

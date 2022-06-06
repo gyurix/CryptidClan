@@ -3,6 +3,7 @@ package gyurix.bountysystem.data;
 import com.nftworlds.wallet.objects.NFTPlayer;
 import com.nftworlds.wallet.objects.Network;
 import com.nftworlds.wallet.objects.Wallet;
+import gyurix.cryptidcommons.data.AnnounceMessage;
 import gyurix.cryptidcommons.util.StrUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -64,7 +65,7 @@ public class BountyPlayer {
         ++streak;
         AnnounceMessage announcement = conf.announceMessages.get(streak);
         if (announcement != null)
-            announcement.broadcast(getName());
+            announcement.broadcast("player", getName());
         save(this);
     }
 }

@@ -1,6 +1,6 @@
 package gyurix.bountysystem.conf;
 
-import gyurix.bountysystem.data.AnnounceMessage;
+import gyurix.cryptidcommons.data.AnnounceMessage;
 import gyurix.cryptidcommons.db.MySQLDatabase;
 import lombok.Getter;
 

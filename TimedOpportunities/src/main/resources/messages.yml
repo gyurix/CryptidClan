@@ -1,0 +1,17 @@
+prefix: "&6&lTimedOpportunities ► &e"
+noconsole: "&cThis command can only be used by players"
+noperm: "&cYou don't have permission for this command"
+help:
+  - "&6&lTimedOpportunities - Admin Commands"
+  - "&6• /topp addloc:&e Adds your current location to the list of possible landing locations"
+  - "&6• /topp help:&e Shows this help menu"
+  - "&6• /topp info:&e Shows info about next landing time / current location"
+  - "&6• /topp start:&e Force starts the event"
+  - "&6• /topp stop:&e Force stops the event"
+addloc: "Added <loc> to possible spawning locations"
+stop: "Stopped event"
+start: "Started event"
+info:
+  - "&6&lTimedOpportunities - Info"
+  - "&6• Location:&e <loc>"
+  - "&6• Next Landing:&e <next>"

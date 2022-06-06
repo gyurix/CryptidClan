@@ -1,27 +1,29 @@
-package gyurix.bountysystem.data;
+package gyurix.cryptidcommons.data;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import static gyurix.cryptidcommons.util.StrUtils.fillVariables;
+
 public class AnnounceMessage {
     public String actionbar, chat, subtitle, title;
 
-    public void broadcast(String pln) {
+    public void broadcast(Object... vars) {
         if (!chat.isEmpty()) {
-            String msg = chat.replace("<player>", pln);
+            String msg = fillVariables(chat, vars);
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.sendMessage(msg);
             }
         }
         if (!actionbar.isEmpty()) {
-            String msg = actionbar.replace("<player>", pln);
+            String msg = fillVariables(actionbar, vars);
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.sendActionBar(msg);
             }
         }
         if (!title.isEmpty()) {
-            String msg = title.replace("<player>", pln);
-            String msgSub = subtitle.replace("<player>", pln);
+            String msg = fillVariables(title, vars);
+            String msgSub = fillVariables(subtitle, vars);
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.sendTitle(msg, msgSub, 5, 30, 5);
             }

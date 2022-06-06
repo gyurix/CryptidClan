@@ -1,0 +1,9 @@
+api-version: 1.13
+author: gyuriX
+depend: [ WorldEdit, WRLDPaymentsAPI ]
+main: gyurix.timedopportunities.TimedOpportunitiesPlugin
+name: TimedOpportunities
+version: 1.
+softdepend: [ Villas ]
+commands:
+  topp:
