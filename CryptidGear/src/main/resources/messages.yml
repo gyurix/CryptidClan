@@ -1,0 +1,14 @@
+help:
+- '&6&lCryptid Gear - Admin Commands'
+- '&6/gear OR /gear help:&e Shows this help menu'
+- '&6/gear give <player> <component>:&e Give a player a gear component'
+- '&6/gear info <component>:&e Info about a gear component'
+- '&6/gear list:&e Lists the available gear components'
+noconsole: '&cThis command can only be used by players'
+noperm: '&cYou don''t have permission for this command'
+ability:
+  use: "&7Used your weapons ability"
+  wait: "&cYou need to wait &e<time>&c before using this weapons special ability again"
+wrong:
+  player: '&cPlayer &e<player>&c was not found'
+  sub: '&cThe entered subcommand &e<sub>&c was not found'

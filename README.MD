@@ -16,4 +16,5 @@
 | Bounties           | /bounty \[page\]    | N/A                                 | Lists the players having bounty on them sorted by the $WRLD amount of the bounty         |
 | TimedOpportunities | /topp OR /topp info | N/A                                 | Shows info about the next landing time and location of timed opportunities               |
 | TimedOpportunities | /topp               | timedopportunities.admin            | Timed Opportunities admin commands                                                       |
+| CryptidGear        | /gear               | cryptidgear.admin                   | Cryptid Gear admin commands                                                              |
 
