@@ -1,3 +1,4 @@
+prefix: "&6&lCryptidGear ► &e"
 help:
 - '&6&lCryptid Gear - Admin Commands'
 - '&6/gear OR /gear help:&e Shows this help menu'
@@ -12,3 +13,4 @@ ability:
 wrong:
   player: '&cPlayer &e<player>&c was not found'
   sub: '&cThe entered subcommand &e<sub>&c was not found'
+list: "Available gear components: <components>"

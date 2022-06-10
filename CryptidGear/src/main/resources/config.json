@@ -1,2 +1,151 @@
 {
+  "weapons": {
+    "launcher": {
+      "damage": 5,
+      "ability": {
+        "type": "LAUNCH",
+        "radius": 10,
+        "damage": 2.5,
+        "particle": "LAVA"
+      }
+    },
+    "auraAttacker": {
+      "damage": 6,
+      "ability": {
+        "type": "AURA",
+        "radius": 10,
+        "damage": 2.5,
+        "particle": "LAVA"
+      }
+    },
+    "speeder": {
+      "damage": 7,
+      "ability": {
+        "type": "POTION",
+        "effectType": "SPEED",
+        "durationSeconds": 8,
+        "level": 3,
+        "particle": "LAVA"
+      }
+    },
+    "strongSword": {
+      "damage": 8,
+      "ability": {
+        "type": "POTION",
+        "effectType": "INCREASE_DAMAGE",
+        "durationSeconds": 6,
+        "level": 2,
+        "particle": "LAVA"
+      }
+    },
+    "springer": {
+      "damage": 7,
+      "ability": {
+        "type": "POTION",
+        "effectType": "JUMP",
+        "durationSeconds": 10,
+        "level": 2,
+        "particle": "LAVA"
+      }
+    },
+    "slicer": {
+      "damage": 6,
+      "ability": {
+        "type": "SLICE",
+        "durationSeconds": 5,
+        "damage": 2,
+        "particle": "LAVA"
+      }
+    },
+    "exploder": {
+      "damage": 5.5,
+      "ability": {
+        "type": "EXPLOSION",
+        "damage": 20,
+        "particle": "LAVA"
+      }
+    },
+    "flamer": {
+      "damage": 4,
+      "ability": {
+        "type": "FLAME",
+        "durationSeconds": 8,
+        "radius": 9.5,
+        "particle": "LAVA"
+      }
+    },
+    "lightMaster": {
+      "damage": 4.5,
+      "ability": {
+        "type": "LIGHTNING",
+        "particle": "LAVA",
+        "radius": 9.5,
+        "level": 3
+      }
+    }
+  },
+  "customItems": {
+    "launcher": "STONE_SWORD name:&6&lLauncher",
+    "auraAttacker": "STONE_SWORD name:&6&lAura_Attacker",
+    "speeder": "STONE_SWORD name:&6&lSpeeder",
+    "strongSword": "STONE_SWORD name:&6&lStrong_Sword",
+    "springer": "STONE_SWORD name:&6&lSpringer",
+    "slicer": "STONE_SWORD name:&6&lSlicer",
+    "exploder": "STONE_SWORD name:&6&lExploder",
+    "flamer": "STONE_SWORD name:&6&lFlamer",
+    "lightMaster": "STONE_SWORD name:&6&lLight_Master",
+    "encStone": "STONE name:&6&lEnchanted_Stone luck:1 hide:enchants"
+  },
+  "recipes": {
+    "launcher": {
+      "shape": "ingredients"
+      : {
+  "a": "STICK"
+}
+},
+"auraAttacker": {
+"ingredients": {
+"a": "STICK"
+}
+},
+"speeder": {
+"ingredients": {
+"a": "STICK"
+}
+},
+"strongSword": {
+"ingredients": {
+"a": "STICK"
+}
+},
+"springer": {
+"ingredients": {
+"a": "STICK"
+}
+},
+"slicer": {
+"ingredients": {
+"a": "STICK"
+}
+},
+"exploder": {
+"ingredients": {
+"a": "STICK"
+}
+},
+"flamer": {
+"ingredients": {
+"a": "STICK"
+}
+},
+"lightMaster": {
+"ingredients": {
+"a": "STICK"
+}
+},
+"encStone": {
+"ingredients": {
+}
+}
+}
 }

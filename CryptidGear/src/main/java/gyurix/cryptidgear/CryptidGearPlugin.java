@@ -44,6 +44,10 @@ public class CryptidGearPlugin extends JavaPlugin implements Listener {
         }
         if (dmgr == null)
             return;
+        Weapon weapon = GearManager.getWeapon(dmgr.getInventory().getItemInMainHand());
+        if (weapon == null)
+            return;
+        e.setDamage(weapon.getDamage());
         PlayerData pd = GearManager.playerData.get(dmgr.getUniqueId());
         if (pd.getStrikeUntil() > System.currentTimeMillis()) {
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * pd.getStrike().getDamage());

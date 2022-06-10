@@ -5,9 +5,7 @@ import gyurix.cryptidcommons.util.StrUtils;
 import gyurix.cryptidgear.GearManager;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import org.bukkit.Particle;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import static gyurix.cryptidgear.conf.ConfigManager.msg;
 
@@ -15,7 +13,6 @@ import static gyurix.cryptidgear.conf.ConfigManager.msg;
 public class Weapon {
     private Ability ability;
     private double damage;
-    private ItemStack item;
     private String name;
 
     @SneakyThrows
@@ -28,7 +25,7 @@ public class Weapon {
             return;
         }
         ability.getType().activate(plr, ability);
-        plr.getWorld().spawnParticle(Particle.valueOf(ability.getParticle()), plr.getLocation(), 5);
+        plr.getWorld().spawnParticle(ability.getParticle(), plr.getLocation(), 5);
         pd.getNextWeaponAbilityUse().put(name, time + ability.getCooldown());
         msg.msg(plr, "ability.use");
     }

@@ -44,7 +44,7 @@ public enum AbilityType {
                     continue;
                 double dist = e.getLocation().distance(loc);
                 if (dist <= settings.getRadius()) {
-                    e.setFireTicks(settings.getDuration() * 20);
+                    e.setFireTicks(settings.getDurationSeconds() * 20);
                 }
             }
         }
@@ -82,7 +82,7 @@ public enum AbilityType {
     POTION {
         @Override
         public void activate(Player plr, Ability settings) {
-            plr.addPotionEffect(new PotionEffect(Objects.requireNonNull(PotionEffectType.getByName(settings.getEffectType())), settings.getDuration(), settings.getLevel() - 1));
+            plr.addPotionEffect(new PotionEffect(Objects.requireNonNull(PotionEffectType.getByName(settings.getEffectType())), settings.getDurationSeconds() / 20, settings.getLevel() - 1));
         }
     },
     SLICE {
@@ -90,7 +90,7 @@ public enum AbilityType {
         @SneakyThrows
         public void activate(Player plr, Ability settings) {
             PlayerData pd = GearManager.playerData.get(plr.getUniqueId());
-            pd.setStrikeUntil(System.currentTimeMillis() + settings.getDuration() * 1000L);
+            pd.setStrikeUntil(System.currentTimeMillis() + settings.getDurationSeconds() * 1000L);
         }
     };
 

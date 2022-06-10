@@ -17,7 +17,7 @@ public class GearManager {
             .expireAfterWrite(10, TimeUnit.MINUTES)
             .build(new CacheLoader<>() {
                 @Override
-                public PlayerData load(UUID uuid) throws Exception {
+                public PlayerData load(UUID uuid) {
                     return new PlayerData(uuid);
                 }
             });

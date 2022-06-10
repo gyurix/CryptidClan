@@ -4,15 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 @Getter
 public class PlayerData {
+    private HashMap<String, Long> nextWeaponAbilityUse = new HashMap<>();
+    private Ability strike;
     @Setter
     private long strikeUntil;
-    private Ability strike;
-    private HashMap<String, Long> nextWeaponAbilityUse = new HashMap<>();
     private UUID uuid;
 
     public PlayerData(UUID uuid) {
