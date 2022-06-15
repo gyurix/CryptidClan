@@ -6,6 +6,7 @@
         "type": "LAUNCH",
         "radius": 10,
         "damage": 2.5,
+        "cooldown": 10,
         "particle": "LAVA"
       }
     },
@@ -13,6 +14,7 @@
       "damage": 6,
       "ability": {
         "type": "AURA",
+        "cooldown": 10,
         "radius": 10,
         "damage": 2.5,
         "particle": "LAVA"
@@ -22,6 +24,7 @@
       "damage": 7,
       "ability": {
         "type": "POTION",
+        "cooldown": 10,
         "effectType": "SPEED",
         "durationSeconds": 8,
         "level": 3,
@@ -32,6 +35,7 @@
       "damage": 8,
       "ability": {
         "type": "POTION",
+        "cooldown": 10,
         "effectType": "INCREASE_DAMAGE",
         "durationSeconds": 6,
         "level": 2,
@@ -42,6 +46,7 @@
       "damage": 7,
       "ability": {
         "type": "POTION",
+        "cooldown": 10,
         "effectType": "JUMP",
         "durationSeconds": 10,
         "level": 2,
@@ -52,6 +57,7 @@
       "damage": 6,
       "ability": {
         "type": "SLICE",
+        "cooldown": 10,
         "durationSeconds": 5,
         "damage": 2,
         "particle": "LAVA"
@@ -61,6 +67,7 @@
       "damage": 5.5,
       "ability": {
         "type": "EXPLOSION",
+        "cooldown": 10,
         "damage": 20,
         "particle": "LAVA"
       }
@@ -69,6 +76,7 @@
       "damage": 4,
       "ability": {
         "type": "FLAME",
+        "cooldown": 10,
         "durationSeconds": 8,
         "radius": 9.5,
         "particle": "LAVA"
@@ -78,6 +86,7 @@
       "damage": 4.5,
       "ability": {
         "type": "LIGHTNING",
+        "cooldown": 10,
         "particle": "LAVA",
         "radius": 9.5,
         "level": 3
@@ -85,67 +94,126 @@
     }
   },
   "customItems": {
-    "launcher": "STONE_SWORD name:&6&lLauncher",
-    "auraAttacker": "STONE_SWORD name:&6&lAura_Attacker",
-    "speeder": "STONE_SWORD name:&6&lSpeeder",
-    "strongSword": "STONE_SWORD name:&6&lStrong_Sword",
-    "springer": "STONE_SWORD name:&6&lSpringer",
-    "slicer": "STONE_SWORD name:&6&lSlicer",
-    "exploder": "STONE_SWORD name:&6&lExploder",
-    "flamer": "STONE_SWORD name:&6&lFlamer",
-    "lightMaster": "STONE_SWORD name:&6&lLight_Master",
-    "encStone": "STONE name:&6&lEnchanted_Stone luck:1 hide:enchants"
+    "launcher": "STONE_SWORD name:&6&lLauncher lore:&eLauncher|&edescription",
+    "auraAttacker": "STONE_SWORD name:&6&lAura_Attacker lore:&eAura_Attacker|&edescription",
+    "speeder": "STONE_SWORD name:&6&lSpeeder lore:&eSpeeder|&edescription",
+    "strongSword": "STONE_SWORD name:&6&lStrong_Sword lore:&eStrong_Sword|&edescription",
+    "springer": "STONE_SWORD name:&6&lSpringer lore:&eSpringer|&edescription",
+    "slicer": "STONE_SWORD name:&6&lSlicer lore:&eSlicer|&edescription",
+    "exploder": "STONE_SWORD name:&6&lExploder lore:&eExploder|&edescription",
+    "flamer": "STONE_SWORD name:&6&lFlamer lore:&eFlamer|&edescription",
+    "lightMaster": "STONE_SWORD name:&6&lLight_Master lore:&eLight_Master|&edescription",
+    "encStone": "STONE name:&6&lEnchanted_Stone lore:&eMaterial_for_crafting|&eweapons luck:1 hide:enchants"
   },
   "recipes": {
     "launcher": {
-      "shape": "ingredients"
-      : {
-  "a": "STICK"
-}
-},
-"auraAttacker": {
-"ingredients": {
-"a": "STICK"
-}
-},
-"speeder": {
-"ingredients": {
-"a": "STICK"
-}
-},
-"strongSword": {
-"ingredients": {
-"a": "STICK"
-}
-},
-"springer": {
-"ingredients": {
-"a": "STICK"
-}
-},
-"slicer": {
-"ingredients": {
-"a": "STICK"
-}
-},
-"exploder": {
-"ingredients": {
-"a": "STICK"
-}
-},
-"flamer": {
-"ingredients": {
-"a": "STICK"
-}
-},
-"lightMaster": {
-"ingredients": {
-"a": "STICK"
-}
-},
-"encStone": {
-"ingredients": {
-}
-}
-}
+      "shape": [
+        "-ee",
+        "a--",
+        "---"
+      ],
+      "ingredients": {
+        "a": "STICK",
+        "e": "encStone"
+      }
+    },
+    "auraAttacker": {
+      "shape": [
+        "-e-",
+        "-a-",
+        "---"
+      ],
+      "ingredients": {
+        "a": "STICK",
+        "e": "encStone"
+      }
+    },
+    "speeder": {
+      "shape": [
+        "-e-",
+        "--a",
+        "---"
+      ],
+      "ingredients": {
+        "a": "STICK",
+        "e": "encStone"
+      }
+    },
+    "strongSword": {
+      "shape": [
+        "-ee",
+        "---",
+        "a--"
+      ],
+      "ingredients": {
+        "a": "STICK",
+        "e": "encStone"
+      }
+    },
+    "springer": {
+      "shape": [
+        "-e-",
+        "---",
+        "-a-"
+      ],
+      "ingredients": {
+        "a": "STICK",
+        "e": "encStone"
+      }
+    },
+    "slicer": {
+      "shape": [
+        "-e-",
+        "---",
+        "--a"
+      ],
+      "ingredients": {
+        "a": "STICK",
+        "e": "encStone"
+      }
+    },
+    "exploder": {
+      "shape": [
+        "eee",
+        "---",
+        "a--"
+      ],
+      "ingredients": {
+        "a": "STICK",
+        "e": "encStone"
+      }
+    },
+    "flamer": {
+      "shape": [
+        "eee",
+        "-a-",
+        "---"
+      ],
+      "ingredients": {
+        "a": "STICK",
+        "e": "encStone"
+      }
+    },
+    "lightMaster": {
+      "shape": [
+        "eee",
+        "--a",
+        "---"
+      ],
+      "ingredients": {
+        "a": "STICK",
+        "e": "encStone"
+      }
+    },
+    "encStone": {
+      "shape": [
+        "sss",
+        "sss",
+        "sss"
+      ],
+      "ingredients": {
+        "s": "STONE"
+      }
+    }
+  }
 }

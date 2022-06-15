@@ -26,7 +26,7 @@ public class Weapon {
         }
         ability.getType().activate(plr, ability);
         plr.getWorld().spawnParticle(ability.getParticle(), plr.getLocation(), 5);
-        pd.getNextWeaponAbilityUse().put(name, time + ability.getCooldown());
+        pd.getNextWeaponAbilityUse().put(name, time + ability.getCooldown() * 1000L);
         msg.msg(plr, "ability.use");
     }
 }

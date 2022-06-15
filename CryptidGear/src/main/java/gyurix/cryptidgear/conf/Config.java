@@ -7,6 +7,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.TreeMap;
 
+import static gyurix.cryptidgear.GearManager.weaponCache;
+
 @Getter
 public class Config implements PostProcessable {
     TreeMap<String, ItemStack> customItems;
@@ -16,8 +18,10 @@ public class Config implements PostProcessable {
     @Override
     public void postProcess() {
         recipes.forEach((name, recipe) -> {
+            recipe.setName(name);
             recipe.setOutputItem(customItems.get(name).clone());
-            recipe.register();
+            recipe.register(this);
         });
+        weapons.forEach((name, weapon) -> weaponCache.put(customItems.get(name).getItemMeta().getDisplayName(), weapon));
     }
 }

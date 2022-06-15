@@ -13,4 +13,25 @@ ability:
 wrong:
   player: '&cPlayer &e<player>&c was not found'
   sub: '&cThe entered subcommand &e<sub>&c was not found'
-list: "Available gear components: <components>"
+  component: "&cComponent &e<component>&c was not found"
+missing:
+  player: "&cYou did not enter the player argument"
+  component: "&cYou did not enter the component argument"
+give: "Gave &6&l<item>&e to &6&l<player>"
+list: "Available gear components:&f <components>"
+info:
+  component:
+  - "&6&lCryptid Gear - Component Info - <name>"
+  - "&6• Name:&e <dname>"
+  - "&6• Item Type:&e <type>"
+  - "&6• Description:&e"
+  - "<lore>"
+  weapon:
+  - "&6&lCryptid Gear - Weapon Info - <name>"
+  - "&6• Ability:&e <ability>"
+  - "&6• Damage:&e <damage>"
+  - "&6• Particle:&e <particle>"
+  - "&6• Name:&e <dname>"
+  - "&6• Item Type:&e <type>"
+  - "&6• Description:&e"
+  - "<lore>"

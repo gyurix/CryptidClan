@@ -13,4 +13,9 @@ public class Ability {
     private Particle particle;
     private double radius;
     private AbilityType type;
+
+    @Override
+    public String toString() {
+        return type.toString(this);
+    }
 }

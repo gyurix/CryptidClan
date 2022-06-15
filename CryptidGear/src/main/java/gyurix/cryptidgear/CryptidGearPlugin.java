@@ -2,6 +2,7 @@ package gyurix.cryptidgear;
 
 import gyurix.cryptidcommons.gui.GUIListener;
 import gyurix.cryptidgear.conf.ConfigManager;
+import gyurix.cryptidgear.conf.CustomRecipe;
 import gyurix.cryptidgear.data.PlayerData;
 import gyurix.cryptidgear.data.Weapon;
 import lombok.SneakyThrows;
@@ -17,6 +18,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import static gyurix.cryptidgear.conf.ConfigManager.conf;
 
 public class CryptidGearPlugin extends JavaPlugin implements Listener {
     public static CryptidGearPlugin pl;
@@ -56,7 +59,9 @@ public class CryptidGearPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-
+        for (CustomRecipe recipe : conf.getRecipes().values()) {
+            recipe.unregister();
+        }
     }
 
     @Override
